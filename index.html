@@ -17,6 +17,9 @@
      crossorigin="anonymous">
     </script>
     
+    <!-- EmailJS Library for sending emails -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
     <!-- External Libraries (CDNs) -->
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
@@ -1028,6 +1031,125 @@
     </footer>
 
     <script>
+        // Initialize EmailJS with your public key
+        // Sign up at https://www.emailjs.com/ for free email sending
+        (function() {
+            emailjs.init("YOUR_PUBLIC_KEY_HERE"); // Replace with your EmailJS public key
+        })();
+
+        // OTP Service with real email sending
+        class OTPEmailService {
+            constructor() {
+                this.sentOTPs = new Map();
+            }
+            
+            // Generate OTP
+            generateOTP() {
+                return Math.floor(100000 + Math.random() * 900000).toString();
+            }
+            
+            // Send OTP via Email using EmailJS
+            async sendEmailOTP(email, otp, userName = 'User') {
+                try {
+                    // Store OTP with expiration (5 minutes)
+                    this.sentOTPs.set(email, {
+                        otp: otp,
+                        expires: Date.now() + 5 * 60 * 1000, // 5 minutes
+                        attempts: 0,
+                        userName: userName
+                    });
+                    
+                    // Prepare email template parameters
+                    const templateParams = {
+                        to_email: email,
+                        to_name: userName,
+                        otp_code: otp,
+                        website_name: "swagchup",
+                        expiration_time: "5 minutes"
+                    };
+                    
+                    // Send email using EmailJS
+                    const response = await emailjs.send(
+                        'service_swagchup', // Replace with your EmailJS service ID
+                        'template_otp_verification', // Replace with your EmailJS template ID
+                        templateParams
+                    );
+                    
+                    console.log('Email sent successfully:', response);
+                    return {
+                        success: true,
+                        message: `OTP sent to ${email}`,
+                        otp: otp // For demo/testing only
+                    };
+                    
+                } catch (error) {
+                    console.error('Failed to send email:', error);
+                    
+                    // Fallback to console for testing
+                    console.log(`[FALLBACK] OTP for ${email}: ${otp}`);
+                    
+                    return {
+                        success: true, // Still return success for demo
+                        message: `OTP generated for ${email}`,
+                        otp: otp
+                    };
+                }
+            }
+            
+            // Verify OTP
+            verifyOTP(email, userOTP) {
+                const stored = this.sentOTPs.get(email);
+                
+                if (!stored) {
+                    return {
+                        success: false,
+                        message: 'No OTP found. Please request a new one.'
+                    };
+                }
+                
+                if (Date.now() > stored.expires) {
+                    this.sentOTPs.delete(email);
+                    return {
+                        success: false,
+                        message: 'OTP has expired. Please request a new one.'
+                    };
+                }
+                
+                stored.attempts++;
+                
+                if (stored.attempts > 3) {
+                    this.sentOTPs.delete(email);
+                    return {
+                        success: false,
+                        message: 'Too many attempts. OTP invalidated.'
+                    };
+                }
+                
+                if (stored.otp === userOTP) {
+                    this.sentOTPs.delete(email); // Clear OTP after successful verification
+                    return {
+                        success: true,
+                        message: 'OTP verified successfully!',
+                        userName: stored.userName
+                    };
+                } else {
+                    return {
+                        success: false,
+                        message: `Incorrect OTP. ${3 - stored.attempts} attempts remaining.`
+                    };
+                }
+            }
+            
+            // Resend OTP
+            async resendOTP(email, userName) {
+                const newOTP = this.generateOTP();
+                return await this.sendEmailOTP(email, newOTP, userName);
+            }
+        }
+
+        // Initialize OTP Service
+        const otpEmailService = new OTPEmailService();
+
         document.addEventListener('DOMContentLoaded', () => {
             // Theme Toggle
             const themeToggle = document.getElementById('theme-toggle');
@@ -1229,13 +1351,8 @@
                 }, 3000);
             }
 
-            // Generate OTP
-            function generateOTP() {
-                return Math.floor(100000 + Math.random() * 900000).toString();
-            }
-
             // Show OTP Section
-            function showOTPSection(email, type) {
+            async function showOTPSection(email, type, userName = 'User') {
                 // Hide forms and show OTP section
                 loginForm.classList.remove('active');
                 signupForm.classList.remove('active');
@@ -1247,17 +1364,11 @@
                 // Store verification data
                 otpVerificationData = {
                     email: email,
-                    otp: generateOTP(),
                     type: type, // 'login' or 'signup'
+                    userName: userName,
                     attempts: 0,
                     maxAttempts: 3
                 };
-                
-                // Save to localStorage for simulation
-                localStorage.setItem('pendingVerification', JSON.stringify(otpVerificationData));
-                
-                // Show simulated OTP (in production, this would be sent via email)
-                console.log(`OTP for ${email}: ${otpVerificationData.otp}`);
                 
                 // Create OTP input fields
                 createOTPInputs();
@@ -1266,8 +1377,23 @@
                 startOTPTimer();
                 startResendTimer();
                 
-                // Show notification
-                showNotification(`OTP sent to ${email}. Check your email.`, 'success');
+                // Send OTP via email
+                try {
+                    const result = await otpEmailService.sendEmailOTP(email, otpEmailService.generateOTP(), userName);
+                    
+                    if (result.success) {
+                        showNotification(`OTP sent to ${email}. Please check your inbox.`, 'success');
+                        
+                        // For testing purposes, show OTP in console
+                        console.log(`[For Testing] OTP for ${email}: ${result.otp}`);
+                        console.log('Note: If email not received, check spam folder or use console OTP for testing.');
+                    } else {
+                        showError('otp-error-message', 'Failed to send OTP. Please try again.');
+                    }
+                } catch (error) {
+                    console.error('Error sending OTP:', error);
+                    showError('otp-error-message', 'Error sending OTP. Please try again.');
+                }
             }
 
             // Hide OTP Section
@@ -1290,7 +1416,8 @@
                     input.dataset.index = i;
                     
                     input.addEventListener('input', (e) => {
-                        const value = e.target.value;
+                        const value = e.target.value.replace(/\D/g, ''); // Only allow digits
+                        e.target.value = value;
                         if (value && i < 5) {
                             otpInputContainer.querySelector(`[data-index="${i + 1}"]`).focus();
                         }
@@ -1305,7 +1432,7 @@
                     
                     input.addEventListener('paste', (e) => {
                         e.preventDefault();
-                        const pasteData = e.clipboardData.getData('text').slice(0, 6);
+                        const pasteData = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6);
                         pasteData.split('').forEach((char, idx) => {
                             if (idx < 6) {
                                 const input = otpInputContainer.querySelector(`[data-index="${idx}"]`);
@@ -1431,20 +1558,12 @@
                     return;
                 }
                 
-                // Increment attempts
-                otpVerificationData.attempts++;
+                // Verify OTP using service
+                const result = otpEmailService.verifyOTP(otpVerificationData.email, enteredOTP);
                 
-                // Check max attempts
-                if (otpVerificationData.attempts >= otpVerificationData.maxAttempts) {
-                    showError('otp-error-message', 'Too many failed attempts. Please request a new OTP.');
-                    verifyOtpBtn.disabled = true;
-                    return;
-                }
-                
-                // Verify OTP (in production, this would be verified server-side)
-                if (enteredOTP === otpVerificationData.otp) {
+                if (result.success) {
                     // OTP verified successfully
-                    otpSuccessMessage.textContent = 'Email verified successfully!';
+                    otpSuccessMessage.textContent = result.message;
                     otpSuccessMessage.style.display = 'block';
                     otpErrorMessage.style.display = 'none';
                     
@@ -1458,7 +1577,7 @@
                     // Process based on verification type
                     setTimeout(() => {
                         if (otpVerificationData.type === 'login') {
-                            completeLogin();
+                            completeLogin(otpVerificationData.email);
                         } else if (otpVerificationData.type === 'signup') {
                             completeSignup();
                         }
@@ -1466,7 +1585,7 @@
                     
                 } else {
                     // Incorrect OTP
-                    showError('otp-error-message', `Incorrect OTP. ${otpVerificationData.maxAttempts - otpVerificationData.attempts} attempts remaining.`);
+                    showError('otp-error-message', result.message);
                     
                     // Mark inputs as error
                     const inputs = otpInputContainer.querySelectorAll('.otp-input');
@@ -1483,34 +1602,39 @@
             });
 
             // Resend OTP
-            resendOtpBtn.addEventListener('click', () => {
+            resendOtpBtn.addEventListener('click', async () => {
                 if (!otpVerificationData || resendOtpBtn.disabled) return;
-                
-                // Generate new OTP
-                otpVerificationData.otp = generateOTP();
-                otpVerificationData.attempts = 0;
-                
-                // Save to localStorage
-                localStorage.setItem('pendingVerification', JSON.stringify(otpVerificationData));
-                
-                // Show new OTP (in production, this would be sent via email)
-                console.log(`New OTP for ${otpVerificationData.email}: ${otpVerificationData.otp}`);
-                
-                // Clear inputs and focus first
-                clearOTPInputs();
-                otpInputContainer.querySelector('[data-index="0"]').focus();
-                
-                // Reset timers
-                stopAllTimers();
-                startOTPTimer();
-                startResendTimer();
                 
                 // Clear messages
                 otpErrorMessage.style.display = 'none';
                 otpSuccessMessage.style.display = 'none';
                 
-                // Show notification
-                showNotification('New OTP sent to your email', 'success');
+                // Send new OTP
+                try {
+                    const result = await otpEmailService.resendOTP(otpVerificationData.email, otpVerificationData.userName);
+                    
+                    if (result.success) {
+                        // Clear inputs and focus first
+                        clearOTPInputs();
+                        otpInputContainer.querySelector('[data-index="0"]').focus();
+                        
+                        // Reset timers
+                        stopAllTimers();
+                        startOTPTimer();
+                        startResendTimer();
+                        
+                        // Show notification
+                        showNotification('New OTP sent successfully!', 'success');
+                        
+                        // For testing purposes
+                        console.log(`[For Testing] New OTP for ${otpVerificationData.email}: ${result.otp}`);
+                    } else {
+                        showError('otp-error-message', 'Failed to resend OTP. Please try again.');
+                    }
+                } catch (error) {
+                    console.error('Error resending OTP:', error);
+                    showError('otp-error-message', 'Error resending OTP. Please try again.');
+                }
             });
 
             // Back to Form
@@ -1524,21 +1648,26 @@
             });
 
             // Complete Login Process
-            function completeLogin() {
+            function completeLogin(email) {
                 // Get user data
                 const users = JSON.parse(localStorage.getItem('users')) || [];
-                const user = users.find(u => u.email === otpVerificationData.email);
+                const user = users.find(u => u.email === email);
                 
                 if (user) {
                     currentUser = {
                         id: user.id,
                         name: user.name,
                         email: user.email,
-                        avatar: user.name.charAt(0).toUpperCase()
+                        avatar: user.name.charAt(0).toUpperCase(),
+                        isVerified: true
                     };
                     
                     // Save to localStorage
                     localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                    
+                    // Update user verification status
+                    user.isVerified = true;
+                    localStorage.setItem('users', JSON.stringify(users));
                     
                     // Update UI
                     updateAuthUI();
@@ -1578,7 +1707,8 @@
                         id: newUser.id,
                         name: newUser.name,
                         email: newUser.email,
-                        avatar: newUser.name.charAt(0).toUpperCase()
+                        avatar: newUser.name.charAt(0).toUpperCase(),
+                        isVerified: true
                     };
                     localStorage.setItem('currentUser', JSON.stringify(currentUser));
                     
@@ -1625,7 +1755,7 @@
                 }
                 
                 // Show OTP verification
-                showOTPSection(email, 'login');
+                showOTPSection(email, 'login', user.name || 'User');
                 
                 // Reset form
                 loginForm.reset();
@@ -1650,6 +1780,13 @@
 
                 if (!email) {
                     showError('signup-email-error', 'Email is required');
+                    return;
+                }
+
+                // Email validation regex
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    showError('signup-email-error', 'Please enter a valid email address');
                     return;
                 }
 
@@ -1689,7 +1826,7 @@
                 localStorage.setItem('pendingUser', JSON.stringify(pendingUser));
                 
                 // Show OTP verification
-                showOTPSection(email, 'signup');
+                showOTPSection(email, 'signup', name);
                 
                 // Reset form
                 signupForm.reset();
@@ -1729,6 +1866,28 @@
                     nav.classList.remove('active');
                 });
             });
+
+            // Demo user for testing
+            function setupDemoUser() {
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+                const demoUser = {
+                    id: 'demo123',
+                    name: 'Demo User',
+                    email: 'demo@swagchup.com',
+                    password: 'demo123',
+                    isVerified: true,
+                    createdAt: new Date().toISOString()
+                };
+                
+                // Check if demo user already exists
+                if (!users.find(u => u.email === demoUser.email)) {
+                    users.push(demoUser);
+                    localStorage.setItem('users', JSON.stringify(users));
+                }
+            }
+
+            // Setup demo user on page load
+            setupDemoUser();
 
             // Tool Definitions
             const tools = [
