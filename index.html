@@ -264,32 +264,6 @@
             border-bottom: 3px solid var(--primary-color);
         }
         
-        /* Login Method Tabs */
-        .login-method-tabs {
-            display: flex;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid var(--border-color);
-        }
-        
-        .login-method-tab {
-            flex: 1;
-            padding: 12px;
-            background: none;
-            border: none;
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: var(--text-light);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .login-method-tab.active {
-            background: var(--primary-color);
-            color: white;
-        }
-        
         .auth-content {
             padding: 30px;
         }
@@ -300,26 +274,6 @@
         
         .auth-form.active {
             display: block;
-        }
-        
-        /* Country Code Selector */
-        .phone-input-group {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .country-code-select {
-            width: 100px;
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            background: var(--background-white);
-            color: var(--text-dark);
-            font-size: 1rem;
-        }
-        
-        .phone-input {
-            flex: 1;
         }
         
         /* OTP Verification Section */
@@ -344,7 +298,7 @@
             font-size: 0.95rem;
         }
         
-        .contact-highlight {
+        .email-highlight {
             color: var(--primary-color);
             font-weight: 600;
             background: rgba(26, 86, 219, 0.1);
@@ -430,7 +384,7 @@
             color: var(--text-dark);
         }
         
-        .form-group input, .form-group select {
+        .form-group input {
             width: 100%;
             padding: 12px;
             border: 1px solid var(--border-color);
@@ -596,37 +550,6 @@
             font-size: 0.9rem;
             margin-top: 5px;
             display: none;
-        }
-
-        /* Login Methods Container */
-        .login-methods {
-            display: none;
-        }
-        
-        .login-methods.active {
-            display: block;
-        }
-        
-        /* Password Visibility Toggle */
-        .password-input-group {
-            position: relative;
-        }
-        
-        .toggle-password {
-            position: absolute;
-            right: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: var(--text-light);
-            cursor: pointer;
-            padding: 5px;
-            border-radius: 4px;
-        }
-        
-        .toggle-password:hover {
-            background: var(--background-light);
         }
 
         /* --- Ad Containers --- */
@@ -808,8 +731,6 @@
             .social-auth { grid-template-columns: 1fr; }
             .otp-input-container { gap: 8px; }
             .otp-input { width: 45px; height: 55px; font-size: 1.3rem; }
-            .phone-input-group { flex-direction: column; }
-            .country-code-select { width: 100%; }
         }
     </style>
 </head>
@@ -870,109 +791,30 @@
             </div>
             <div class="auth-content">
                 <!-- Login Form -->
-                <div class="auth-form active" id="login-form">
-                    <div class="login-method-tabs">
-                        <button type="button" class="login-method-tab active" id="login-email-tab">Email Login</button>
-                        <button type="button" class="login-method-tab" id="login-phone-tab">Phone Login</button>
-                    </div>
-                    
-                    <!-- Email Login Form -->
-                    <div class="login-methods active" id="email-login-form">
-                        <div class="form-group">
-                            <label for="login-email">Email Address</label>
-                            <input type="email" id="login-email" placeholder="Enter your email" required>
-                            <div class="error-message" id="login-email-error"></div>
-                        </div>
-                        <div class="form-group">
-                            <label for="login-password">Password</label>
-                            <div class="password-input-group">
-                                <input type="password" id="login-password" placeholder="Enter your password" required>
-                                <button type="button" class="toggle-password" id="toggle-login-password">
-                                    👁️
-                                </button>
-                            </div>
-                            <div class="error-message" id="login-password-error"></div>
-                        </div>
-                        <div class="form-options">
-                            <div class="remember-me">
-                                <input type="checkbox" id="remember-me">
-                                <label for="remember-me">Remember me</label>
-                            </div>
-                            <a href="#" class="forgot-password">Forgot password?</a>
-                        </div>
-                        <button type="button" class="auth-btn" id="login-with-email-btn">Login</button>
-                        <div class="error-message" id="login-general-error"></div>
-                        <div class="success-message" id="login-success-message"></div>
-                    </div>
-                    
-                    <!-- Phone Login Form -->
-                    <div class="login-methods" id="phone-login-form">
-                        <div class="form-group">
-                            <label for="login-phone">Phone Number</label>
-                            <div class="phone-input-group">
-                                <select class="country-code-select" id="login-country-code">
-                                    <option value="+1">🇺🇸 +1</option>
-                                    <option value="+44">🇬🇧 +44</option>
-                                    <option value="+91">🇮🇳 +91</option>
-                                    <option value="+61">🇦🇺 +61</option>
-                                    <option value="+49">🇩🇪 +49</option>
-                                    <option value="+33">🇫🇷 +33</option>
-                                    <option value="+81">🇯🇵 +81</option>
-                                    <option value="+86">🇨🇳 +86</option>
-                                </select>
-                                <input type="tel" class="phone-input" id="login-phone" placeholder="Enter your phone number" required>
-                            </div>
-                            <div class="error-message" id="login-phone-error"></div>
-                        </div>
-                        <div class="form-group">
-                            <label for="login-phone-password">Password</label>
-                            <div class="password-input-group">
-                                <input type="password" id="login-phone-password" placeholder="Enter your password" required>
-                                <button type="button" class="toggle-password" id="toggle-phone-password">
-                                    👁️
-                                </button>
-                            </div>
-                            <div class="error-message" id="login-phone-password-error"></div>
-                        </div>
-                        <div class="form-options">
-                            <div class="remember-me">
-                                <input type="checkbox" id="remember-phone">
-                                <label for="remember-phone">Remember me</label>
-                            </div>
-                            <a href="#" class="forgot-password">Forgot password?</a>
-                        </div>
-                        <button type="button" class="auth-btn" id="login-with-phone-btn">Login</button>
-                        <div class="error-message" id="login-phone-general-error"></div>
-                        <div class="success-message" id="login-phone-success-message"></div>
-                    </div>
-                    
-                    <div class="auth-divider">
-                        <span>or login with OTP</span>
-                    </div>
-                    
-                    <!-- OTP Login Options -->
+                <form class="auth-form active" id="login-form">
                     <div class="form-group">
-                        <div class="phone-input-group">
-                            <select class="country-code-select" id="otp-login-country-code">
-                                <option value="+1">🇺🇸 +1</option>
-                                <option value="+44">🇬🇧 +44</option>
-                                <option value="+91">🇮🇳 +91</option>
-                                <option value="+61">🇦🇺 +61</option>
-                                <option value="+49">🇩🇪 +49</option>
-                                <option value="+33">🇫🇷 +33</option>
-                                <option value="+81">🇯🇵 +81</option>
-                                <option value="+86">🇨🇳 +86</option>
-                            </select>
-                            <input type="tel" class="phone-input" id="otp-login-phone" placeholder="Enter phone for OTP">
-                        </div>
+                        <label for="login-email">Email Address</label>
+                        <input type="email" id="login-email" placeholder="Enter your email" required>
+                        <div class="error-message" id="login-email-error"></div>
                     </div>
-                    
-                    <button type="button" class="auth-btn" id="send-otp-login-btn" style="margin-top: 10px;">Send OTP</button>
-                    
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" placeholder="Enter your password" required>
+                        <div class="error-message" id="login-password-error"></div>
+                    </div>
+                    <div class="form-options">
+                        <div class="remember-me">
+                            <input type="checkbox" id="remember-me">
+                            <label for="remember-me">Remember me</label>
+                        </div>
+                        <a href="#" class="forgot-password">Forgot password?</a>
+                    </div>
+                    <button type="submit" class="auth-btn">Login</button>
+                    <div class="error-message" id="login-general-error"></div>
+                    <div class="success-message" id="login-success-message"></div>
                     <div class="auth-divider">
                         <span>or continue with</span>
                     </div>
-                    
                     <div class="social-auth">
                         <button type="button" class="social-btn google">
                             <svg width="18" height="18" viewBox="0 0 24 24">
@@ -990,11 +832,10 @@
                             Facebook
                         </button>
                     </div>
-                    
                     <div class="auth-footer">
                         Don't have an account? <a href="#" id="switch-to-signup">Sign up</a>
                     </div>
-                </div>
+                </form>
 
                 <!-- Signup Form -->
                 <form class="auth-form" id="signup-form">
@@ -1009,40 +850,13 @@
                         <div class="error-message" id="signup-email-error"></div>
                     </div>
                     <div class="form-group">
-                        <label for="signup-phone">Phone Number (Optional)</label>
-                        <div class="phone-input-group">
-                            <select class="country-code-select" id="signup-country-code">
-                                <option value="+1">🇺🇸 +1</option>
-                                <option value="+44">🇬🇧 +44</option>
-                                <option value="+91">🇮🇳 +91</option>
-                                <option value="+61">🇦🇺 +61</option>
-                                <option value="+49">🇩🇪 +49</option>
-                                <option value="+33">🇫🇷 +33</option>
-                                <option value="+81">🇯🇵 +81</option>
-                                <option value="+86">🇨🇳 +86</option>
-                            </select>
-                            <input type="tel" class="phone-input" id="signup-phone" placeholder="Enter your phone number">
-                        </div>
-                        <div class="error-message" id="signup-phone-error"></div>
-                    </div>
-                    <div class="form-group">
                         <label for="signup-password">Password</label>
-                        <div class="password-input-group">
-                            <input type="password" id="signup-password" placeholder="Create a password" required>
-                            <button type="button" class="toggle-password" id="toggle-signup-password">
-                                👁️
-                            </button>
-                        </div>
+                        <input type="password" id="signup-password" placeholder="Create a password" required>
                         <div class="error-message" id="signup-password-error"></div>
                     </div>
                     <div class="form-group">
                         <label for="confirm-password">Confirm Password</label>
-                        <div class="password-input-group">
-                            <input type="password" id="confirm-password" placeholder="Confirm your password" required>
-                            <button type="button" class="toggle-password" id="toggle-confirm-password">
-                                👁️
-                            </button>
-                        </div>
+                        <input type="password" id="confirm-password" placeholder="Confirm your password" required>
                         <div class="error-message" id="confirm-password-error"></div>
                     </div>
                     <div class="form-group">
@@ -1055,11 +869,9 @@
                     <button type="submit" class="auth-btn">Create Account</button>
                     <div class="error-message" id="signup-general-error"></div>
                     <div class="success-message" id="signup-success-message"></div>
-                    
                     <div class="auth-divider">
                         <span>or sign up with</span>
                     </div>
-                    
                     <div class="social-auth">
                         <button type="button" class="social-btn google">
                             <svg width="18" height="18" viewBox="0 0 24 24">
@@ -1077,18 +889,17 @@
                             Facebook
                         </button>
                     </div>
-                    
                     <div class="auth-footer">
                         Already have an account? <a href="#" id="switch-to-login">Login</a>
                     </div>
                 </form>
                 
-                <!-- OTP Verification Section -->
+                <!-- OTP Verification Section (for both login and signup) -->
                 <div class="otp-section" id="otp-section">
-                    <h2 class="otp-title">Verify Your Identity</h2>
+                    <h2 class="otp-title">Verify Your Email</h2>
                     <p class="otp-description">
                         We've sent a 6-digit verification code to<br>
-                        <span class="contact-highlight" id="otp-contact-display">contact@example.com</span>
+                        <span class="email-highlight" id="otp-email-display">user@example.com</span>
                     </p>
                     
                     <div class="otp-input-container" id="otp-input-container">
@@ -1217,120 +1028,6 @@
     </footer>
 
     <script>
-        // Mock OTP Service (Simulated Email/SMS Sending)
-        class OTPService {
-            constructor() {
-                this.sentOTPs = new Map();
-            }
-            
-            // Generate OTP
-            generateOTP() {
-                return Math.floor(100000 + Math.random() * 900000).toString();
-            }
-            
-            // Send OTP via Email (Mock)
-            async sendEmailOTP(email, otp) {
-                console.log(`[Mock Email Service] OTP sent to ${email}: ${otp}`);
-                
-                // Store OTP with expiration (5 minutes)
-                this.sentOTPs.set(`email:${email}`, {
-                    otp: otp,
-                    expires: Date.now() + 5 * 60 * 1000, // 5 minutes
-                    attempts: 0
-                });
-                
-                // In a real application, you would:
-                // 1. Send actual email via SendGrid, Mailgun, etc.
-                // 2. Store OTP in your backend database
-                // 3. Implement rate limiting
-                
-                return {
-                    success: true,
-                    message: `OTP sent to ${email}`,
-                    otp: otp // Only for demo - remove in production
-                };
-            }
-            
-            // Send OTP via SMS (Mock)
-            async sendSMSOTP(phoneNumber, otp) {
-                console.log(`[Mock SMS Service] OTP sent to ${phoneNumber}: ${otp}`);
-                
-                // Store OTP with expiration (5 minutes)
-                this.sentOTPs.set(`phone:${phoneNumber}`, {
-                    otp: otp,
-                    expires: Date.now() + 5 * 60 * 1000, // 5 minutes
-                    attempts: 0
-                });
-                
-                // In a real application, you would:
-                // 1. Use Twilio, Vonage, or other SMS service
-                // 2. Store OTP in your backend database
-                // 3. Implement rate limiting
-                
-                return {
-                    success: true,
-                    message: `OTP sent to ${phoneNumber}`,
-                    otp: otp // Only for demo - remove in production
-                };
-            }
-            
-            // Verify OTP
-            verifyOTP(emailOrPhone, userOTP, isEmail = true) {
-                const key = isEmail ? `email:${emailOrPhone}` : `phone:${emailOrPhone}`;
-                const stored = this.sentOTPs.get(key);
-                
-                if (!stored) {
-                    return {
-                        success: false,
-                        message: 'No OTP found. Please request a new one.'
-                    };
-                }
-                
-                if (Date.now() > stored.expires) {
-                    this.sentOTPs.delete(key);
-                    return {
-                        success: false,
-                        message: 'OTP has expired. Please request a new one.'
-                    };
-                }
-                
-                stored.attempts++;
-                
-                if (stored.attempts > 3) {
-                    this.sentOTPs.delete(key);
-                    return {
-                        success: false,
-                        message: 'Too many attempts. OTP invalidated.'
-                    };
-                }
-                
-                if (stored.otp === userOTP) {
-                    this.sentOTPs.delete(key); // Clear OTP after successful verification
-                    return {
-                        success: true,
-                        message: 'OTP verified successfully!'
-                    };
-                } else {
-                    return {
-                        success: false,
-                        message: `Incorrect OTP. ${3 - stored.attempts} attempts remaining.`
-                    };
-                }
-            }
-            
-            // Clear expired OTPs
-            clearExpiredOTPs() {
-                for (const [key, value] of this.sentOTPs.entries()) {
-                    if (Date.now() > value.expires) {
-                        this.sentOTPs.delete(key);
-                    }
-                }
-            }
-        }
-
-        // Initialize OTP Service
-        const otpService = new OTPService();
-
         document.addEventListener('DOMContentLoaded', () => {
             // Theme Toggle
             const themeToggle = document.getElementById('theme-toggle');
@@ -1397,14 +1094,8 @@
             const switchToSignup = document.getElementById('switch-to-signup');
             const switchToLogin = document.getElementById('switch-to-login');
 
-            // Login Method Tabs
-            const loginEmailTab = document.getElementById('login-email-tab');
-            const loginPhoneTab = document.getElementById('login-phone-tab');
-            const emailLoginForm = document.getElementById('email-login-form');
-            const phoneLoginForm = document.getElementById('phone-login-form');
-
             // OTP Elements
-            const otpContactDisplay = document.getElementById('otp-contact-display');
+            const otpEmailDisplay = document.getElementById('otp-email-display');
             const otpInputContainer = document.getElementById('otp-input-container');
             const verifyOtpBtn = document.getElementById('verify-otp-btn');
             const otpErrorMessage = document.getElementById('otp-error-message');
@@ -1414,44 +1105,6 @@
             const resendOtpBtn = document.getElementById('resend-otp-btn');
             const resendCountdown = document.getElementById('resend-countdown');
             const backToFormBtn = document.getElementById('back-to-form-btn');
-
-            // Password visibility toggles
-            const toggleLoginPassword = document.getElementById('toggle-login-password');
-            const togglePhonePassword = document.getElementById('toggle-phone-password');
-            const toggleSignupPassword = document.getElementById('toggle-signup-password');
-            const toggleConfirmPassword = document.getElementById('toggle-confirm-password');
-
-            // Set up password visibility toggles
-            setupPasswordToggle(toggleLoginPassword, 'login-password');
-            setupPasswordToggle(togglePhonePassword, 'login-phone-password');
-            setupPasswordToggle(toggleSignupPassword, 'signup-password');
-            setupPasswordToggle(toggleConfirmPassword, 'confirm-password');
-
-            function setupPasswordToggle(toggleBtn, inputId) {
-                toggleBtn.addEventListener('click', () => {
-                    const input = document.getElementById(inputId);
-                    const type = input.type === 'password' ? 'text' : 'password';
-                    input.type = type;
-                    toggleBtn.textContent = type === 'password' ? '👁️' : '🙈';
-                });
-            }
-
-            // Login Method Switching
-            loginEmailTab.addEventListener('click', () => {
-                loginEmailTab.classList.add('active');
-                loginPhoneTab.classList.remove('active');
-                emailLoginForm.classList.add('active');
-                phoneLoginForm.classList.remove('active');
-                clearLoginErrors();
-            });
-
-            loginPhoneTab.addEventListener('click', () => {
-                loginPhoneTab.classList.add('active');
-                loginEmailTab.classList.remove('active');
-                phoneLoginForm.classList.add('active');
-                emailLoginForm.classList.remove('active');
-                clearLoginErrors();
-            });
 
             // Open/Close Auth Modal
             openLogin.addEventListener('click', () => {
@@ -1535,18 +1188,6 @@
                 });
             }
 
-            // Clear login errors
-            function clearLoginErrors() {
-                ['login-email-error', 'login-password-error', 'login-general-error',
-                 'login-phone-error', 'login-phone-password-error', 'login-phone-general-error'].forEach(id => {
-                    const el = document.getElementById(id);
-                    if (el) {
-                        el.style.display = 'none';
-                        el.textContent = '';
-                    }
-                });
-            }
-
             // Show error message
             function showError(elementId, message) {
                 const element = document.getElementById(elementId);
@@ -1588,22 +1229,35 @@
                 }, 3000);
             }
 
+            // Generate OTP
+            function generateOTP() {
+                return Math.floor(100000 + Math.random() * 900000).toString();
+            }
+
             // Show OTP Section
-            async function showOTPSection(contact, type, isEmail = true) {
+            function showOTPSection(email, type) {
                 // Hide forms and show OTP section
                 loginForm.classList.remove('active');
                 signupForm.classList.remove('active');
                 otpSection.classList.add('active');
                 
+                // Set email display
+                otpEmailDisplay.textContent = email;
+                
                 // Store verification data
                 otpVerificationData = {
-                    contact: contact,
+                    email: email,
+                    otp: generateOTP(),
                     type: type, // 'login' or 'signup'
-                    isEmail: isEmail
+                    attempts: 0,
+                    maxAttempts: 3
                 };
                 
-                // Display contact info
-                otpContactDisplay.textContent = contact;
+                // Save to localStorage for simulation
+                localStorage.setItem('pendingVerification', JSON.stringify(otpVerificationData));
+                
+                // Show simulated OTP (in production, this would be sent via email)
+                console.log(`OTP for ${email}: ${otpVerificationData.otp}`);
                 
                 // Create OTP input fields
                 createOTPInputs();
@@ -1612,26 +1266,8 @@
                 startOTPTimer();
                 startResendTimer();
                 
-                // Send OTP
-                try {
-                    let result;
-                    if (isEmail) {
-                        result = await otpService.sendEmailOTP(contact, otpService.generateOTP());
-                    } else {
-                        result = await otpService.sendSMSOTP(contact, otpService.generateOTP());
-                    }
-                    
-                    if (result.success) {
-                        showNotification(`OTP sent to ${contact}`, 'success');
-                        // For demo purposes, show OTP in console
-                        console.log(`Demo OTP: ${result.otp}`);
-                    } else {
-                        showError('otp-error-message', 'Failed to send OTP. Please try again.');
-                    }
-                } catch (error) {
-                    console.error('Error sending OTP:', error);
-                    showError('otp-error-message', 'Error sending OTP. Please try again.');
-                }
+                // Show notification
+                showNotification(`OTP sent to ${email}. Check your email.`, 'success');
             }
 
             // Hide OTP Section
@@ -1654,8 +1290,7 @@
                     input.dataset.index = i;
                     
                     input.addEventListener('input', (e) => {
-                        const value = e.target.value.replace(/\D/g, ''); // Only allow digits
-                        e.target.value = value;
+                        const value = e.target.value;
                         if (value && i < 5) {
                             otpInputContainer.querySelector(`[data-index="${i + 1}"]`).focus();
                         }
@@ -1670,7 +1305,7 @@
                     
                     input.addEventListener('paste', (e) => {
                         e.preventDefault();
-                        const pasteData = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6);
+                        const pasteData = e.clipboardData.getData('text').slice(0, 6);
                         pasteData.split('').forEach((char, idx) => {
                             if (idx < 6) {
                                 const input = otpInputContainer.querySelector(`[data-index="${idx}"]`);
@@ -1796,16 +1431,20 @@
                     return;
                 }
                 
-                // Verify OTP using service
-                const result = otpService.verifyOTP(
-                    otpVerificationData.contact,
-                    enteredOTP,
-                    otpVerificationData.isEmail
-                );
+                // Increment attempts
+                otpVerificationData.attempts++;
                 
-                if (result.success) {
+                // Check max attempts
+                if (otpVerificationData.attempts >= otpVerificationData.maxAttempts) {
+                    showError('otp-error-message', 'Too many failed attempts. Please request a new OTP.');
+                    verifyOtpBtn.disabled = true;
+                    return;
+                }
+                
+                // Verify OTP (in production, this would be verified server-side)
+                if (enteredOTP === otpVerificationData.otp) {
                     // OTP verified successfully
-                    otpSuccessMessage.textContent = result.message;
+                    otpSuccessMessage.textContent = 'Email verified successfully!';
                     otpSuccessMessage.style.display = 'block';
                     otpErrorMessage.style.display = 'none';
                     
@@ -1819,7 +1458,7 @@
                     // Process based on verification type
                     setTimeout(() => {
                         if (otpVerificationData.type === 'login') {
-                            completeOTPLogin(otpVerificationData.contact, otpVerificationData.isEmail);
+                            completeLogin();
                         } else if (otpVerificationData.type === 'signup') {
                             completeSignup();
                         }
@@ -1827,7 +1466,7 @@
                     
                 } else {
                     // Incorrect OTP
-                    showError('otp-error-message', result.message);
+                    showError('otp-error-message', `Incorrect OTP. ${otpVerificationData.maxAttempts - otpVerificationData.attempts} attempts remaining.`);
                     
                     // Mark inputs as error
                     const inputs = otpInputContainer.querySelectorAll('.otp-input');
@@ -1844,42 +1483,34 @@
             });
 
             // Resend OTP
-            resendOtpBtn.addEventListener('click', async () => {
+            resendOtpBtn.addEventListener('click', () => {
                 if (!otpVerificationData || resendOtpBtn.disabled) return;
+                
+                // Generate new OTP
+                otpVerificationData.otp = generateOTP();
+                otpVerificationData.attempts = 0;
+                
+                // Save to localStorage
+                localStorage.setItem('pendingVerification', JSON.stringify(otpVerificationData));
+                
+                // Show new OTP (in production, this would be sent via email)
+                console.log(`New OTP for ${otpVerificationData.email}: ${otpVerificationData.otp}`);
+                
+                // Clear inputs and focus first
+                clearOTPInputs();
+                otpInputContainer.querySelector('[data-index="0"]').focus();
+                
+                // Reset timers
+                stopAllTimers();
+                startOTPTimer();
+                startResendTimer();
                 
                 // Clear messages
                 otpErrorMessage.style.display = 'none';
                 otpSuccessMessage.style.display = 'none';
                 
-                // Send new OTP
-                try {
-                    let result;
-                    if (otpVerificationData.isEmail) {
-                        result = await otpService.sendEmailOTP(otpVerificationData.contact, otpService.generateOTP());
-                    } else {
-                        result = await otpService.sendSMSOTP(otpVerificationData.contact, otpService.generateOTP());
-                    }
-                    
-                    if (result.success) {
-                        // Clear inputs and focus first
-                        clearOTPInputs();
-                        otpInputContainer.querySelector('[data-index="0"]').focus();
-                        
-                        // Reset timers
-                        stopAllTimers();
-                        startOTPTimer();
-                        startResendTimer();
-                        
-                        // Show notification
-                        showNotification('New OTP sent successfully!', 'success');
-                        console.log(`New Demo OTP: ${result.otp}`);
-                    } else {
-                        showError('otp-error-message', 'Failed to resend OTP. Please try again.');
-                    }
-                } catch (error) {
-                    console.error('Error resending OTP:', error);
-                    showError('otp-error-message', 'Error resending OTP. Please try again.');
-                }
+                // Show notification
+                showNotification('New OTP sent to your email', 'success');
             });
 
             // Back to Form
@@ -1892,24 +1523,17 @@
                 }
             });
 
-            // Complete OTP Login
-            function completeOTPLogin(contact, isEmail) {
-                // Find user by email or phone
+            // Complete Login Process
+            function completeLogin() {
+                // Get user data
                 const users = JSON.parse(localStorage.getItem('users')) || [];
-                let user;
-                
-                if (isEmail) {
-                    user = users.find(u => u.email === contact);
-                } else {
-                    user = users.find(u => u.phone === contact);
-                }
+                const user = users.find(u => u.email === otpVerificationData.email);
                 
                 if (user) {
                     currentUser = {
                         id: user.id,
                         name: user.name,
                         email: user.email,
-                        phone: user.phone,
                         avatar: user.name.charAt(0).toUpperCase()
                     };
                     
@@ -1940,7 +1564,6 @@
                         id: Date.now().toString(),
                         name: pendingUser.name,
                         email: pendingUser.email,
-                        phone: pendingUser.phone,
                         password: pendingUser.password,
                         isVerified: true,
                         createdAt: new Date().toISOString()
@@ -1955,7 +1578,6 @@
                         id: newUser.id,
                         name: newUser.name,
                         email: newUser.email,
-                        phone: newUser.phone,
                         avatar: newUser.name.charAt(0).toUpperCase()
                     };
                     localStorage.setItem('currentUser', JSON.stringify(currentUser));
@@ -1974,13 +1596,13 @@
                 }
             }
 
-            // Email Login Button
-            document.getElementById('login-with-email-btn').addEventListener('click', async () => {
-                clearLoginErrors();
-                
+            // Login Form Submission
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                clearAllErrors();
+
                 const email = document.getElementById('login-email').value.trim();
                 const password = document.getElementById('login-password').value.trim();
-                const rememberMe = document.getElementById('remember-me').checked;
 
                 // Simple validation
                 if (!email) {
@@ -2002,111 +1624,11 @@
                     return;
                 }
                 
-                // Check if user is verified
-                if (!user.isVerified) {
-                    // User needs email verification
-                    showOTPSection(email, 'login', true);
-                } else {
-                    // Direct login for verified users
-                    currentUser = {
-                        id: user.id,
-                        name: user.name,
-                        email: user.email,
-                        phone: user.phone,
-                        avatar: user.name.charAt(0).toUpperCase()
-                    };
-                    
-                    // Save to localStorage
-                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                    if (rememberMe) {
-                        localStorage.setItem('rememberedUser', JSON.stringify({ email: email }));
-                    }
-                    
-                    // Update UI
-                    updateAuthUI();
-                    
-                    // Close modal and show success
-                    closeAuthModal();
-                    showNotification('Login successful!', 'success');
-                }
-            });
-
-            // Phone Login Button
-            document.getElementById('login-with-phone-btn').addEventListener('click', async () => {
-                clearLoginErrors();
+                // Show OTP verification
+                showOTPSection(email, 'login');
                 
-                const countryCode = document.getElementById('login-country-code').value;
-                const phone = document.getElementById('login-phone').value.trim();
-                const fullPhone = countryCode + phone;
-                const password = document.getElementById('login-phone-password').value.trim();
-                const rememberPhone = document.getElementById('remember-phone').checked;
-
-                // Validation
-                if (!phone) {
-                    showError('login-phone-error', 'Phone number is required');
-                    return;
-                }
-
-                if (!password) {
-                    showError('login-phone-password-error', 'Password is required');
-                    return;
-                }
-
-                // Check if user exists
-                const users = JSON.parse(localStorage.getItem('users')) || [];
-                const user = users.find(u => u.phone === fullPhone && u.password === password);
-                
-                if (!user) {
-                    showError('login-phone-general-error', 'Invalid phone number or password');
-                    return;
-                }
-                
-                // Direct login for phone users
-                currentUser = {
-                    id: user.id,
-                    name: user.name,
-                    email: user.email,
-                    phone: user.phone,
-                    avatar: user.name.charAt(0).toUpperCase()
-                };
-                
-                // Save to localStorage
-                localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                if (rememberPhone) {
-                    localStorage.setItem('rememberedUser', JSON.stringify({ phone: fullPhone }));
-                }
-                
-                // Update UI
-                updateAuthUI();
-                
-                // Close modal and show success
-                closeAuthModal();
-                showNotification('Login successful!', 'success');
-            });
-
-            // Send OTP for Login
-            document.getElementById('send-otp-login-btn').addEventListener('click', async () => {
-                const countryCode = document.getElementById('otp-login-country-code').value;
-                const phone = document.getElementById('otp-login-phone').value.trim();
-                
-                if (!phone) {
-                    showNotification('Please enter phone number', 'warning');
-                    return;
-                }
-                
-                const fullPhone = countryCode + phone;
-                
-                // Check if phone exists in users
-                const users = JSON.parse(localStorage.getItem('users')) || [];
-                const user = users.find(u => u.phone === fullPhone);
-                
-                if (!user) {
-                    showNotification('Phone number not registered. Please sign up first.', 'warning');
-                    return;
-                }
-                
-                // Send OTP via SMS
-                showOTPSection(fullPhone, 'login', false);
+                // Reset form
+                loginForm.reset();
             });
 
             // Signup Form Submission
@@ -2116,9 +1638,6 @@
 
                 const name = document.getElementById('signup-name').value.trim();
                 const email = document.getElementById('signup-email').value.trim();
-                const countryCode = document.getElementById('signup-country-code').value;
-                const phone = document.getElementById('signup-phone').value.trim();
-                const fullPhone = phone ? countryCode + phone : null;
                 const password = document.getElementById('signup-password').value.trim();
                 const confirmPassword = document.getElementById('confirm-password').value.trim();
                 const termsAgreed = document.getElementById('terms-agreement').checked;
@@ -2134,18 +1653,6 @@
                     return;
                 }
 
-                // Email validation regex
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(email)) {
-                    showError('signup-email-error', 'Please enter a valid email address');
-                    return;
-                }
-
-                if (phone && !/^\d{10,15}$/.test(phone)) {
-                    showError('signup-phone-error', 'Please enter a valid phone number (10-15 digits)');
-                    return;
-                }
-
                 if (!password) {
                     showError('signup-password-error', 'Password is required');
                     return;
@@ -2153,17 +1660,6 @@
 
                 if (password.length < 6) {
                     showError('signup-password-error', 'Password must be at least 6 characters');
-                    return;
-                }
-
-                // Password strength check
-                const hasUpperCase = /[A-Z]/.test(password);
-                const hasLowerCase = /[a-z]/.test(password);
-                const hasNumbers = /\d/.test(password);
-                const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-                
-                if (!hasUpperCase || !hasLowerCase || !hasNumbers || !hasSpecialChar) {
-                    showError('signup-password-error', 'Password must contain uppercase, lowercase, numbers, and special characters');
                     return;
                 }
 
@@ -2183,23 +1679,20 @@
                     showError('signup-email-error', 'Email already registered');
                     return;
                 }
-                
-                if (fullPhone && users.find(u => u.phone === fullPhone)) {
-                    showError('signup-phone-error', 'Phone number already registered');
-                    return;
-                }
 
                 // Save pending user data
                 const pendingUser = {
                     name: name,
                     email: email,
-                    phone: fullPhone,
                     password: password
                 };
                 localStorage.setItem('pendingUser', JSON.stringify(pendingUser));
                 
-                // Show OTP verification for email
-                showOTPSection(email, 'signup', true);
+                // Show OTP verification
+                showOTPSection(email, 'signup');
+                
+                // Reset form
+                signupForm.reset();
             });
 
             // Social Auth Buttons
@@ -2236,27 +1729,6 @@
                     nav.classList.remove('active');
                 });
             });
-
-            // Auto-fill remembered user
-            function autoFillRememberedUser() {
-                const remembered = JSON.parse(localStorage.getItem('rememberedUser'));
-                if (remembered) {
-                    if (remembered.email) {
-                        document.getElementById('login-email').value = remembered.email;
-                        document.getElementById('remember-me').checked = true;
-                    }
-                    if (remembered.phone) {
-                        // Parse phone number
-                        const phone = remembered.phone;
-                        // This is simplified - in real app, you'd parse country code
-                        document.getElementById('login-phone').value = phone.substring(phone.length - 10);
-                        document.getElementById('remember-phone').checked = true;
-                    }
-                }
-            }
-
-            // Call auto-fill when opening login modal
-            openLogin.addEventListener('click', autoFillRememberedUser);
 
             // Tool Definitions
             const tools = [
