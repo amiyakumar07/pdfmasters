@@ -276,6 +276,103 @@
             display: block;
         }
         
+        /* OTP Verification Section */
+        .otp-section {
+            display: none;
+            text-align: center;
+        }
+        
+        .otp-section.active {
+            display: block;
+        }
+        
+        .otp-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        .otp-description {
+            color: var(--text-light);
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+        }
+        
+        .email-highlight {
+            color: var(--primary-color);
+            font-weight: 600;
+            background: rgba(26, 86, 219, 0.1);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        
+        .otp-input-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+        
+        .otp-input {
+            width: 50px;
+            height: 60px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--background-white);
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+        }
+        
+        .otp-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(26, 86, 219, 0.1);
+        }
+        
+        .otp-input.filled {
+            border-color: var(--success-color);
+            background: rgba(16, 185, 129, 0.1);
+        }
+        
+        .otp-input.error {
+            border-color: var(--danger-color);
+            background: rgba(239, 68, 68, 0.1);
+        }
+        
+        .otp-timer {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+        
+        .otp-timer .time {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .resend-otp {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            font-weight: 600;
+            padding: 5px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .resend-otp:hover {
+            background: rgba(26, 86, 219, 0.1);
+        }
+        
+        .resend-otp:disabled {
+            color: var(--text-light);
+            cursor: not-allowed;
+        }
+        
         .form-group {
             margin-bottom: 20px;
         }
@@ -632,6 +729,8 @@
             .hero-section h1 { font-size: 2.2rem; }
             .auth-container { margin: 20px; max-width: calc(100% - 40px); }
             .social-auth { grid-template-columns: 1fr; }
+            .otp-input-container { gap: 8px; }
+            .otp-input { width: 45px; height: 55px; font-size: 1.3rem; }
         }
     </style>
 </head>
@@ -794,6 +893,40 @@
                         Already have an account? <a href="#" id="switch-to-login">Login</a>
                     </div>
                 </form>
+                
+                <!-- OTP Verification Section (for both login and signup) -->
+                <div class="otp-section" id="otp-section">
+                    <h2 class="otp-title">Verify Your Email</h2>
+                    <p class="otp-description">
+                        We've sent a 6-digit verification code to<br>
+                        <span class="email-highlight" id="otp-email-display">user@example.com</span>
+                    </p>
+                    
+                    <div class="otp-input-container" id="otp-input-container">
+                        <!-- OTP inputs will be generated dynamically -->
+                    </div>
+                    
+                    <div class="otp-timer" id="otp-timer">
+                        Code expires in: <span class="time" id="otp-time">05:00</span>
+                    </div>
+                    
+                    <button type="button" class="auth-btn" id="verify-otp-btn">Verify & Continue</button>
+                    
+                    <div class="error-message" id="otp-error-message"></div>
+                    <div class="success-message" id="otp-success-message"></div>
+                    
+                    <div style="margin-top: 20px;">
+                        <button type="button" class="resend-otp" id="resend-otp-btn" disabled>
+                            Didn't receive code? Resend in <span id="resend-countdown">60</span>s
+                        </button>
+                    </div>
+                    
+                    <div style="margin-top: 15px;">
+                        <button type="button" class="resend-otp" id="back-to-form-btn">
+                            ← Back to form
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -822,7 +955,7 @@
                 <li><strong>Split PDF:</strong> Extract specific pages or ranges.</li>
                 <li><strong>Compress PDF:</strong> Reduce file size without losing quality.</li>
                 <li><strong>Convert:</strong> Transform PDF to Word, Excel, JPG, and vice versa.</li>
-                <li><strong>Edit & Security:</strong> Add text, shapes, signatures, watermarks, or password protection.</li>
+                <li><strong>Edit & Security:</strong> Add text, shapes, comments, highlights, or password protection.</li>
             </ul>
         </div>
     </section>
@@ -941,17 +1074,37 @@
 
             updateAuthUI();
 
+            // OTP Verification System
+            let otpVerificationData = null;
+            let otpTimerInterval = null;
+            let resendTimerInterval = null;
+            let timeLeft = 300; // 5 minutes in seconds
+            let resendTimeLeft = 60; // 1 minute for resend
+
             // Auth Modal Elements
             const authModal = document.getElementById('auth-modal');
             const loginTab = document.getElementById('login-tab');
             const signupTab = document.getElementById('signup-tab');
             const loginForm = document.getElementById('login-form');
             const signupForm = document.getElementById('signup-form');
+            const otpSection = document.getElementById('otp-section');
             const closeAuth = document.getElementById('close-auth');
             const openLogin = document.getElementById('open-login');
             const openSignup = document.getElementById('open-signup');
             const switchToSignup = document.getElementById('switch-to-signup');
             const switchToLogin = document.getElementById('switch-to-login');
+
+            // OTP Elements
+            const otpEmailDisplay = document.getElementById('otp-email-display');
+            const otpInputContainer = document.getElementById('otp-input-container');
+            const verifyOtpBtn = document.getElementById('verify-otp-btn');
+            const otpErrorMessage = document.getElementById('otp-error-message');
+            const otpSuccessMessage = document.getElementById('otp-success-message');
+            const otpTimer = document.getElementById('otp-timer');
+            const otpTime = document.getElementById('otp-time');
+            const resendOtpBtn = document.getElementById('resend-otp-btn');
+            const resendCountdown = document.getElementById('resend-countdown');
+            const backToFormBtn = document.getElementById('back-to-form-btn');
 
             // Open/Close Auth Modal
             openLogin.addEventListener('click', () => {
@@ -994,11 +1147,14 @@
                     loginForm.classList.remove('active');
                 }
                 clearAllErrors();
+                hideOTPSection();
             }
 
             function closeAuthModal() {
                 authModal.classList.remove('active');
                 clearAllErrors();
+                hideOTPSection();
+                stopAllTimers();
             }
 
             // Tab Switching
@@ -1008,6 +1164,7 @@
                 loginForm.classList.add('active');
                 signupForm.classList.remove('active');
                 clearAllErrors();
+                hideOTPSection();
             });
 
             signupTab.addEventListener('click', () => {
@@ -1016,6 +1173,7 @@
                 signupForm.classList.add('active');
                 loginForm.classList.remove('active');
                 clearAllErrors();
+                hideOTPSection();
             });
 
             // Clear all error messages
@@ -1071,6 +1229,373 @@
                 }, 3000);
             }
 
+            // Generate OTP
+            function generateOTP() {
+                return Math.floor(100000 + Math.random() * 900000).toString();
+            }
+
+            // Show OTP Section
+            function showOTPSection(email, type) {
+                // Hide forms and show OTP section
+                loginForm.classList.remove('active');
+                signupForm.classList.remove('active');
+                otpSection.classList.add('active');
+                
+                // Set email display
+                otpEmailDisplay.textContent = email;
+                
+                // Store verification data
+                otpVerificationData = {
+                    email: email,
+                    otp: generateOTP(),
+                    type: type, // 'login' or 'signup'
+                    attempts: 0,
+                    maxAttempts: 3
+                };
+                
+                // Save to localStorage for simulation
+                localStorage.setItem('pendingVerification', JSON.stringify(otpVerificationData));
+                
+                // Show simulated OTP (in production, this would be sent via email)
+                console.log(`OTP for ${email}: ${otpVerificationData.otp}`);
+                
+                // Create OTP input fields
+                createOTPInputs();
+                
+                // Start timers
+                startOTPTimer();
+                startResendTimer();
+                
+                // Show notification
+                showNotification(`OTP sent to ${email}. Check your email.`, 'success');
+            }
+
+            // Hide OTP Section
+            function hideOTPSection() {
+                otpSection.classList.remove('active');
+                loginForm.classList.add('active');
+                clearOTPInputs();
+                stopAllTimers();
+                otpVerificationData = null;
+            }
+
+            // Create OTP Inputs
+            function createOTPInputs() {
+                otpInputContainer.innerHTML = '';
+                for (let i = 0; i < 6; i++) {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.maxLength = 1;
+                    input.className = 'otp-input';
+                    input.dataset.index = i;
+                    
+                    input.addEventListener('input', (e) => {
+                        const value = e.target.value;
+                        if (value && i < 5) {
+                            otpInputContainer.querySelector(`[data-index="${i + 1}"]`).focus();
+                        }
+                        updateOTPInputStyle();
+                    });
+                    
+                    input.addEventListener('keydown', (e) => {
+                        if (e.key === 'Backspace' && !e.target.value && i > 0) {
+                            otpInputContainer.querySelector(`[data-index="${i - 1}"]`).focus();
+                        }
+                    });
+                    
+                    input.addEventListener('paste', (e) => {
+                        e.preventDefault();
+                        const pasteData = e.clipboardData.getData('text').slice(0, 6);
+                        pasteData.split('').forEach((char, idx) => {
+                            if (idx < 6) {
+                                const input = otpInputContainer.querySelector(`[data-index="${idx}"]`);
+                                input.value = char;
+                                updateOTPInputStyle();
+                                if (idx < 5) {
+                                    otpInputContainer.querySelector(`[data-index="${idx + 1}"]`).focus();
+                                }
+                            }
+                        });
+                    });
+                    
+                    otpInputContainer.appendChild(input);
+                }
+                
+                // Focus first input
+                setTimeout(() => {
+                    otpInputContainer.querySelector('[data-index="0"]').focus();
+                }, 100);
+            }
+
+            // Update OTP Input Style
+            function updateOTPInputStyle() {
+                const inputs = otpInputContainer.querySelectorAll('.otp-input');
+                inputs.forEach(input => {
+                    input.classList.remove('filled', 'error');
+                    if (input.value) {
+                        input.classList.add('filled');
+                    }
+                });
+            }
+
+            // Get OTP Value
+            function getOTPValue() {
+                const inputs = otpInputContainer.querySelectorAll('.otp-input');
+                let otp = '';
+                inputs.forEach(input => {
+                    otp += input.value;
+                });
+                return otp;
+            }
+
+            // Clear OTP Inputs
+            function clearOTPInputs() {
+                const inputs = otpInputContainer.querySelectorAll('.otp-input');
+                inputs.forEach(input => {
+                    input.value = '';
+                    input.classList.remove('filled', 'error');
+                });
+            }
+
+            // Start OTP Timer
+            function startOTPTimer() {
+                timeLeft = 300; // 5 minutes
+                updateOTPTimerDisplay();
+                
+                otpTimerInterval = setInterval(() => {
+                    timeLeft--;
+                    updateOTPTimerDisplay();
+                    
+                    if (timeLeft <= 0) {
+                        clearInterval(otpTimerInterval);
+                        otpTimer.innerHTML = '<span style="color: var(--danger-color);">OTP expired!</span>';
+                        verifyOtpBtn.disabled = true;
+                    }
+                }, 1000);
+            }
+
+            // Update OTP Timer Display
+            function updateOTPTimerDisplay() {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                otpTime.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+
+            // Start Resend Timer
+            function startResendTimer() {
+                resendTimeLeft = 60; // 1 minute
+                resendOtpBtn.disabled = true;
+                updateResendTimerDisplay();
+                
+                resendTimerInterval = setInterval(() => {
+                    resendTimeLeft--;
+                    updateResendTimerDisplay();
+                    
+                    if (resendTimeLeft <= 0) {
+                        clearInterval(resendTimerInterval);
+                        resendOtpBtn.disabled = false;
+                        resendOtpBtn.innerHTML = 'Resend OTP';
+                    }
+                }, 1000);
+            }
+
+            // Update Resend Timer Display
+            function updateResendTimerDisplay() {
+                resendCountdown.textContent = resendTimeLeft;
+            }
+
+            // Stop All Timers
+            function stopAllTimers() {
+                if (otpTimerInterval) {
+                    clearInterval(otpTimerInterval);
+                    otpTimerInterval = null;
+                }
+                if (resendTimerInterval) {
+                    clearInterval(resendTimerInterval);
+                    resendTimerInterval = null;
+                }
+            }
+
+            // Verify OTP
+            verifyOtpBtn.addEventListener('click', async () => {
+                if (!otpVerificationData) {
+                    showError('otp-error-message', 'Session expired. Please try again.');
+                    return;
+                }
+                
+                const enteredOTP = getOTPValue();
+                
+                // Check if OTP is complete
+                if (enteredOTP.length !== 6) {
+                    showError('otp-error-message', 'Please enter complete 6-digit OTP');
+                    return;
+                }
+                
+                // Increment attempts
+                otpVerificationData.attempts++;
+                
+                // Check max attempts
+                if (otpVerificationData.attempts >= otpVerificationData.maxAttempts) {
+                    showError('otp-error-message', 'Too many failed attempts. Please request a new OTP.');
+                    verifyOtpBtn.disabled = true;
+                    return;
+                }
+                
+                // Verify OTP (in production, this would be verified server-side)
+                if (enteredOTP === otpVerificationData.otp) {
+                    // OTP verified successfully
+                    otpSuccessMessage.textContent = 'Email verified successfully!';
+                    otpSuccessMessage.style.display = 'block';
+                    otpErrorMessage.style.display = 'none';
+                    
+                    // Mark inputs as valid
+                    const inputs = otpInputContainer.querySelectorAll('.otp-input');
+                    inputs.forEach(input => {
+                        input.classList.remove('error');
+                        input.classList.add('filled');
+                    });
+                    
+                    // Process based on verification type
+                    setTimeout(() => {
+                        if (otpVerificationData.type === 'login') {
+                            completeLogin();
+                        } else if (otpVerificationData.type === 'signup') {
+                            completeSignup();
+                        }
+                    }, 1000);
+                    
+                } else {
+                    // Incorrect OTP
+                    showError('otp-error-message', `Incorrect OTP. ${otpVerificationData.maxAttempts - otpVerificationData.attempts} attempts remaining.`);
+                    
+                    // Mark inputs as error
+                    const inputs = otpInputContainer.querySelectorAll('.otp-input');
+                    inputs.forEach(input => {
+                        input.classList.add('error');
+                    });
+                    
+                    // Clear inputs after wrong attempt
+                    setTimeout(() => {
+                        clearOTPInputs();
+                        otpInputContainer.querySelector('[data-index="0"]').focus();
+                    }, 1000);
+                }
+            });
+
+            // Resend OTP
+            resendOtpBtn.addEventListener('click', () => {
+                if (!otpVerificationData || resendOtpBtn.disabled) return;
+                
+                // Generate new OTP
+                otpVerificationData.otp = generateOTP();
+                otpVerificationData.attempts = 0;
+                
+                // Save to localStorage
+                localStorage.setItem('pendingVerification', JSON.stringify(otpVerificationData));
+                
+                // Show new OTP (in production, this would be sent via email)
+                console.log(`New OTP for ${otpVerificationData.email}: ${otpVerificationData.otp}`);
+                
+                // Clear inputs and focus first
+                clearOTPInputs();
+                otpInputContainer.querySelector('[data-index="0"]').focus();
+                
+                // Reset timers
+                stopAllTimers();
+                startOTPTimer();
+                startResendTimer();
+                
+                // Clear messages
+                otpErrorMessage.style.display = 'none';
+                otpSuccessMessage.style.display = 'none';
+                
+                // Show notification
+                showNotification('New OTP sent to your email', 'success');
+            });
+
+            // Back to Form
+            backToFormBtn.addEventListener('click', () => {
+                hideOTPSection();
+                if (otpVerificationData.type === 'login') {
+                    loginTab.click();
+                } else {
+                    signupTab.click();
+                }
+            });
+
+            // Complete Login Process
+            function completeLogin() {
+                // Get user data
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+                const user = users.find(u => u.email === otpVerificationData.email);
+                
+                if (user) {
+                    currentUser = {
+                        id: user.id,
+                        name: user.name,
+                        email: user.email,
+                        avatar: user.name.charAt(0).toUpperCase()
+                    };
+                    
+                    // Save to localStorage
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                    
+                    // Update UI
+                    updateAuthUI();
+                    
+                    // Close modal and show success
+                    setTimeout(() => {
+                        closeAuthModal();
+                        showNotification('Login successful!', 'success');
+                    }, 500);
+                } else {
+                    showError('otp-error-message', 'User not found. Please sign up first.');
+                }
+            }
+
+            // Complete Signup Process
+            function completeSignup() {
+                // Get form data from localStorage
+                const pendingUser = JSON.parse(localStorage.getItem('pendingUser'));
+                
+                if (pendingUser) {
+                    const users = JSON.parse(localStorage.getItem('users')) || [];
+                    const newUser = {
+                        id: Date.now().toString(),
+                        name: pendingUser.name,
+                        email: pendingUser.email,
+                        password: pendingUser.password,
+                        isVerified: true,
+                        createdAt: new Date().toISOString()
+                    };
+                    
+                    // Save to localStorage
+                    users.push(newUser);
+                    localStorage.setItem('users', JSON.stringify(users));
+                    
+                    // Set as current user
+                    currentUser = {
+                        id: newUser.id,
+                        name: newUser.name,
+                        email: newUser.email,
+                        avatar: newUser.name.charAt(0).toUpperCase()
+                    };
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                    
+                    // Clean up
+                    localStorage.removeItem('pendingUser');
+                    
+                    // Update UI
+                    updateAuthUI();
+                    
+                    // Close modal and show success
+                    setTimeout(() => {
+                        closeAuthModal();
+                        showNotification('Account created successfully!', 'success');
+                    }, 500);
+                }
+            }
+
             // Login Form Submission
             loginForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
@@ -1078,7 +1603,6 @@
 
                 const email = document.getElementById('login-email').value.trim();
                 const password = document.getElementById('login-password').value.trim();
-                const rememberMe = document.getElementById('remember-me').checked;
 
                 // Simple validation
                 if (!email) {
@@ -1091,47 +1615,20 @@
                     return;
                 }
 
-                // Simulate API call - in real app, this would be an actual API call
-                setTimeout(() => {
-                    // Mock user data - in real app, validate against backend
-                    if (email === 'demo@swagchup.com' && password === 'demo123') {
-                        currentUser = {
-                            id: '1',
-                            name: 'Demo User',
-                            email: email,
-                            avatar: 'D'
-                        };
-                    } else {
-                        // Check localStorage for existing users
-                        const users = JSON.parse(localStorage.getItem('users')) || [];
-                        const user = users.find(u => u.email === email && u.password === password);
-                        
-                        if (user) {
-                            currentUser = {
-                                id: user.id,
-                                name: user.name,
-                                email: user.email,
-                                avatar: user.name.charAt(0).toUpperCase()
-                            };
-                        } else {
-                            showError('login-general-error', 'Invalid email or password');
-                            return;
-                        }
-                    }
-
-                    // Save user to localStorage
-                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                    
-                    // Update UI
-                    updateAuthUI();
-                    
-                    // Close modal and show success
-                    closeAuthModal();
-                    showNotification('Login successful!', 'success');
-                    
-                    // Reset form
-                    loginForm.reset();
-                }, 1000);
+                // Check if user exists
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+                const user = users.find(u => u.email === email && u.password === password);
+                
+                if (!user) {
+                    showError('login-general-error', 'Invalid email or password');
+                    return;
+                }
+                
+                // Show OTP verification
+                showOTPSection(email, 'login');
+                
+                // Reset form
+                loginForm.reset();
             });
 
             // Signup Form Submission
@@ -1183,40 +1680,19 @@
                     return;
                 }
 
-                // Simulate API call
-                setTimeout(() => {
-                    // Create new user
-                    const newUser = {
-                        id: Date.now().toString(),
-                        name: name,
-                        email: email,
-                        password: password, // In real app, this would be hashed
-                        createdAt: new Date().toISOString()
-                    };
-
-                    // Save to localStorage
-                    users.push(newUser);
-                    localStorage.setItem('users', JSON.stringify(users));
-
-                    // Set as current user
-                    currentUser = {
-                        id: newUser.id,
-                        name: newUser.name,
-                        email: newUser.email,
-                        avatar: newUser.name.charAt(0).toUpperCase()
-                    };
-                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-
-                    // Update UI
-                    updateAuthUI();
-                    
-                    // Close modal and show success
-                    closeAuthModal();
-                    showNotification('Account created successfully!', 'success');
-                    
-                    // Reset form
-                    signupForm.reset();
-                }, 1000);
+                // Save pending user data
+                const pendingUser = {
+                    name: name,
+                    email: email,
+                    password: password
+                };
+                localStorage.setItem('pendingUser', JSON.stringify(pendingUser));
+                
+                // Show OTP verification
+                showOTPSection(email, 'signup');
+                
+                // Reset form
+                signupForm.reset();
             });
 
             // Social Auth Buttons
@@ -1876,7 +2352,3 @@
     </script>
 </body>
 </html>
-
-
-
-
