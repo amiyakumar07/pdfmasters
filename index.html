@@ -7,11 +7,8 @@
     <meta name="keywords" content="swagchup tool, free pdf editor, online pdf tools, merge pdf, split pdf, compress pdf, convert pdf, pdf to word, jpg to pdf, edit pdf, sign pdf, protect pdf">
     <title>swagchup - The Ultimate Free Online PDF Tool Suite</title>
     
-    <!-- Google Sign-In API -->
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-    
-    <!-- Facebook SDK -->
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+    <!-- Country Flags CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
     
     <!-- AMP Auto Ads Component -->
     <script async custom-element="amp-auto-ads"
@@ -32,6 +29,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pptxgenjs/3.12.0/pptxgen.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css">
     
     <style>
         :root {
@@ -230,7 +229,7 @@
             background: var(--background-white);
             border-radius: 12px;
             width: 100%;
-            max-width: 400px;
+            max-width: 450px;
             overflow: hidden;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             animation: slideIn 0.3s ease;
@@ -279,7 +278,7 @@
             color: var(--text-dark);
         }
         
-        .form-group input {
+        .form-group input, .form-group select {
             width: 100%;
             padding: 12px;
             border: 1px solid var(--border-color);
@@ -290,10 +289,63 @@
             color: var(--text-dark);
         }
         
-        .form-group input:focus {
+        .form-group input:focus, .form-group select:focus {
             outline: none;
             border-color: var(--primary-color);
             box-shadow: 0 0 0 3px rgba(26, 86, 219, 0.1);
+        }
+        
+        .phone-input-container {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .country-code-select {
+            width: 120px;
+            flex-shrink: 0;
+        }
+        
+        .phone-number-input {
+            flex: 1;
+        }
+        
+        .country-flag {
+            width: 20px;
+            height: 15px;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        
+        .login-method-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .login-tab {
+            flex: 1;
+            padding: 12px;
+            background: none;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-light);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .login-tab.active {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+        }
+        
+        .login-form-section {
+            display: none;
+        }
+        
+        .login-form-section.active {
+            display: block;
         }
         
         .form-options {
@@ -334,65 +386,6 @@
         
         .auth-btn:hover {
             background: var(--primary-dark);
-        }
-        
-        .auth-divider {
-            text-align: center;
-            margin: 20px 0;
-            position: relative;
-        }
-        
-        .auth-divider::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: var(--border-color);
-        }
-        
-        .auth-divider span {
-            background: var(--background-white);
-            padding: 0 15px;
-            color: var(--text-light);
-            font-size: 0.9rem;
-        }
-        
-        .social-auth {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-        }
-        
-        .social-btn {
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            background: var(--background-white);
-            color: var(--text-dark);
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            width: 100%;
-        }
-        
-        .social-btn:hover {
-            background: var(--background-light);
-        }
-        
-        .social-btn.google {
-            border-color: #DB4437;
-            color: #DB4437;
-        }
-        
-        .social-btn.facebook {
-            border-color: #4267B2;
-            color: #4267B2;
         }
         
         .auth-footer {
@@ -446,12 +439,6 @@
             font-size: 0.9rem;
             margin-top: 5px;
             display: none;
-        }
-
-        /* Google Sign-In Button */
-        .g_id_signin {
-            width: 100% !important;
-            margin-bottom: 10px;
         }
 
         /* --- Ad Containers --- */
@@ -630,7 +617,8 @@
             .ad-modal-sidebar { display: none; }
             .hero-section h1 { font-size: 2.2rem; }
             .auth-container { margin: 20px; max-width: calc(100% - 40px); }
-            .social-auth { grid-template-columns: 1fr; }
+            .phone-input-container { flex-direction: column; }
+            .country-code-select { width: 100%; }
         }
     </style>
 </head>
@@ -690,7 +678,13 @@
                 <p>Sign in to your account to continue</p>
             </div>
             <div class="auth-content">
-                <form id="login-form">
+                <div class="login-method-tabs">
+                    <button class="login-tab active" id="login-email-tab">Email</button>
+                    <button class="login-tab" id="login-phone-tab">Phone</button>
+                </div>
+                
+                <!-- Email Login Form -->
+                <form id="login-email-form" class="login-form-section active">
                     <div class="form-group">
                         <label for="login-email">Email Address</label>
                         <input type="email" id="login-email" placeholder="Enter your email" required>
@@ -708,42 +702,42 @@
                         </div>
                         <a href="#" class="forgot-password" id="forgot-password">Forgot password?</a>
                     </div>
-                    <button type="submit" class="auth-btn">Login</button>
-                    <div class="error-message" id="login-general-error"></div>
-                    <div class="success-message" id="login-success-message"></div>
-                    <div class="auth-divider">
-                        <span>or continue with</span>
-                    </div>
-                    <div class="social-auth">
-                        <!-- Google Sign-In Button -->
-                        <div id="g_id_onload"
-                            data-client_id="YOUR_GOOGLE_CLIENT_ID"
-                            data-context="signin"
-                            data-ux_mode="popup"
-                            data-callback="handleGoogleSignIn"
-                            data-auto_prompt="false">
-                        </div>
-                        <div class="g_id_signin"
-                            data-type="standard"
-                            data-shape="rectangular"
-                            data-theme="outline"
-                            data-text="signin_with"
-                            data-size="large"
-                            data-logo_alignment="left">
-                        </div>
-                        
-                        <!-- Facebook Login Button -->
-                        <div id="fb-login-button" class="social-btn facebook">
-                            <svg width="18" height="18" viewBox="0 0 24 24">
-                                <path fill="#4267B2" d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                            </svg>
-                            Continue with Facebook
-                        </div>
-                    </div>
-                    <div class="auth-footer">
-                        Don't have an account? <a href="#" id="go-to-signup">Sign up</a>
-                    </div>
+                    <button type="submit" class="auth-btn">Login with Email</button>
+                    <div class="error-message" id="login-email-general-error"></div>
+                    <div class="success-message" id="login-email-success-message"></div>
                 </form>
+                
+                <!-- Phone Login Form -->
+                <form id="login-phone-form" class="login-form-section">
+                    <div class="form-group">
+                        <label for="login-phone-country">Country Code</label>
+                        <div class="phone-input-container">
+                            <select id="login-phone-country" class="country-code-select" required>
+                                <!-- Options will be populated by JavaScript -->
+                            </select>
+                            <input type="tel" id="login-phone-number" class="phone-number-input" placeholder="Phone number" required>
+                        </div>
+                        <div class="error-message" id="login-phone-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-phone-password">Password</label>
+                        <input type="password" id="login-phone-password" placeholder="Enter your password" required>
+                        <div class="error-message" id="login-phone-password-error"></div>
+                    </div>
+                    <div class="form-options">
+                        <div class="remember-me">
+                            <input type="checkbox" id="remember-phone">
+                            <label for="remember-phone">Remember me</label>
+                        </div>
+                    </div>
+                    <button type="submit" class="auth-btn">Login with Phone</button>
+                    <div class="error-message" id="login-phone-general-error"></div>
+                    <div class="success-message" id="login-phone-success-message"></div>
+                </form>
+                
+                <div class="auth-footer">
+                    Don't have an account? <a href="#" id="go-to-signup">Sign up</a>
+                </div>
             </div>
         </div>
     </div>
@@ -757,7 +751,13 @@
                 <p>Join swagchup to access all features</p>
             </div>
             <div class="auth-content">
-                <form id="signup-form">
+                <div class="login-method-tabs">
+                    <button class="login-tab active" id="signup-email-tab">Email</button>
+                    <button class="login-tab" id="signup-phone-tab">Phone</button>
+                </div>
+                
+                <!-- Email Signup Form -->
+                <form id="signup-email-form" class="login-form-section active">
                     <div class="form-group">
                         <label for="signup-name">Full Name</label>
                         <input type="text" id="signup-name" placeholder="Enter your full name" required>
@@ -770,7 +770,7 @@
                     </div>
                     <div class="form-group">
                         <label for="signup-password">Password</label>
-                        <input type="password" id="signup-password" placeholder="Create a password" required>
+                        <input type="password" id="signup-password" placeholder="Create a password (min. 6 characters)" required>
                         <div class="error-message" id="signup-password-error"></div>
                     </div>
                     <div class="form-group">
@@ -785,42 +785,53 @@
                         </label>
                         <div class="error-message" id="terms-error"></div>
                     </div>
-                    <button type="submit" class="auth-btn">Create Account</button>
-                    <div class="error-message" id="signup-general-error"></div>
-                    <div class="success-message" id="signup-success-message"></div>
-                    <div class="auth-divider">
-                        <span>or sign up with</span>
-                    </div>
-                    <div class="social-auth">
-                        <!-- Google Sign-In Button for Signup -->
-                        <div id="g_id_onload_signup"
-                            data-client_id="YOUR_GOOGLE_CLIENT_ID"
-                            data-context="signup"
-                            data-ux_mode="popup"
-                            data-callback="handleGoogleSignUp"
-                            data-auto_prompt="false">
-                        </div>
-                        <div class="g_id_signin"
-                            data-type="standard"
-                            data-shape="rectangular"
-                            data-theme="outline"
-                            data-text="signup_with"
-                            data-size="large"
-                            data-logo_alignment="left">
-                        </div>
-                        
-                        <!-- Facebook Signup Button -->
-                        <div id="fb-signup-button" class="social-btn facebook">
-                            <svg width="18" height="18" viewBox="0 0 24 24">
-                                <path fill="#4267B2" d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                            </svg>
-                            Sign up with Facebook
-                        </div>
-                    </div>
-                    <div class="auth-footer">
-                        Already have an account? <a href="#" id="go-to-login">Login</a>
-                    </div>
+                    <button type="submit" class="auth-btn">Create Account with Email</button>
+                    <div class="error-message" id="signup-email-general-error"></div>
+                    <div class="success-message" id="signup-email-success-message"></div>
                 </form>
+                
+                <!-- Phone Signup Form -->
+                <form id="signup-phone-form" class="login-form-section">
+                    <div class="form-group">
+                        <label for="signup-phone-name">Full Name</label>
+                        <input type="text" id="signup-phone-name" placeholder="Enter your full name" required>
+                        <div class="error-message" id="signup-phone-name-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-phone-country">Country Code</label>
+                        <div class="phone-input-container">
+                            <select id="signup-phone-country" class="country-code-select" required>
+                                <!-- Options will be populated by JavaScript -->
+                            </select>
+                            <input type="tel" id="signup-phone-number" class="phone-number-input" placeholder="Phone number" required>
+                        </div>
+                        <div class="error-message" id="signup-phone-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-phone-password">Password</label>
+                        <input type="password" id="signup-phone-password" placeholder="Create a password (min. 6 characters)" required>
+                        <div class="error-message" id="signup-phone-password-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm-phone-password">Confirm Password</label>
+                        <input type="password" id="confirm-phone-password" placeholder="Confirm your password" required>
+                        <div class="error-message" id="confirm-phone-password-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" id="phone-terms-agreement" required>
+                        <label for="phone-terms-agreement" style="display: inline; font-size: 0.9rem;">
+                            I agree to the <a href="#" onclick="event.preventDefault(); showNotification('Terms of Service page would open here', 'info');">Terms of Service</a> and <a href="#" onclick="event.preventDefault(); showNotification('Privacy Policy page would open here', 'info');">Privacy Policy</a>
+                        </label>
+                        <div class="error-message" id="phone-terms-error"></div>
+                    </div>
+                    <button type="submit" class="auth-btn">Create Account with Phone</button>
+                    <div class="error-message" id="signup-phone-general-error"></div>
+                    <div class="success-message" id="signup-phone-success-message"></div>
+                </form>
+                
+                <div class="auth-footer">
+                    Already have an account? <a href="#" id="go-to-login">Login</a>
+                </div>
             </div>
         </div>
     </div>
@@ -922,159 +933,99 @@
     </footer>
 
     <script>
-        // Google Sign-In Configuration
-        const GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID'; // Replace with your actual Google Client ID
-        
-        // Facebook SDK Configuration
-        window.fbAsyncInit = function() {
-            FB.init({
-                appId: 'YOUR_FACEBOOK_APP_ID', // Replace with your actual Facebook App ID
-                cookie: true,
-                xfbml: true,
-                version: 'v18.0'
+        // Country Data for Phone Inputs
+        const countries = [
+            { code: 'US', name: 'United States', dialCode: '+1', flag: '🇺🇸' },
+            { code: 'GB', name: 'United Kingdom', dialCode: '+44', flag: '🇬🇧' },
+            { code: 'IN', name: 'India', dialCode: '+91', flag: '🇮🇳' },
+            { code: 'CA', name: 'Canada', dialCode: '+1', flag: '🇨🇦' },
+            { code: 'AU', name: 'Australia', dialCode: '+61', flag: '🇦🇺' },
+            { code: 'DE', name: 'Germany', dialCode: '+49', flag: '🇩🇪' },
+            { code: 'FR', name: 'France', dialCode: '+33', flag: '🇫🇷' },
+            { code: 'JP', name: 'Japan', dialCode: '+81', flag: '🇯🇵' },
+            { code: 'CN', name: 'China', dialCode: '+86', flag: '🇨🇳' },
+            { code: 'BR', name: 'Brazil', dialCode: '+55', flag: '🇧🇷' },
+            { code: 'RU', name: 'Russia', dialCode: '+7', flag: '🇷🇺' },
+            { code: 'ZA', name: 'South Africa', dialCode: '+27', flag: '🇿🇦' },
+            { code: 'NG', name: 'Nigeria', dialCode: '+234', flag: '🇳🇬' },
+            { code: 'KE', name: 'Kenya', dialCode: '+254', flag: '🇰🇪' },
+            { code: 'EG', name: 'Egypt', dialCode: '+20', flag: '🇪🇬' },
+            { code: 'MX', name: 'Mexico', dialCode: '+52', flag: '🇲🇽' },
+            { code: 'AR', name: 'Argentina', dialCode: '+54', flag: '🇦🇷' },
+            { code: 'IT', name: 'Italy', dialCode: '+39', flag: '🇮🇹' },
+            { code: 'ES', name: 'Spain', dialCode: '+34', flag: '🇪🇸' },
+            { code: 'KR', name: 'South Korea', dialCode: '+82', flag: '🇰🇷' },
+            { code: 'ID', name: 'Indonesia', dialCode: '+62', flag: '🇮🇩' },
+            { code: 'SA', name: 'Saudi Arabia', dialCode: '+966', flag: '🇸🇦' },
+            { code: 'AE', name: 'UAE', dialCode: '+971', flag: '🇦🇪' },
+            { code: 'PK', name: 'Pakistan', dialCode: '+92', flag: '🇵🇰' },
+            { code: 'BD', name: 'Bangladesh', dialCode: '+880', flag: '🇧🇩' },
+            { code: 'TR', name: 'Turkey', dialCode: '+90', flag: '🇹🇷' },
+            { code: 'NL', name: 'Netherlands', dialCode: '+31', flag: '🇳🇱' },
+            { code: 'SE', name: 'Sweden', dialCode: '+46', flag: '🇸🇪' },
+            { code: 'NO', name: 'Norway', dialCode: '+47', flag: '🇳🇴' },
+            { code: 'DK', name: 'Denmark', dialCode: '+45', flag: '🇩🇰' },
+            { code: 'FI', name: 'Finland', dialCode: '+358', flag: '🇫🇮' },
+            { code: 'PL', name: 'Poland', dialCode: '+48', flag: '🇵🇱' },
+            { code: 'UA', name: 'Ukraine', dialCode: '+380', flag: '🇺🇦' },
+            { code: 'RO', name: 'Romania', dialCode: '+40', flag: '🇷🇴' },
+            { code: 'GR', name: 'Greece', dialCode: '+30', flag: '🇬🇷' },
+            { code: 'CZ', name: 'Czech Republic', dialCode: '+420', flag: '🇨🇿' },
+            { code: 'PT', name: 'Portugal', dialCode: '+351', flag: '🇵🇹' },
+            { code: 'HU', name: 'Hungary', dialCode: '+36', flag: '🇭🇺' },
+            { code: 'AT', name: 'Austria', dialCode: '+43', flag: '🇦🇹' },
+            { code: 'CH', name: 'Switzerland', dialCode: '+41', flag: '🇨🇭' },
+            { code: 'BE', name: 'Belgium', dialCode: '+32', flag: '🇧🇪' },
+            { code: 'IL', name: 'Israel', dialCode: '+972', flag: '🇮🇱' },
+            { code: 'TH', name: 'Thailand', dialCode: '+66', flag: '🇹🇭' },
+            { code: 'VN', name: 'Vietnam', dialCode: '+84', flag: '🇻🇳' },
+            { code: 'MY', name: 'Malaysia', dialCode: '+60', flag: '🇲🇾' },
+            { code: 'SG', name: 'Singapore', dialCode: '+65', flag: '🇸🇬' },
+            { code: 'PH', name: 'Philippines', dialCode: '+63', flag: '🇵🇭' },
+            { code: 'NZ', name: 'New Zealand', dialCode: '+64', flag: '🇳🇿' },
+            { code: 'IE', name: 'Ireland', dialCode: '+353', flag: '🇮🇪' }
+        ];
+
+        // Populate country dropdowns
+        function populateCountryDropdown(selectId, defaultCountry = 'US') {
+            const select = document.getElementById(selectId);
+            select.innerHTML = '';
+            
+            countries.forEach(country => {
+                const option = document.createElement('option');
+                option.value = country.code;
+                option.dataset.dialCode = country.dialCode;
+                option.innerHTML = `${country.flag} ${country.name} (${country.dialCode})`;
+                if (country.code === defaultCountry) {
+                    option.selected = true;
+                }
+                select.appendChild(option);
             });
             
-            FB.AppEvents.logPageView();
-        };
-
-        // Google Sign-In Callback Functions
-        function handleGoogleSignIn(response) {
-            // Decode the credential response
-            const responsePayload = decodeJWT(response.credential);
+            // Update phone input placeholder based on selected country
+            select.addEventListener('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+                const dialCode = selectedOption.dataset.dialCode;
+                const phoneInput = this.closest('.phone-input-container').querySelector('.phone-number-input');
+                phoneInput.placeholder = `Phone number (${dialCode})`;
+            });
             
-            if (responsePayload) {
-                const userData = {
-                    id: responsePayload.sub,
-                    name: responsePayload.name,
-                    email: responsePayload.email,
-                    picture: responsePayload.picture,
-                    provider: 'google',
-                    verified: responsePayload.email_verified
-                };
-                
-                handleSocialLogin(userData, 'login');
-            }
+            // Trigger change event to set initial placeholder
+            select.dispatchEvent(new Event('change'));
         }
 
-        function handleGoogleSignUp(response) {
-            // Decode the credential response
-            const responsePayload = decodeJWT(response.credential);
-            
-            if (responsePayload) {
-                const userData = {
-                    id: responsePayload.sub,
-                    name: responsePayload.name,
-                    email: responsePayload.email,
-                    picture: responsePayload.picture,
-                    provider: 'google',
-                    verified: responsePayload.email_verified
-                };
-                
-                handleSocialLogin(userData, 'signup');
-            }
+        // Get dial code for a country
+        function getDialCode(countryCode) {
+            const country = countries.find(c => c.code === countryCode);
+            return country ? country.dialCode : '+1';
         }
 
-        // Decode JWT token
-        function decodeJWT(token) {
-            try {
-                const base64Url = token.split('.')[1];
-                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-                const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-                }).join(''));
-                return JSON.parse(jsonPayload);
-            } catch (error) {
-                console.error('Error decoding JWT:', error);
-                return null;
-            }
-        }
-
-        // Facebook Login Function
-        function handleFacebookLogin() {
-            FB.login(function(response) {
-                if (response.authResponse) {
-                    // User is logged in and granted permissions
-                    FB.api('/me', { fields: 'name,email,picture' }, function(userInfo) {
-                        const userData = {
-                            id: userInfo.id,
-                            name: userInfo.name,
-                            email: userInfo.email || `${userInfo.id}@facebook.com`,
-                            picture: userInfo.picture?.data?.url,
-                            provider: 'facebook'
-                        };
-                        
-                        handleSocialLogin(userData, 'login');
-                    });
-                } else {
-                    showNotification('User cancelled login or did not fully authorize.', 'warning');
-                }
-            }, { scope: 'public_profile,email' });
-        }
-
-        // Facebook Signup Function
-        function handleFacebookSignup() {
-            FB.login(function(response) {
-                if (response.authResponse) {
-                    // User is logged in and granted permissions
-                    FB.api('/me', { fields: 'name,email,picture' }, function(userInfo) {
-                        const userData = {
-                            id: userInfo.id,
-                            name: userInfo.name,
-                            email: userInfo.email || `${userInfo.id}@facebook.com`,
-                            picture: userInfo.picture?.data?.url,
-                            provider: 'facebook'
-                        };
-                        
-                        handleSocialLogin(userData, 'signup');
-                    });
-                } else {
-                    showNotification('User cancelled signup or did not fully authorize.', 'warning');
-                }
-            }, { scope: 'public_profile,email' });
-        }
-
-        // Handle Social Login/Signup
-        function handleSocialLogin(userData, type) {
-            // Save user data to localStorage
-            const users = JSON.parse(localStorage.getItem('users')) || [];
-            const existingUserIndex = users.findIndex(u => u.email === userData.email || u.id === userData.id);
-            
-            if (existingUserIndex !== -1) {
-                // Update existing user
-                users[existingUserIndex] = { ...users[existingUserIndex], ...userData };
-            } else {
-                // Add new user
-                users.push({
-                    ...userData,
-                    createdAt: new Date().toISOString()
-                });
-            }
-            
-            localStorage.setItem('users', JSON.stringify(users));
-            
-            // Set as current user
-            currentUser = {
-                id: userData.id,
-                name: userData.name,
-                email: userData.email,
-                avatar: userData.name.charAt(0).toUpperCase(),
-                picture: userData.picture,
-                provider: userData.provider
-            };
-            
-            localStorage.setItem('currentUser', JSON.stringify(currentUser));
-            
-            // Update UI
-            updateAuthUI();
-            
-            // Close modal and show success
-            if (type === 'login') {
-                document.getElementById('login-modal').classList.remove('active');
-            } else {
-                document.getElementById('signup-modal').classList.remove('active');
-            }
-            
-            showNotification(`${type === 'login' ? 'Login' : 'Signup'} successful with ${userData.provider}!`, 'success');
+        // Format phone number for storage
+        function formatPhoneNumber(countryCode, phoneNumber) {
+            const dialCode = getDialCode(countryCode);
+            // Remove any non-digit characters and leading zeros
+            const cleanNumber = phoneNumber.replace(/\D+/g, '').replace(/^0+/, '');
+            return `${dialCode}${cleanNumber}`;
         }
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -1090,6 +1041,10 @@
                 document.body.classList.add('dark-mode');
             }
 
+            // Populate country dropdowns
+            populateCountryDropdown('login-phone-country', 'US');
+            populateCountryDropdown('signup-phone-country', 'US');
+
             // User Authentication State
             let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
             const authButtons = document.getElementById('auth-buttons');
@@ -1102,17 +1057,7 @@
                     authButtons.style.display = 'none';
                     userProfile.classList.add('visible');
                     userName.textContent = currentUser.name.split(' ')[0];
-                    
-                    // Use profile picture if available, otherwise use initial
-                    if (currentUser.picture) {
-                        userAvatar.style.backgroundImage = `url(${currentUser.picture})`;
-                        userAvatar.style.backgroundSize = 'cover';
-                        userAvatar.style.backgroundPosition = 'center';
-                        userAvatar.textContent = '';
-                    } else {
-                        userAvatar.style.backgroundImage = 'none';
-                        userAvatar.textContent = currentUser.name.charAt(0).toUpperCase();
-                    }
+                    userAvatar.textContent = currentUser.name.charAt(0).toUpperCase();
                 } else {
                     authButtons.style.display = 'flex';
                     userProfile.classList.remove('visible');
@@ -1123,15 +1068,6 @@
             userProfile.addEventListener('click', () => {
                 if (currentUser) {
                     if (confirm('Are you sure you want to logout?')) {
-                        // If social login, consider revoking tokens
-                        if (currentUser.provider === 'google') {
-                            // Google logout
-                            google.accounts.id.disableAutoSelect();
-                        } else if (currentUser.provider === 'facebook') {
-                            // Facebook logout
-                            FB.logout();
-                        }
-                        
                         currentUser = null;
                         localStorage.removeItem('currentUser');
                         updateAuthUI();
@@ -1156,6 +1092,8 @@
             openLogin.addEventListener('click', () => {
                 loginModal.classList.add('active');
                 clearAuthErrors();
+                // Switch to email tab by default
+                document.getElementById('login-email-tab').click();
             });
 
             closeLogin.addEventListener('click', () => {
@@ -1174,6 +1112,8 @@
             openSignup.addEventListener('click', () => {
                 signupModal.classList.add('active');
                 clearAuthErrors();
+                // Switch to email tab by default
+                document.getElementById('signup-email-tab').click();
             });
 
             closeSignup.addEventListener('click', () => {
@@ -1194,12 +1134,58 @@
                 loginModal.classList.remove('active');
                 signupModal.classList.add('active');
                 clearAuthErrors();
+                document.getElementById('signup-email-tab').click();
             });
 
             goToLogin.addEventListener('click', (e) => {
                 e.preventDefault();
                 signupModal.classList.remove('active');
                 loginModal.classList.add('active');
+                clearAuthErrors();
+                document.getElementById('login-email-tab').click();
+            });
+
+            // Login Tabs
+            const loginEmailTab = document.getElementById('login-email-tab');
+            const loginPhoneTab = document.getElementById('login-phone-tab');
+            const loginEmailForm = document.getElementById('login-email-form');
+            const loginPhoneForm = document.getElementById('login-phone-form');
+
+            loginEmailTab.addEventListener('click', () => {
+                loginEmailTab.classList.add('active');
+                loginPhoneTab.classList.remove('active');
+                loginEmailForm.classList.add('active');
+                loginPhoneForm.classList.remove('active');
+                clearAuthErrors();
+            });
+
+            loginPhoneTab.addEventListener('click', () => {
+                loginPhoneTab.classList.add('active');
+                loginEmailTab.classList.remove('active');
+                loginPhoneForm.classList.add('active');
+                loginEmailForm.classList.remove('active');
+                clearAuthErrors();
+            });
+
+            // Signup Tabs
+            const signupEmailTab = document.getElementById('signup-email-tab');
+            const signupPhoneTab = document.getElementById('signup-phone-tab');
+            const signupEmailForm = document.getElementById('signup-email-form');
+            const signupPhoneForm = document.getElementById('signup-phone-form');
+
+            signupEmailTab.addEventListener('click', () => {
+                signupEmailTab.classList.add('active');
+                signupPhoneTab.classList.remove('active');
+                signupEmailForm.classList.add('active');
+                signupPhoneForm.classList.remove('active');
+                clearAuthErrors();
+            });
+
+            signupPhoneTab.addEventListener('click', () => {
+                signupPhoneTab.classList.add('active');
+                signupEmailTab.classList.remove('active');
+                signupPhoneForm.classList.add('active');
+                signupEmailForm.classList.remove('active');
                 clearAuthErrors();
             });
 
@@ -1256,12 +1242,18 @@
                 }, 3000);
             }
 
-            // Facebook Login Button Event Listeners
-            document.getElementById('fb-login-button').addEventListener('click', handleFacebookLogin);
-            document.getElementById('fb-signup-button').addEventListener('click', handleFacebookSignup);
+            // Find user by email or phone
+            function findUser(email = null, phone = null) {
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+                return users.find(user => {
+                    if (email && user.email === email) return true;
+                    if (phone && user.phone === phone) return true;
+                    return false;
+                });
+            }
 
-            // Login Form Submission
-            document.getElementById('login-form').addEventListener('submit', (e) => {
+            // Email Login Form Submission
+            document.getElementById('login-email-form').addEventListener('submit', (e) => {
                 e.preventDefault();
                 clearAuthErrors();
 
@@ -1279,12 +1271,16 @@
                     return;
                 }
 
-                // Check if user exists
-                const users = JSON.parse(localStorage.getItem('users')) || [];
-                const user = users.find(u => u.email === email && u.password === password);
+                // Find user by email
+                const user = findUser(email);
                 
                 if (!user) {
-                    showError('login-general-error', 'Invalid email or password');
+                    showError('login-email-general-error', 'No account found with this email');
+                    return;
+                }
+                
+                if (user.password !== password) {
+                    showError('login-email-general-error', 'Invalid password');
                     return;
                 }
                 
@@ -1293,9 +1289,9 @@
                     id: user.id,
                     name: user.name,
                     email: user.email,
+                    phone: user.phone,
                     avatar: user.name.charAt(0).toUpperCase(),
-                    picture: user.picture,
-                    provider: user.provider || 'email'
+                    provider: 'email'
                 };
                 
                 // Save to localStorage
@@ -1309,11 +1305,71 @@
                 showNotification('Login successful!', 'success');
                 
                 // Reset form
-                document.getElementById('login-form').reset();
+                document.getElementById('login-email-form').reset();
             });
 
-            // Signup Form Submission
-            document.getElementById('signup-form').addEventListener('submit', (e) => {
+            // Phone Login Form Submission
+            document.getElementById('login-phone-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                clearAuthErrors();
+
+                const countryCode = document.getElementById('login-phone-country').value;
+                const phoneNumber = document.getElementById('login-phone-number').value.trim();
+                const password = document.getElementById('login-phone-password').value.trim();
+
+                // Simple validation
+                if (!phoneNumber) {
+                    showError('login-phone-error', 'Phone number is required');
+                    return;
+                }
+
+                if (!password) {
+                    showError('login-phone-password-error', 'Password is required');
+                    return;
+                }
+
+                // Format phone number
+                const formattedPhone = formatPhoneNumber(countryCode, phoneNumber);
+                
+                // Find user by phone
+                const user = findUser(null, formattedPhone);
+                
+                if (!user) {
+                    showError('login-phone-general-error', 'No account found with this phone number');
+                    return;
+                }
+                
+                if (user.password !== password) {
+                    showError('login-phone-general-error', 'Invalid password');
+                    return;
+                }
+                
+                // Set current user
+                currentUser = {
+                    id: user.id,
+                    name: user.name,
+                    email: user.email,
+                    phone: user.phone,
+                    avatar: user.name.charAt(0).toUpperCase(),
+                    provider: 'phone'
+                };
+                
+                // Save to localStorage
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                
+                // Update UI
+                updateAuthUI();
+                
+                // Close modal and show success
+                loginModal.classList.remove('active');
+                showNotification('Login successful!', 'success');
+                
+                // Reset form
+                document.getElementById('login-phone-form').reset();
+            });
+
+            // Email Signup Form Submission
+            document.getElementById('signup-email-form').addEventListener('submit', (e) => {
                 e.preventDefault();
                 clearAuthErrors();
 
@@ -1362,8 +1418,7 @@
                 }
 
                 // Check if user already exists
-                const users = JSON.parse(localStorage.getItem('users')) || [];
-                if (users.find(u => u.email === email)) {
+                if (findUser(email)) {
                     showError('signup-email-error', 'Email already registered');
                     return;
                 }
@@ -1379,6 +1434,7 @@
                 };
                 
                 // Save to localStorage
+                const users = JSON.parse(localStorage.getItem('users')) || [];
                 users.push(newUser);
                 localStorage.setItem('users', JSON.stringify(users));
                 
@@ -1400,7 +1456,97 @@
                 showNotification('Account created successfully!', 'success');
                 
                 // Reset form
-                document.getElementById('signup-form').reset();
+                document.getElementById('signup-email-form').reset();
+            });
+
+            // Phone Signup Form Submission
+            document.getElementById('signup-phone-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                clearAuthErrors();
+
+                const name = document.getElementById('signup-phone-name').value.trim();
+                const countryCode = document.getElementById('signup-phone-country').value;
+                const phoneNumber = document.getElementById('signup-phone-number').value.trim();
+                const password = document.getElementById('signup-phone-password').value.trim();
+                const confirmPassword = document.getElementById('confirm-phone-password').value.trim();
+                const termsAgreed = document.getElementById('phone-terms-agreement').checked;
+
+                // Validation
+                if (!name) {
+                    showError('signup-phone-name-error', 'Name is required');
+                    return;
+                }
+
+                if (!phoneNumber) {
+                    showError('signup-phone-error', 'Phone number is required');
+                    return;
+                }
+
+                if (!password) {
+                    showError('signup-phone-password-error', 'Password is required');
+                    return;
+                }
+
+                if (password.length < 6) {
+                    showError('signup-phone-password-error', 'Password must be at least 6 characters');
+                    return;
+                }
+
+                if (password !== confirmPassword) {
+                    showError('confirm-phone-password-error', 'Passwords do not match');
+                    return;
+                }
+
+                if (!termsAgreed) {
+                    showError('phone-terms-error', 'You must agree to the terms');
+                    return;
+                }
+
+                // Format phone number
+                const formattedPhone = formatPhoneNumber(countryCode, phoneNumber);
+                
+                // Check if user already exists
+                if (findUser(null, formattedPhone)) {
+                    showError('signup-phone-error', 'Phone number already registered');
+                    return;
+                }
+
+                // Create new user
+                const newUser = {
+                    id: Date.now().toString(),
+                    name: name,
+                    phone: formattedPhone,
+                    password: password,
+                    provider: 'phone',
+                    countryCode: countryCode,
+                    createdAt: new Date().toISOString()
+                };
+                
+                // Save to localStorage
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+                users.push(newUser);
+                localStorage.setItem('users', JSON.stringify(users));
+                
+                // Set as current user
+                currentUser = {
+                    id: newUser.id,
+                    name: newUser.name,
+                    phone: newUser.phone,
+                    avatar: newUser.name.charAt(0).toUpperCase(),
+                    provider: 'phone',
+                    countryCode: countryCode
+                };
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                
+                // Update UI
+                updateAuthUI();
+                
+                // Close modal and show success
+                signupModal.classList.remove('active');
+                showNotification('Account created successfully!', 'success');
+                
+                // Reset form
+                document.getElementById('signup-phone-form').reset();
             });
 
             // Forgot Password
@@ -1432,6 +1578,7 @@
                     id: 'demo123',
                     name: 'Demo User',
                     email: 'demo@swagchup.com',
+                    phone: '+15551234567',
                     password: 'demo123',
                     provider: 'email',
                     createdAt: new Date().toISOString()
@@ -2065,22 +2212,6 @@
                 }
             `;
             document.head.appendChild(style);
-            
-            // Check social login status on page load
-            function checkSocialLoginStatus() {
-                // Check if user has Google token
-                if (localStorage.getItem('google_token')) {
-                    // Handle Google auto-login
-                }
-                
-                // Check if user has Facebook token
-                if (localStorage.getItem('fb_access_token')) {
-                    // Handle Facebook auto-login
-                }
-            }
-            
-            // Initial check
-            checkSocialLoginStatus();
         });
     </script>
 </body>
