@@ -7,6 +7,12 @@
     <meta name="keywords" content="swagchup tool, free pdf editor, online pdf tools, merge pdf, split pdf, compress pdf, convert pdf, pdf to word, jpg to pdf, edit pdf, sign pdf, protect pdf">
     <title>swagchup - The Ultimate Free Online PDF Tool Suite</title>
     
+    <!-- Google Sign-In API -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    
+    <!-- Facebook SDK -->
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+    
     <!-- AMP Auto Ads Component -->
     <script async custom-element="amp-auto-ads"
         src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
@@ -16,9 +22,6 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3535670686155810"
      crossorigin="anonymous">
     </script>
-    
-    <!-- EmailJS Library for sending emails -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     
     <!-- External Libraries (CDNs) -->
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
@@ -205,7 +208,7 @@
         .hero-section h1 { font-size: 2.8rem; margin-bottom: 1rem; font-weight: 700; }
         .hero-section p { font-size: 1.1rem; color: var(--text-light); max-width: 800px; margin: 0 auto; }
 
-        /* --- Login/Signup Modal --- */
+        /* --- Auth Modals --- */
         .auth-modal {
             display: none;
             position: fixed;
@@ -227,7 +230,7 @@
             background: var(--background-white);
             border-radius: 12px;
             width: 100%;
-            max-width: 450px;
+            max-width: 400px;
             overflow: hidden;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             animation: slideIn 0.3s ease;
@@ -244,136 +247,25 @@
             }
         }
         
-        .auth-tabs {
-            display: flex;
+        .auth-header {
+            padding: 25px 30px 15px;
+            text-align: center;
             border-bottom: 1px solid var(--border-color);
         }
         
-        .auth-tab {
-            flex: 1;
-            padding: 20px;
-            text-align: center;
-            background: none;
-            border: none;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text-light);
-            cursor: pointer;
-            transition: all 0.3s ease;
+        .auth-header h2 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
         }
         
-        .auth-tab.active {
-            color: var(--primary-color);
-            border-bottom: 3px solid var(--primary-color);
+        .auth-header p {
+            color: var(--text-light);
+            font-size: 0.95rem;
         }
         
         .auth-content {
             padding: 30px;
-        }
-        
-        .auth-form {
-            display: none;
-        }
-        
-        .auth-form.active {
-            display: block;
-        }
-        
-        /* OTP Verification Section */
-        .otp-section {
-            display: none;
-            text-align: center;
-        }
-        
-        .otp-section.active {
-            display: block;
-        }
-        
-        .otp-title {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            color: var(--primary-color);
-        }
-        
-        .otp-description {
-            color: var(--text-light);
-            margin-bottom: 25px;
-            font-size: 0.95rem;
-        }
-        
-        .email-highlight {
-            color: var(--primary-color);
-            font-weight: 600;
-            background: rgba(26, 86, 219, 0.1);
-            padding: 2px 8px;
-            border-radius: 4px;
-        }
-        
-        .otp-input-container {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 25px;
-        }
-        
-        .otp-input {
-            width: 50px;
-            height: 60px;
-            text-align: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            background: var(--background-white);
-            color: var(--text-dark);
-            transition: all 0.3s ease;
-        }
-        
-        .otp-input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(26, 86, 219, 0.1);
-        }
-        
-        .otp-input.filled {
-            border-color: var(--success-color);
-            background: rgba(16, 185, 129, 0.1);
-        }
-        
-        .otp-input.error {
-            border-color: var(--danger-color);
-            background: rgba(239, 68, 68, 0.1);
-        }
-        
-        .otp-timer {
-            color: var(--text-light);
-            font-size: 0.9rem;
-            margin-bottom: 20px;
-        }
-        
-        .otp-timer .time {
-            color: var(--primary-color);
-            font-weight: bold;
-        }
-        
-        .resend-otp {
-            background: none;
-            border: none;
-            color: var(--primary-color);
-            cursor: pointer;
-            font-weight: 600;
-            padding: 5px;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-        }
-        
-        .resend-otp:hover {
-            background: rgba(26, 86, 219, 0.1);
-        }
-        
-        .resend-otp:disabled {
-            color: var(--text-light);
-            cursor: not-allowed;
         }
         
         .form-group {
@@ -486,6 +378,7 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
+            width: 100%;
         }
         
         .social-btn:hover {
@@ -553,6 +446,12 @@
             font-size: 0.9rem;
             margin-top: 5px;
             display: none;
+        }
+
+        /* Google Sign-In Button */
+        .g_id_signin {
+            width: 100% !important;
+            margin-bottom: 10px;
         }
 
         /* --- Ad Containers --- */
@@ -732,8 +631,6 @@
             .hero-section h1 { font-size: 2.2rem; }
             .auth-container { margin: 20px; max-width: calc(100% - 40px); }
             .social-auth { grid-template-columns: 1fr; }
-            .otp-input-container { gap: 8px; }
-            .otp-input { width: 45px; height: 55px; font-size: 1.3rem; }
         }
     </style>
 </head>
@@ -784,17 +681,16 @@
         </div>
     </header>
 
-    <!-- Login/Signup Modal -->
-    <div class="auth-modal" id="auth-modal">
+    <!-- Login Modal -->
+    <div class="auth-modal" id="login-modal">
         <div class="auth-container">
-            <button class="close-auth" id="close-auth">×</button>
-            <div class="auth-tabs">
-                <button class="auth-tab active" id="login-tab">Login</button>
-                <button class="auth-tab" id="signup-tab">Sign Up</button>
+            <button class="close-auth" id="close-login">×</button>
+            <div class="auth-header">
+                <h2>Welcome Back</h2>
+                <p>Sign in to your account to continue</p>
             </div>
             <div class="auth-content">
-                <!-- Login Form -->
-                <form class="auth-form active" id="login-form">
+                <form id="login-form">
                     <div class="form-group">
                         <label for="login-email">Email Address</label>
                         <input type="email" id="login-email" placeholder="Enter your email" required>
@@ -810,7 +706,7 @@
                             <input type="checkbox" id="remember-me">
                             <label for="remember-me">Remember me</label>
                         </div>
-                        <a href="#" class="forgot-password">Forgot password?</a>
+                        <a href="#" class="forgot-password" id="forgot-password">Forgot password?</a>
                     </div>
                     <button type="submit" class="auth-btn">Login</button>
                     <div class="error-message" id="login-general-error"></div>
@@ -819,29 +715,49 @@
                         <span>or continue with</span>
                     </div>
                     <div class="social-auth">
-                        <button type="button" class="social-btn google">
-                            <svg width="18" height="18" viewBox="0 0 24 24">
-                                <path fill="#DB4437" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                                <path fill="#4285F4" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                                <path fill="#34A853" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-                            </svg>
-                            Google
-                        </button>
-                        <button type="button" class="social-btn facebook">
+                        <!-- Google Sign-In Button -->
+                        <div id="g_id_onload"
+                            data-client_id="YOUR_GOOGLE_CLIENT_ID"
+                            data-context="signin"
+                            data-ux_mode="popup"
+                            data-callback="handleGoogleSignIn"
+                            data-auto_prompt="false">
+                        </div>
+                        <div class="g_id_signin"
+                            data-type="standard"
+                            data-shape="rectangular"
+                            data-theme="outline"
+                            data-text="signin_with"
+                            data-size="large"
+                            data-logo_alignment="left">
+                        </div>
+                        
+                        <!-- Facebook Login Button -->
+                        <div id="fb-login-button" class="social-btn facebook">
                             <svg width="18" height="18" viewBox="0 0 24 24">
                                 <path fill="#4267B2" d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                             </svg>
-                            Facebook
-                        </button>
+                            Continue with Facebook
+                        </div>
                     </div>
                     <div class="auth-footer">
-                        Don't have an account? <a href="#" id="switch-to-signup">Sign up</a>
+                        Don't have an account? <a href="#" id="go-to-signup">Sign up</a>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
 
-                <!-- Signup Form -->
-                <form class="auth-form" id="signup-form">
+    <!-- Signup Modal -->
+    <div class="auth-modal" id="signup-modal">
+        <div class="auth-container">
+            <button class="close-auth" id="close-signup">×</button>
+            <div class="auth-header">
+                <h2>Create Account</h2>
+                <p>Join swagchup to access all features</p>
+            </div>
+            <div class="auth-content">
+                <form id="signup-form">
                     <div class="form-group">
                         <label for="signup-name">Full Name</label>
                         <input type="text" id="signup-name" placeholder="Enter your full name" required>
@@ -865,7 +781,7 @@
                     <div class="form-group">
                         <input type="checkbox" id="terms-agreement" required>
                         <label for="terms-agreement" style="display: inline; font-size: 0.9rem;">
-                            I agree to the <a href="terms-of-service.html" target="_blank">Terms of Service</a> and <a href="privacy-policy.html" target="_blank">Privacy Policy</a>
+                            I agree to the <a href="#" onclick="event.preventDefault(); showNotification('Terms of Service page would open here', 'info');">Terms of Service</a> and <a href="#" onclick="event.preventDefault(); showNotification('Privacy Policy page would open here', 'info');">Privacy Policy</a>
                         </label>
                         <div class="error-message" id="terms-error"></div>
                     </div>
@@ -876,60 +792,35 @@
                         <span>or sign up with</span>
                     </div>
                     <div class="social-auth">
-                        <button type="button" class="social-btn google">
-                            <svg width="18" height="18" viewBox="0 0 24 24">
-                                <path fill="#DB4437" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                                <path fill="#4285F4" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                                <path fill="#34A853" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-                            </svg>
-                            Google
-                        </button>
-                        <button type="button" class="social-btn facebook">
+                        <!-- Google Sign-In Button for Signup -->
+                        <div id="g_id_onload_signup"
+                            data-client_id="YOUR_GOOGLE_CLIENT_ID"
+                            data-context="signup"
+                            data-ux_mode="popup"
+                            data-callback="handleGoogleSignUp"
+                            data-auto_prompt="false">
+                        </div>
+                        <div class="g_id_signin"
+                            data-type="standard"
+                            data-shape="rectangular"
+                            data-theme="outline"
+                            data-text="signup_with"
+                            data-size="large"
+                            data-logo_alignment="left">
+                        </div>
+                        
+                        <!-- Facebook Signup Button -->
+                        <div id="fb-signup-button" class="social-btn facebook">
                             <svg width="18" height="18" viewBox="0 0 24 24">
                                 <path fill="#4267B2" d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                             </svg>
-                            Facebook
-                        </button>
+                            Sign up with Facebook
+                        </div>
                     </div>
                     <div class="auth-footer">
-                        Already have an account? <a href="#" id="switch-to-login">Login</a>
+                        Already have an account? <a href="#" id="go-to-login">Login</a>
                     </div>
                 </form>
-                
-                <!-- OTP Verification Section (for both login and signup) -->
-                <div class="otp-section" id="otp-section">
-                    <h2 class="otp-title">Verify Your Email</h2>
-                    <p class="otp-description">
-                        We've sent a 6-digit verification code to<br>
-                        <span class="email-highlight" id="otp-email-display">user@example.com</span>
-                    </p>
-                    
-                    <div class="otp-input-container" id="otp-input-container">
-                        <!-- OTP inputs will be generated dynamically -->
-                    </div>
-                    
-                    <div class="otp-timer" id="otp-timer">
-                        Code expires in: <span class="time" id="otp-time">05:00</span>
-                    </div>
-                    
-                    <button type="button" class="auth-btn" id="verify-otp-btn">Verify & Continue</button>
-                    
-                    <div class="error-message" id="otp-error-message"></div>
-                    <div class="success-message" id="otp-success-message"></div>
-                    
-                    <div style="margin-top: 20px;">
-                        <button type="button" class="resend-otp" id="resend-otp-btn" disabled>
-                            Didn't receive code? Resend in <span id="resend-countdown">60</span>s
-                        </button>
-                    </div>
-                    
-                    <div style="margin-top: 15px;">
-                        <button type="button" class="resend-otp" id="back-to-form-btn">
-                            ← Back to form
-                        </button>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -1011,16 +902,16 @@
             <div class="footer-col">
                 <h4>Company</h4>
                 <ul>
-                    <li><a href="about-us.html">About Us</a></li>
-                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                    <li><a href="terms-of-service.html">Terms of Service</a></li>
+                    <li><a href="#" onclick="showNotification('About Us page would open here', 'info')">About Us</a></li>
+                    <li><a href="#" onclick="showNotification('Privacy Policy page would open here', 'info')">Privacy Policy</a></li>
+                    <li><a href="#" onclick="showNotification('Terms of Service page would open here', 'info')">Terms of Service</a></li>
                 </ul>
             </div>
             <div class="footer-col">
                 <h4>Contact</h4>
                 <ul>
                     <li><a href="mailto:support@swagchup.in">support@swagchup.in</a></li>
-                    <li><a href="#">Help & Support</a></li>
+                    <li><a href="#" onclick="showNotification('Help & Support page would open here', 'info')">Help & Support</a></li>
                 </ul>
             </div>
         </div>
@@ -1031,124 +922,160 @@
     </footer>
 
     <script>
-        // Initialize EmailJS with your public key
-        // Sign up at https://www.emailjs.com/ for free email sending
-        (function() {
-            emailjs.init("YOUR_PUBLIC_KEY_HERE"); // Replace with your EmailJS public key
-        })();
+        // Google Sign-In Configuration
+        const GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID'; // Replace with your actual Google Client ID
+        
+        // Facebook SDK Configuration
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId: 'YOUR_FACEBOOK_APP_ID', // Replace with your actual Facebook App ID
+                cookie: true,
+                xfbml: true,
+                version: 'v18.0'
+            });
+            
+            FB.AppEvents.logPageView();
+        };
 
-        // OTP Service with real email sending
-        class OTPEmailService {
-            constructor() {
-                this.sentOTPs = new Map();
-            }
+        // Google Sign-In Callback Functions
+        function handleGoogleSignIn(response) {
+            // Decode the credential response
+            const responsePayload = decodeJWT(response.credential);
             
-            // Generate OTP
-            generateOTP() {
-                return Math.floor(100000 + Math.random() * 900000).toString();
-            }
-            
-            // Send OTP via Email using EmailJS
-            async sendEmailOTP(email, otp, userName = 'User') {
-                try {
-                    // Store OTP with expiration (5 minutes)
-                    this.sentOTPs.set(email, {
-                        otp: otp,
-                        expires: Date.now() + 5 * 60 * 1000, // 5 minutes
-                        attempts: 0,
-                        userName: userName
-                    });
-                    
-                    // Prepare email template parameters
-                    const templateParams = {
-                        to_email: email,
-                        to_name: userName,
-                        otp_code: otp,
-                        website_name: "swagchup",
-                        expiration_time: "5 minutes"
-                    };
-                    
-                    // Send email using EmailJS
-                    const response = await emailjs.send(
-                        'service_swagchup', // Replace with your EmailJS service ID
-                        'template_otp_verification', // Replace with your EmailJS template ID
-                        templateParams
-                    );
-                    
-                    console.log('Email sent successfully:', response);
-                    return {
-                        success: true,
-                        message: `OTP sent to ${email}`,
-                        otp: otp // For demo/testing only
-                    };
-                    
-                } catch (error) {
-                    console.error('Failed to send email:', error);
-                    
-                    // Fallback to console for testing
-                    console.log(`[FALLBACK] OTP for ${email}: ${otp}`);
-                    
-                    return {
-                        success: true, // Still return success for demo
-                        message: `OTP generated for ${email}`,
-                        otp: otp
-                    };
-                }
-            }
-            
-            // Verify OTP
-            verifyOTP(email, userOTP) {
-                const stored = this.sentOTPs.get(email);
+            if (responsePayload) {
+                const userData = {
+                    id: responsePayload.sub,
+                    name: responsePayload.name,
+                    email: responsePayload.email,
+                    picture: responsePayload.picture,
+                    provider: 'google',
+                    verified: responsePayload.email_verified
+                };
                 
-                if (!stored) {
-                    return {
-                        success: false,
-                        message: 'No OTP found. Please request a new one.'
-                    };
-                }
-                
-                if (Date.now() > stored.expires) {
-                    this.sentOTPs.delete(email);
-                    return {
-                        success: false,
-                        message: 'OTP has expired. Please request a new one.'
-                    };
-                }
-                
-                stored.attempts++;
-                
-                if (stored.attempts > 3) {
-                    this.sentOTPs.delete(email);
-                    return {
-                        success: false,
-                        message: 'Too many attempts. OTP invalidated.'
-                    };
-                }
-                
-                if (stored.otp === userOTP) {
-                    this.sentOTPs.delete(email); // Clear OTP after successful verification
-                    return {
-                        success: true,
-                        message: 'OTP verified successfully!',
-                        userName: stored.userName
-                    };
-                } else {
-                    return {
-                        success: false,
-                        message: `Incorrect OTP. ${3 - stored.attempts} attempts remaining.`
-                    };
-                }
-            }
-            
-            // Resend OTP
-            async resendOTP(email, userName) {
-                const newOTP = this.generateOTP();
-                return await this.sendEmailOTP(email, newOTP, userName);
+                handleSocialLogin(userData, 'login');
             }
         }
 
-        // Initialize OTP Service
-        const otpEmailService = new OTPEmailService();
+        function handleGoogleSignUp(response) {
+            // Decode the credential response
+            const responsePayload = decodeJWT(response.credential);
+            
+            if (responsePayload) {
+                const userData = {
+                    id: responsePayload.sub,
+                    name: responsePayload.name,
+                    email: responsePayload.email,
+                    picture: responsePayload.picture,
+                    provider: 'google',
+                    verified: responsePayload.email_verified
+                };
+                
+                handleSocialLogin(userData, 'signup');
+            }
+        }
+
+        // Decode JWT token
+        function decodeJWT(token) {
+            try {
+                const base64Url = token.split('.')[1];
+                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                }).join(''));
+                return JSON.parse(jsonPayload);
+            } catch (error) {
+                console.error('Error decoding JWT:', error);
+                return null;
+            }
+        }
+
+        // Facebook Login Function
+        function handleFacebookLogin() {
+            FB.login(function(response) {
+                if (response.authResponse) {
+                    // User is logged in and granted permissions
+                    FB.api('/me', { fields: 'name,email,picture' }, function(userInfo) {
+                        const userData = {
+                            id: userInfo.id,
+                            name: userInfo.name,
+                            email: userInfo.email || `${userInfo.id}@facebook.com`,
+                            picture: userInfo.picture?.data?.url,
+                            provider: 'facebook'
+                        };
+                        
+                        handleSocialLogin(userData, 'login');
+                    });
+                } else {
+                    showNotification('User cancelled login or did not fully authorize.', 'warning');
+                }
+            }, { scope: 'public_profile,email' });
+        }
+
+        // Facebook Signup Function
+        function handleFacebookSignup() {
+            FB.login(function(response) {
+                if (response.authResponse) {
+                    // User is logged in and granted permissions
+                    FB.api('/me', { fields: 'name,email,picture' }, function(userInfo) {
+                        const userData = {
+                            id: userInfo.id,
+                            name: userInfo.name,
+                            email: userInfo.email || `${userInfo.id}@facebook.com`,
+                            picture: userInfo.picture?.data?.url,
+                            provider: 'facebook'
+                        };
+                        
+                        handleSocialLogin(userData, 'signup');
+                    });
+                } else {
+                    showNotification('User cancelled signup or did not fully authorize.', 'warning');
+                }
+            }, { scope: 'public_profile,email' });
+        }
+
+        // Handle Social Login/Signup
+        function handleSocialLogin(userData, type) {
+            // Save user data to localStorage
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const existingUserIndex = users.findIndex(u => u.email === userData.email || u.id === userData.id);
+            
+            if (existingUserIndex !== -1) {
+                // Update existing user
+                users[existingUserIndex] = { ...users[existingUserIndex], ...userData };
+            } else {
+                // Add new user
+                users.push({
+                    ...userData,
+                    createdAt: new Date().toISOString()
+                });
+            }
+            
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            // Set as current user
+            currentUser = {
+                id: userData.id,
+                name: userData.name,
+                email: userData.email,
+                avatar: userData.name.charAt(0).toUpperCase(),
+                picture: userData.picture,
+                provider: userData.provider
+            };
+            
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            
+            // Update UI
+            updateAuthUI();
+            
+            // Close modal and show success
+            if (type === 'login') {
+                document.getElementById('login-modal').classList.remove('active');
+            } else {
+                document.getElementById('signup-modal').classList.remove('active');
+            }
+            
+            showNotification(`${type === 'login' ? 'Login' : 'Signup'} successful with ${userData.provider}!`, 'success');
+        }
 
         document.addEventListener('DOMContentLoaded', () => {
             // Theme Toggle
@@ -1175,7 +1102,17 @@
                     authButtons.style.display = 'none';
                     userProfile.classList.add('visible');
                     userName.textContent = currentUser.name.split(' ')[0];
-                    userAvatar.textContent = currentUser.name.charAt(0).toUpperCase();
+                    
+                    // Use profile picture if available, otherwise use initial
+                    if (currentUser.picture) {
+                        userAvatar.style.backgroundImage = `url(${currentUser.picture})`;
+                        userAvatar.style.backgroundSize = 'cover';
+                        userAvatar.style.backgroundPosition = 'center';
+                        userAvatar.textContent = '';
+                    } else {
+                        userAvatar.style.backgroundImage = 'none';
+                        userAvatar.textContent = currentUser.name.charAt(0).toUpperCase();
+                    }
                 } else {
                     authButtons.style.display = 'flex';
                     userProfile.classList.remove('visible');
@@ -1186,6 +1123,15 @@
             userProfile.addEventListener('click', () => {
                 if (currentUser) {
                     if (confirm('Are you sure you want to logout?')) {
+                        // If social login, consider revoking tokens
+                        if (currentUser.provider === 'google') {
+                            // Google logout
+                            google.accounts.id.disableAutoSelect();
+                        } else if (currentUser.provider === 'facebook') {
+                            // Facebook logout
+                            FB.logout();
+                        }
+                        
                         currentUser = null;
                         localStorage.removeItem('currentUser');
                         updateAuthUI();
@@ -1196,110 +1142,69 @@
 
             updateAuthUI();
 
-            // OTP Verification System
-            let otpVerificationData = null;
-            let otpTimerInterval = null;
-            let resendTimerInterval = null;
-            let timeLeft = 300; // 5 minutes in seconds
-            let resendTimeLeft = 60; // 1 minute for resend
-
-            // Auth Modal Elements
-            const authModal = document.getElementById('auth-modal');
-            const loginTab = document.getElementById('login-tab');
-            const signupTab = document.getElementById('signup-tab');
-            const loginForm = document.getElementById('login-form');
-            const signupForm = document.getElementById('signup-form');
-            const otpSection = document.getElementById('otp-section');
-            const closeAuth = document.getElementById('close-auth');
+            // Auth Modals Elements
+            const loginModal = document.getElementById('login-modal');
+            const signupModal = document.getElementById('signup-modal');
             const openLogin = document.getElementById('open-login');
             const openSignup = document.getElementById('open-signup');
-            const switchToSignup = document.getElementById('switch-to-signup');
-            const switchToLogin = document.getElementById('switch-to-login');
+            const closeLogin = document.getElementById('close-login');
+            const closeSignup = document.getElementById('close-signup');
+            const goToSignup = document.getElementById('go-to-signup');
+            const goToLogin = document.getElementById('go-to-login');
 
-            // OTP Elements
-            const otpEmailDisplay = document.getElementById('otp-email-display');
-            const otpInputContainer = document.getElementById('otp-input-container');
-            const verifyOtpBtn = document.getElementById('verify-otp-btn');
-            const otpErrorMessage = document.getElementById('otp-error-message');
-            const otpSuccessMessage = document.getElementById('otp-success-message');
-            const otpTimer = document.getElementById('otp-timer');
-            const otpTime = document.getElementById('otp-time');
-            const resendOtpBtn = document.getElementById('resend-otp-btn');
-            const resendCountdown = document.getElementById('resend-countdown');
-            const backToFormBtn = document.getElementById('back-to-form-btn');
-
-            // Open/Close Auth Modal
+            // Open/Close Login Modal
             openLogin.addEventListener('click', () => {
-                openAuthModal('login');
+                loginModal.classList.add('active');
+                clearAuthErrors();
             });
 
+            closeLogin.addEventListener('click', () => {
+                loginModal.classList.remove('active');
+                clearAuthErrors();
+            });
+
+            loginModal.addEventListener('click', (e) => {
+                if (e.target === loginModal) {
+                    loginModal.classList.remove('active');
+                    clearAuthErrors();
+                }
+            });
+
+            // Open/Close Signup Modal
             openSignup.addEventListener('click', () => {
-                openAuthModal('signup');
+                signupModal.classList.add('active');
+                clearAuthErrors();
             });
 
-            switchToSignup.addEventListener('click', (e) => {
-                e.preventDefault();
-                openAuthModal('signup');
+            closeSignup.addEventListener('click', () => {
+                signupModal.classList.remove('active');
+                clearAuthErrors();
             });
 
-            switchToLogin.addEventListener('click', (e) => {
-                e.preventDefault();
-                openAuthModal('login');
-            });
-
-            closeAuth.addEventListener('click', closeAuthModal);
-
-            authModal.addEventListener('click', (e) => {
-                if (e.target === authModal) {
-                    closeAuthModal();
+            signupModal.addEventListener('click', (e) => {
+                if (e.target === signupModal) {
+                    signupModal.classList.remove('active');
+                    clearAuthErrors();
                 }
             });
 
-            function openAuthModal(formType) {
-                authModal.classList.add('active');
-                if (formType === 'login') {
-                    loginTab.classList.add('active');
-                    signupTab.classList.remove('active');
-                    loginForm.classList.add('active');
-                    signupForm.classList.remove('active');
-                } else {
-                    signupTab.classList.add('active');
-                    loginTab.classList.remove('active');
-                    signupForm.classList.add('active');
-                    loginForm.classList.remove('active');
-                }
-                clearAllErrors();
-                hideOTPSection();
-            }
-
-            function closeAuthModal() {
-                authModal.classList.remove('active');
-                clearAllErrors();
-                hideOTPSection();
-                stopAllTimers();
-            }
-
-            // Tab Switching
-            loginTab.addEventListener('click', () => {
-                loginTab.classList.add('active');
-                signupTab.classList.remove('active');
-                loginForm.classList.add('active');
-                signupForm.classList.remove('active');
-                clearAllErrors();
-                hideOTPSection();
+            // Switch between modals
+            goToSignup.addEventListener('click', (e) => {
+                e.preventDefault();
+                loginModal.classList.remove('active');
+                signupModal.classList.add('active');
+                clearAuthErrors();
             });
 
-            signupTab.addEventListener('click', () => {
-                signupTab.classList.add('active');
-                loginTab.classList.remove('active');
-                signupForm.classList.add('active');
-                loginForm.classList.remove('active');
-                clearAllErrors();
-                hideOTPSection();
+            goToLogin.addEventListener('click', (e) => {
+                e.preventDefault();
+                signupModal.classList.remove('active');
+                loginModal.classList.add('active');
+                clearAuthErrors();
             });
 
             // Clear all error messages
-            function clearAllErrors() {
+            function clearAuthErrors() {
                 document.querySelectorAll('.error-message').forEach(el => {
                     el.style.display = 'none';
                     el.textContent = '';
@@ -1339,7 +1244,7 @@
                     font-weight: 600;
                     z-index: 9999;
                     animation: slideIn 0.3s ease;
-                    background: ${type === 'success' ? '#10b981' : '#ef4444'};
+                    background: ${type === 'success' ? '#10b981' : type === 'warning' ? '#f59e0b' : type === 'info' ? '#3b82f6' : '#ef4444'};
                 `;
                 notification.textContent = message;
                 document.body.appendChild(notification);
@@ -1351,385 +1256,14 @@
                 }, 3000);
             }
 
-            // Show OTP Section
-            async function showOTPSection(email, type, userName = 'User') {
-                // Hide forms and show OTP section
-                loginForm.classList.remove('active');
-                signupForm.classList.remove('active');
-                otpSection.classList.add('active');
-                
-                // Set email display
-                otpEmailDisplay.textContent = email;
-                
-                // Store verification data
-                otpVerificationData = {
-                    email: email,
-                    type: type, // 'login' or 'signup'
-                    userName: userName,
-                    attempts: 0,
-                    maxAttempts: 3
-                };
-                
-                // Create OTP input fields
-                createOTPInputs();
-                
-                // Start timers
-                startOTPTimer();
-                startResendTimer();
-                
-                // Send OTP via email
-                try {
-                    const result = await otpEmailService.sendEmailOTP(email, otpEmailService.generateOTP(), userName);
-                    
-                    if (result.success) {
-                        showNotification(`OTP sent to ${email}. Please check your inbox.`, 'success');
-                        
-                        // For testing purposes, show OTP in console
-                        console.log(`[For Testing] OTP for ${email}: ${result.otp}`);
-                        console.log('Note: If email not received, check spam folder or use console OTP for testing.');
-                    } else {
-                        showError('otp-error-message', 'Failed to send OTP. Please try again.');
-                    }
-                } catch (error) {
-                    console.error('Error sending OTP:', error);
-                    showError('otp-error-message', 'Error sending OTP. Please try again.');
-                }
-            }
-
-            // Hide OTP Section
-            function hideOTPSection() {
-                otpSection.classList.remove('active');
-                loginForm.classList.add('active');
-                clearOTPInputs();
-                stopAllTimers();
-                otpVerificationData = null;
-            }
-
-            // Create OTP Inputs
-            function createOTPInputs() {
-                otpInputContainer.innerHTML = '';
-                for (let i = 0; i < 6; i++) {
-                    const input = document.createElement('input');
-                    input.type = 'text';
-                    input.maxLength = 1;
-                    input.className = 'otp-input';
-                    input.dataset.index = i;
-                    
-                    input.addEventListener('input', (e) => {
-                        const value = e.target.value.replace(/\D/g, ''); // Only allow digits
-                        e.target.value = value;
-                        if (value && i < 5) {
-                            otpInputContainer.querySelector(`[data-index="${i + 1}"]`).focus();
-                        }
-                        updateOTPInputStyle();
-                    });
-                    
-                    input.addEventListener('keydown', (e) => {
-                        if (e.key === 'Backspace' && !e.target.value && i > 0) {
-                            otpInputContainer.querySelector(`[data-index="${i - 1}"]`).focus();
-                        }
-                    });
-                    
-                    input.addEventListener('paste', (e) => {
-                        e.preventDefault();
-                        const pasteData = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6);
-                        pasteData.split('').forEach((char, idx) => {
-                            if (idx < 6) {
-                                const input = otpInputContainer.querySelector(`[data-index="${idx}"]`);
-                                input.value = char;
-                                updateOTPInputStyle();
-                                if (idx < 5) {
-                                    otpInputContainer.querySelector(`[data-index="${idx + 1}"]`).focus();
-                                }
-                            }
-                        });
-                    });
-                    
-                    otpInputContainer.appendChild(input);
-                }
-                
-                // Focus first input
-                setTimeout(() => {
-                    otpInputContainer.querySelector('[data-index="0"]').focus();
-                }, 100);
-            }
-
-            // Update OTP Input Style
-            function updateOTPInputStyle() {
-                const inputs = otpInputContainer.querySelectorAll('.otp-input');
-                inputs.forEach(input => {
-                    input.classList.remove('filled', 'error');
-                    if (input.value) {
-                        input.classList.add('filled');
-                    }
-                });
-            }
-
-            // Get OTP Value
-            function getOTPValue() {
-                const inputs = otpInputContainer.querySelectorAll('.otp-input');
-                let otp = '';
-                inputs.forEach(input => {
-                    otp += input.value;
-                });
-                return otp;
-            }
-
-            // Clear OTP Inputs
-            function clearOTPInputs() {
-                const inputs = otpInputContainer.querySelectorAll('.otp-input');
-                inputs.forEach(input => {
-                    input.value = '';
-                    input.classList.remove('filled', 'error');
-                });
-            }
-
-            // Start OTP Timer
-            function startOTPTimer() {
-                timeLeft = 300; // 5 minutes
-                updateOTPTimerDisplay();
-                
-                otpTimerInterval = setInterval(() => {
-                    timeLeft--;
-                    updateOTPTimerDisplay();
-                    
-                    if (timeLeft <= 0) {
-                        clearInterval(otpTimerInterval);
-                        otpTimer.innerHTML = '<span style="color: var(--danger-color);">OTP expired!</span>';
-                        verifyOtpBtn.disabled = true;
-                    }
-                }, 1000);
-            }
-
-            // Update OTP Timer Display
-            function updateOTPTimerDisplay() {
-                const minutes = Math.floor(timeLeft / 60);
-                const seconds = timeLeft % 60;
-                otpTime.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            }
-
-            // Start Resend Timer
-            function startResendTimer() {
-                resendTimeLeft = 60; // 1 minute
-                resendOtpBtn.disabled = true;
-                updateResendTimerDisplay();
-                
-                resendTimerInterval = setInterval(() => {
-                    resendTimeLeft--;
-                    updateResendTimerDisplay();
-                    
-                    if (resendTimeLeft <= 0) {
-                        clearInterval(resendTimerInterval);
-                        resendOtpBtn.disabled = false;
-                        resendOtpBtn.innerHTML = 'Resend OTP';
-                    }
-                }, 1000);
-            }
-
-            // Update Resend Timer Display
-            function updateResendTimerDisplay() {
-                resendCountdown.textContent = resendTimeLeft;
-            }
-
-            // Stop All Timers
-            function stopAllTimers() {
-                if (otpTimerInterval) {
-                    clearInterval(otpTimerInterval);
-                    otpTimerInterval = null;
-                }
-                if (resendTimerInterval) {
-                    clearInterval(resendTimerInterval);
-                    resendTimerInterval = null;
-                }
-            }
-
-            // Verify OTP
-            verifyOtpBtn.addEventListener('click', async () => {
-                if (!otpVerificationData) {
-                    showError('otp-error-message', 'Session expired. Please try again.');
-                    return;
-                }
-                
-                const enteredOTP = getOTPValue();
-                
-                // Check if OTP is complete
-                if (enteredOTP.length !== 6) {
-                    showError('otp-error-message', 'Please enter complete 6-digit OTP');
-                    return;
-                }
-                
-                // Verify OTP using service
-                const result = otpEmailService.verifyOTP(otpVerificationData.email, enteredOTP);
-                
-                if (result.success) {
-                    // OTP verified successfully
-                    otpSuccessMessage.textContent = result.message;
-                    otpSuccessMessage.style.display = 'block';
-                    otpErrorMessage.style.display = 'none';
-                    
-                    // Mark inputs as valid
-                    const inputs = otpInputContainer.querySelectorAll('.otp-input');
-                    inputs.forEach(input => {
-                        input.classList.remove('error');
-                        input.classList.add('filled');
-                    });
-                    
-                    // Process based on verification type
-                    setTimeout(() => {
-                        if (otpVerificationData.type === 'login') {
-                            completeLogin(otpVerificationData.email);
-                        } else if (otpVerificationData.type === 'signup') {
-                            completeSignup();
-                        }
-                    }, 1000);
-                    
-                } else {
-                    // Incorrect OTP
-                    showError('otp-error-message', result.message);
-                    
-                    // Mark inputs as error
-                    const inputs = otpInputContainer.querySelectorAll('.otp-input');
-                    inputs.forEach(input => {
-                        input.classList.add('error');
-                    });
-                    
-                    // Clear inputs after wrong attempt
-                    setTimeout(() => {
-                        clearOTPInputs();
-                        otpInputContainer.querySelector('[data-index="0"]').focus();
-                    }, 1000);
-                }
-            });
-
-            // Resend OTP
-            resendOtpBtn.addEventListener('click', async () => {
-                if (!otpVerificationData || resendOtpBtn.disabled) return;
-                
-                // Clear messages
-                otpErrorMessage.style.display = 'none';
-                otpSuccessMessage.style.display = 'none';
-                
-                // Send new OTP
-                try {
-                    const result = await otpEmailService.resendOTP(otpVerificationData.email, otpVerificationData.userName);
-                    
-                    if (result.success) {
-                        // Clear inputs and focus first
-                        clearOTPInputs();
-                        otpInputContainer.querySelector('[data-index="0"]').focus();
-                        
-                        // Reset timers
-                        stopAllTimers();
-                        startOTPTimer();
-                        startResendTimer();
-                        
-                        // Show notification
-                        showNotification('New OTP sent successfully!', 'success');
-                        
-                        // For testing purposes
-                        console.log(`[For Testing] New OTP for ${otpVerificationData.email}: ${result.otp}`);
-                    } else {
-                        showError('otp-error-message', 'Failed to resend OTP. Please try again.');
-                    }
-                } catch (error) {
-                    console.error('Error resending OTP:', error);
-                    showError('otp-error-message', 'Error resending OTP. Please try again.');
-                }
-            });
-
-            // Back to Form
-            backToFormBtn.addEventListener('click', () => {
-                hideOTPSection();
-                if (otpVerificationData.type === 'login') {
-                    loginTab.click();
-                } else {
-                    signupTab.click();
-                }
-            });
-
-            // Complete Login Process
-            function completeLogin(email) {
-                // Get user data
-                const users = JSON.parse(localStorage.getItem('users')) || [];
-                const user = users.find(u => u.email === email);
-                
-                if (user) {
-                    currentUser = {
-                        id: user.id,
-                        name: user.name,
-                        email: user.email,
-                        avatar: user.name.charAt(0).toUpperCase(),
-                        isVerified: true
-                    };
-                    
-                    // Save to localStorage
-                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                    
-                    // Update user verification status
-                    user.isVerified = true;
-                    localStorage.setItem('users', JSON.stringify(users));
-                    
-                    // Update UI
-                    updateAuthUI();
-                    
-                    // Close modal and show success
-                    setTimeout(() => {
-                        closeAuthModal();
-                        showNotification('Login successful!', 'success');
-                    }, 500);
-                } else {
-                    showError('otp-error-message', 'User not found. Please sign up first.');
-                }
-            }
-
-            // Complete Signup Process
-            function completeSignup() {
-                // Get form data from localStorage
-                const pendingUser = JSON.parse(localStorage.getItem('pendingUser'));
-                
-                if (pendingUser) {
-                    const users = JSON.parse(localStorage.getItem('users')) || [];
-                    const newUser = {
-                        id: Date.now().toString(),
-                        name: pendingUser.name,
-                        email: pendingUser.email,
-                        password: pendingUser.password,
-                        isVerified: true,
-                        createdAt: new Date().toISOString()
-                    };
-                    
-                    // Save to localStorage
-                    users.push(newUser);
-                    localStorage.setItem('users', JSON.stringify(users));
-                    
-                    // Set as current user
-                    currentUser = {
-                        id: newUser.id,
-                        name: newUser.name,
-                        email: newUser.email,
-                        avatar: newUser.name.charAt(0).toUpperCase(),
-                        isVerified: true
-                    };
-                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                    
-                    // Clean up
-                    localStorage.removeItem('pendingUser');
-                    
-                    // Update UI
-                    updateAuthUI();
-                    
-                    // Close modal and show success
-                    setTimeout(() => {
-                        closeAuthModal();
-                        showNotification('Account created successfully!', 'success');
-                    }, 500);
-                }
-            }
+            // Facebook Login Button Event Listeners
+            document.getElementById('fb-login-button').addEventListener('click', handleFacebookLogin);
+            document.getElementById('fb-signup-button').addEventListener('click', handleFacebookSignup);
 
             // Login Form Submission
-            loginForm.addEventListener('submit', async (e) => {
+            document.getElementById('login-form').addEventListener('submit', (e) => {
                 e.preventDefault();
-                clearAllErrors();
+                clearAuthErrors();
 
                 const email = document.getElementById('login-email').value.trim();
                 const password = document.getElementById('login-password').value.trim();
@@ -1754,17 +1288,34 @@
                     return;
                 }
                 
-                // Show OTP verification
-                showOTPSection(email, 'login', user.name || 'User');
+                // Set current user
+                currentUser = {
+                    id: user.id,
+                    name: user.name,
+                    email: user.email,
+                    avatar: user.name.charAt(0).toUpperCase(),
+                    picture: user.picture,
+                    provider: user.provider || 'email'
+                };
+                
+                // Save to localStorage
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                
+                // Update UI
+                updateAuthUI();
+                
+                // Close modal and show success
+                loginModal.classList.remove('active');
+                showNotification('Login successful!', 'success');
                 
                 // Reset form
-                loginForm.reset();
+                document.getElementById('login-form').reset();
             });
 
             // Signup Form Submission
-            signupForm.addEventListener('submit', async (e) => {
+            document.getElementById('signup-form').addEventListener('submit', (e) => {
                 e.preventDefault();
-                clearAllErrors();
+                clearAuthErrors();
 
                 const name = document.getElementById('signup-name').value.trim();
                 const email = document.getElementById('signup-email').value.trim();
@@ -1817,36 +1368,43 @@
                     return;
                 }
 
-                // Save pending user data
-                const pendingUser = {
+                // Create new user
+                const newUser = {
+                    id: Date.now().toString(),
                     name: name,
                     email: email,
-                    password: password
+                    password: password,
+                    provider: 'email',
+                    createdAt: new Date().toISOString()
                 };
-                localStorage.setItem('pendingUser', JSON.stringify(pendingUser));
                 
-                // Show OTP verification
-                showOTPSection(email, 'signup', name);
+                // Save to localStorage
+                users.push(newUser);
+                localStorage.setItem('users', JSON.stringify(users));
+                
+                // Set as current user
+                currentUser = {
+                    id: newUser.id,
+                    name: newUser.name,
+                    email: newUser.email,
+                    avatar: newUser.name.charAt(0).toUpperCase(),
+                    provider: 'email'
+                };
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                
+                // Update UI
+                updateAuthUI();
+                
+                // Close modal and show success
+                signupModal.classList.remove('active');
+                showNotification('Account created successfully!', 'success');
                 
                 // Reset form
-                signupForm.reset();
-            });
-
-            // Social Auth Buttons
-            document.querySelectorAll('.social-btn.google').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    showNotification('Google login coming soon!', 'warning');
-                });
-            });
-
-            document.querySelectorAll('.social-btn.facebook').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    showNotification('Facebook login coming soon!', 'warning');
-                });
+                document.getElementById('signup-form').reset();
             });
 
             // Forgot Password
-            document.querySelector('.forgot-password').addEventListener('click', (e) => {
+            document.getElementById('forgot-password').addEventListener('click', (e) => {
                 e.preventDefault();
                 showNotification('Password reset feature coming soon!', 'warning');
             });
@@ -1867,7 +1425,7 @@
                 });
             });
 
-            // Demo user for testing
+            // Setup demo user for testing
             function setupDemoUser() {
                 const users = JSON.parse(localStorage.getItem('users')) || [];
                 const demoUser = {
@@ -1875,7 +1433,7 @@
                     name: 'Demo User',
                     email: 'demo@swagchup.com',
                     password: 'demo123',
-                    isVerified: true,
+                    provider: 'email',
                     createdAt: new Date().toISOString()
                 };
                 
@@ -2507,6 +2065,22 @@
                 }
             `;
             document.head.appendChild(style);
+            
+            // Check social login status on page load
+            function checkSocialLoginStatus() {
+                // Check if user has Google token
+                if (localStorage.getItem('google_token')) {
+                    // Handle Google auto-login
+                }
+                
+                // Check if user has Facebook token
+                if (localStorage.getItem('fb_access_token')) {
+                    // Handle Facebook auto-login
+                }
+            }
+            
+            // Initial check
+            checkSocialLoginStatus();
         });
     </script>
 </body>
