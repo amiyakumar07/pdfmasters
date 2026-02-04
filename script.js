@@ -4,6 +4,8 @@ const state = {
     files: [],
     processing: false,
     apiBaseUrl: 'http://localhost:3000/api',
+    currentUser: JSON.parse(localStorage.getItem('currentUser')) || null,
+    pendingVerification: null,
     tools: [
         { id: 'merge', name: 'Merge PDF', icon: 'fa-file-medical', category: 'organize', time: '10s' },
         { id: 'split', name: 'Split PDF', icon: 'fa-cut', category: 'organize', time: '15s' },
@@ -34,6 +36,134 @@ const state = {
     ]
 };
 
+// OTP Email Service
+class OTPEmailService {
+    constructor() {
+        this.sentOTPs = new Map();
+        this.initEmailJS();
+    }
+    
+    initEmailJS() {
+        // Initialize EmailJS with your public key
+        // Replace with your EmailJS public key
+        if (typeof emailjs !== 'undefined') {
+            emailjs.init("YOUR_PUBLIC_KEY_HERE");
+        }
+    }
+    
+    // Generate OTP
+    generateOTP() {
+        return Math.floor(100000 + Math.random() * 900000).toString();
+    }
+    
+    // Send OTP via Email using EmailJS
+    async sendEmailOTP(email, otp, userName = 'User') {
+        try {
+            // Store OTP with expiration (5 minutes)
+            this.sentOTPs.set(email, {
+                otp: otp,
+                expires: Date.now() + 5 * 60 * 1000, // 5 minutes
+                attempts: 0,
+                userName: userName
+            });
+            
+            // For demo/testing, show OTP in console
+            console.log(`[OTP Service] OTP for ${email}: ${otp}`);
+            console.log('In production, this would be sent via EmailJS');
+            
+            // Uncomment below to enable real email sending with EmailJS
+            /*
+            const templateParams = {
+                to_email: email,
+                to_name: userName,
+                otp_code: otp,
+                website_name: "swagchup",
+                expiration_time: "5 minutes"
+            };
+            
+            const response = await emailjs.send(
+                'service_swagchup', // Your EmailJS service ID
+                'template_otp_verification', // Your EmailJS template ID
+                templateParams
+            );
+            
+            console.log('Email sent successfully:', response);
+            */
+            
+            return {
+                success: true,
+                message: `OTP sent to ${email}`,
+                otp: otp // For demo/testing only
+            };
+            
+        } catch (error) {
+            console.error('Failed to send email:', error);
+            
+            // Fallback to console for testing
+            console.log(`[FALLBACK] OTP for ${email}: ${otp}`);
+            
+            return {
+                success: true, // Still return success for demo
+                message: `OTP generated for ${email}`,
+                otp: otp
+            };
+        }
+    }
+    
+    // Verify OTP
+    verifyOTP(email, userOTP) {
+        const stored = this.sentOTPs.get(email);
+        
+        if (!stored) {
+            return {
+                success: false,
+                message: 'No OTP found. Please request a new one.'
+            };
+        }
+        
+        if (Date.now() > stored.expires) {
+            this.sentOTPs.delete(email);
+            return {
+                success: false,
+                message: 'OTP has expired. Please request a new one.'
+            };
+        }
+        
+        stored.attempts++;
+        
+        if (stored.attempts > 3) {
+            this.sentOTPs.delete(email);
+            return {
+                success: false,
+                message: 'Too many attempts. OTP invalidated.'
+            };
+        }
+        
+        if (stored.otp === userOTP) {
+            this.sentOTPs.delete(email); // Clear OTP after successful verification
+            return {
+                success: true,
+                message: 'OTP verified successfully!',
+                userName: stored.userName
+            };
+        } else {
+            return {
+                success: false,
+                message: `Incorrect OTP. ${3 - stored.attempts} attempts remaining.`
+            };
+        }
+    }
+    
+    // Resend OTP
+    async resendOTP(email, userName) {
+        const newOTP = this.generateOTP();
+        return await this.sendEmailOTP(email, newOTP, userName);
+    }
+}
+
+// Initialize OTP Service
+const otpService = new OTPEmailService();
+
 // DOM Elements
 const elements = {
     fileInput: document.getElementById('fileInput'),
@@ -63,7 +193,41 @@ const elements = {
     saveToCloudBtn: document.getElementById('saveToCloudBtn'),
     shareBtn: document.getElementById('shareBtn'),
     modalCloses: document.querySelectorAll('.modal-close'),
-    viewMoreTools: document.getElementById('viewMoreTools')
+    viewMoreTools: document.getElementById('viewMoreTools'),
+    
+    // Auth Elements
+    authModal: document.getElementById('auth-modal'),
+    loginTab: document.getElementById('login-tab'),
+    signupTab: document.getElementById('signup-tab'),
+    loginForm: document.getElementById('login-form'),
+    signupForm: document.getElementById('signup-form'),
+    otpSection: document.getElementById('otp-section'),
+    closeAuth: document.getElementById('close-auth'),
+    openLogin: document.getElementById('open-login'),
+    openSignup: document.getElementById('open-signup'),
+    switchToSignup: document.getElementById('switch-to-signup'),
+    switchToLogin: document.getElementById('switch-to-login'),
+    otpEmailDisplay: document.getElementById('otp-email-display'),
+    otpInputContainer: document.getElementById('otp-input-container'),
+    verifyOtpBtn: document.getElementById('verify-otp-btn'),
+    otpErrorMessage: document.getElementById('otp-error-message'),
+    otpSuccessMessage: document.getElementById('otp-success-message'),
+    otpTimer: document.getElementById('otp-timer'),
+    otpTime: document.getElementById('otp-time'),
+    resendOtpBtn: document.getElementById('resend-otp-btn'),
+    resendCountdown: document.getElementById('resend-countdown'),
+    backToFormBtn: document.getElementById('back-to-form-btn'),
+    authButtons: document.getElementById('auth-buttons'),
+    userProfile: document.getElementById('user-profile'),
+    userName: document.getElementById('user-name'),
+    userAvatar: document.getElementById('user-avatar'),
+    loginEmail: document.getElementById('login-email'),
+    loginPassword: document.getElementById('login-password'),
+    signupName: document.getElementById('signup-name'),
+    signupEmail: document.getElementById('signup-email'),
+    signupPassword: document.getElementById('signup-password'),
+    confirmPassword: document.getElementById('confirm-password'),
+    termsAgreement: document.getElementById('terms-agreement')
 };
 
 // Initialize Application
@@ -71,63 +235,176 @@ function init() {
     setupEventListeners();
     setupDragAndDrop();
     setupToolFilter();
+    setupAuthEventListeners();
+    updateAuthUI();
     checkBackend();
     updateFileList();
+    setupDemoUser();
 }
 
 // Setup Event Listeners
 function setupEventListeners() {
     // File Upload
-    elements.uploadArea.addEventListener('click', () => elements.fileInput.click());
-    elements.fileInput.addEventListener('change', handleFileSelect);
-    elements.addMoreBtn?.addEventListener('click', () => elements.fileInput.click());
+    if (elements.uploadArea) {
+        elements.uploadArea.addEventListener('click', () => elements.fileInput.click());
+    }
+    if (elements.fileInput) {
+        elements.fileInput.addEventListener('change', handleFileSelect);
+    }
+    if (elements.addMoreBtn) {
+        elements.addMoreBtn.addEventListener('click', () => elements.fileInput.click());
+    }
     
     // File Management
-    elements.clearFiles?.addEventListener('click', clearAllFiles);
-    elements.processBtn?.addEventListener('click', processFiles);
+    if (elements.clearFiles) {
+        elements.clearFiles.addEventListener('click', clearAllFiles);
+    }
+    if (elements.processBtn) {
+        elements.processBtn.addEventListener('click', processFiles);
+    }
     
     // Tool Selection
-    elements.toolsGrid?.addEventListener('click', handleToolClick);
+    if (elements.toolsGrid) {
+        elements.toolsGrid.addEventListener('click', handleToolClick);
+    }
     
     // Search
-    elements.searchTools?.addEventListener('input', filterTools);
+    if (elements.searchTools) {
+        elements.searchTools.addEventListener('input', filterTools);
+    }
     
     // Modals
-    elements.modalCloses.forEach(close => {
-        close.addEventListener('click', closeAllModals);
-    });
+    if (elements.modalCloses) {
+        elements.modalCloses.forEach(close => {
+            close.addEventListener('click', closeAllModals);
+        });
+    }
     
     // Download
-    elements.downloadBtn?.addEventListener('click', handleDownload);
+    if (elements.downloadBtn) {
+        elements.downloadBtn.addEventListener('click', handleDownload);
+    }
     
     // New Process
-    elements.newProcessBtn?.addEventListener('click', () => {
-        closeAllModals();
-        clearAllFiles();
-    });
+    if (elements.newProcessBtn) {
+        elements.newProcessBtn.addEventListener('click', () => {
+            closeAllModals();
+            clearAllFiles();
+        });
+    }
     
     // Save to Cloud
-    elements.saveToCloudBtn?.addEventListener('click', saveToCloud);
+    if (elements.saveToCloudBtn) {
+        elements.saveToCloudBtn.addEventListener('click', saveToCloud);
+    }
     
     // Share
-    elements.shareBtn?.addEventListener('click', shareFile);
+    if (elements.shareBtn) {
+        elements.shareBtn.addEventListener('click', shareFile);
+    }
     
     // View More Tools
-    elements.viewMoreTools?.addEventListener('click', toggleMoreTools);
+    if (elements.viewMoreTools) {
+        elements.viewMoreTools.addEventListener('click', toggleMoreTools);
+    }
     
     // Close modals on outside click
     window.addEventListener('click', (e) => {
-        if (e.target === elements.processingModal) {
+        if (elements.processingModal && e.target === elements.processingModal) {
             closeAllModals();
         }
-        if (e.target === elements.resultModal) {
+        if (elements.resultModal && e.target === elements.resultModal) {
             closeAllModals();
         }
     });
 }
 
+// Setup Auth Event Listeners
+function setupAuthEventListeners() {
+    // Open/Close Auth Modal
+    if (elements.openLogin) {
+        elements.openLogin.addEventListener('click', () => openAuthModal('login'));
+    }
+    if (elements.openSignup) {
+        elements.openSignup.addEventListener('click', () => openAuthModal('signup'));
+    }
+    if (elements.switchToSignup) {
+        elements.switchToSignup.addEventListener('click', (e) => {
+            e.preventDefault();
+            openAuthModal('signup');
+        });
+    }
+    if (elements.switchToLogin) {
+        elements.switchToLogin.addEventListener('click', (e) => {
+            e.preventDefault();
+            openAuthModal('login');
+        });
+    }
+    if (elements.closeAuth) {
+        elements.closeAuth.addEventListener('click', closeAuthModal);
+    }
+    
+    if (elements.authModal) {
+        elements.authModal.addEventListener('click', (e) => {
+            if (e.target === elements.authModal) {
+                closeAuthModal();
+            }
+        });
+    }
+    
+    // Tab Switching
+    if (elements.loginTab) {
+        elements.loginTab.addEventListener('click', () => {
+            switchToTab('login');
+        });
+    }
+    if (elements.signupTab) {
+        elements.signupTab.addEventListener('click', () => {
+            switchToTab('signup');
+        });
+    }
+    
+    // Login Form Submission
+    if (elements.loginForm) {
+        elements.loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await handleLogin();
+        });
+    }
+    
+    // Signup Form Submission
+    if (elements.signupForm) {
+        elements.signupForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await handleSignup();
+        });
+    }
+    
+    // OTP Verification
+    if (elements.verifyOtpBtn) {
+        elements.verifyOtpBtn.addEventListener('click', verifyOTP);
+    }
+    
+    // Resend OTP
+    if (elements.resendOtpBtn) {
+        elements.resendOtpBtn.addEventListener('click', resendOTP);
+    }
+    
+    // Back to Form
+    if (elements.backToFormBtn) {
+        elements.backToFormBtn.addEventListener('click', backToForm);
+    }
+    
+    // User Profile Click
+    if (elements.userProfile) {
+        elements.userProfile.addEventListener('click', handleUserProfileClick);
+    }
+}
+
 // Setup Drag and Drop
 function setupDragAndDrop() {
+    if (!elements.uploadArea) return;
+    
     ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
         elements.uploadArea.addEventListener(eventName, preventDefaults, false);
     });
@@ -156,6 +433,8 @@ function setupDragAndDrop() {
 
 // Setup Tool Filter
 function setupToolFilter() {
+    if (!elements.filterBtns) return;
+    
     elements.filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             // Remove active class from all buttons
@@ -185,6 +464,13 @@ function handleDrop(e) {
 
 // Add Files
 function addFiles(newFiles) {
+    // Check if user is logged in
+    if (!state.currentUser && newFiles.length > 0) {
+        showNotification('Please login or sign up to upload files', 'warning');
+        openAuthModal('login');
+        return;
+    }
+    
     // Validate files
     const validFiles = newFiles.filter(file => {
         const maxSize = 100 * 1024 * 1024; // 100MB
@@ -230,7 +516,7 @@ function addFiles(newFiles) {
 
 // Update File List Display
 function updateFileList() {
-    if (!elements.fileList) return;
+    if (!elements.fileList || !elements.selectedFiles) return;
     
     if (state.files.length === 0) {
         elements.selectedFiles.style.display = 'none';
@@ -313,6 +599,8 @@ function handleToolClick(e) {
 
 // Filter Tools
 function filterTools() {
+    if (!elements.searchTools) return;
+    
     const searchTerm = elements.searchTools.value.toLowerCase();
     const toolCards = document.querySelectorAll('.tool-card');
     
@@ -385,6 +673,13 @@ function toggleMoreTools() {
 
 // Process Files
 async function processFiles() {
+    // Check if user is logged in
+    if (!state.currentUser) {
+        showNotification('Please login to process files', 'warning');
+        openAuthModal('login');
+        return;
+    }
+    
     if (state.files.length === 0) {
         showNotification('Please select files first', 'error');
         return;
@@ -399,10 +694,12 @@ async function processFiles() {
     state.processing = true;
     
     // Show processing modal
-    elements.processingModal.classList.add('active');
-    elements.currentTool.textContent = tool.name;
-    elements.totalFiles.textContent = state.files.length;
-    elements.estimatedTime.textContent = tool.time;
+    if (elements.processingModal) {
+        elements.processingModal.classList.add('active');
+        elements.currentTool.textContent = tool.name;
+        elements.totalFiles.textContent = state.files.length;
+        elements.estimatedTime.textContent = tool.time;
+    }
     
     try {
         // Simulate processing
@@ -458,7 +755,9 @@ function updateProgress(percentage, text) {
 // Show Result
 function showResult(tool) {
     // Hide processing modal
-    elements.processingModal.classList.remove('active');
+    if (elements.processingModal) {
+        elements.processingModal.classList.remove('active');
+    }
     
     // Update result info
     const resultFile = {
@@ -467,13 +766,21 @@ function showResult(tool) {
         pages: Math.floor(Math.random() * 50) + 1
     };
     
-    elements.resultFileName.textContent = resultFile.name;
-    elements.resultFileSize.textContent = resultFile.size;
-    elements.resultPageCount.textContent = `${resultFile.pages} pages`;
+    if (elements.resultFileName) {
+        elements.resultFileName.textContent = resultFile.name;
+    }
+    if (elements.resultFileSize) {
+        elements.resultFileSize.textContent = resultFile.size;
+    }
+    if (elements.resultPageCount) {
+        elements.resultPageCount.textContent = `${resultFile.pages} pages`;
+    }
     
     // Show result modal
     setTimeout(() => {
-        elements.resultModal.classList.add('active');
+        if (elements.resultModal) {
+            elements.resultModal.classList.add('active');
+        }
     }, 300);
 }
 
@@ -490,7 +797,7 @@ async function handleDownload() {
         // Create download link
         const a = document.createElement('a');
         a.href = url;
-        a.download = elements.resultFileName.textContent;
+        a.download = elements.resultFileName ? elements.resultFileName.textContent : 'processed-file.pdf';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -500,7 +807,9 @@ async function handleDownload() {
         
         // Close modal after download
         setTimeout(() => {
-            elements.resultModal.classList.remove('active');
+            if (elements.resultModal) {
+                elements.resultModal.classList.remove('active');
+            }
             showNotification('File downloaded successfully!', 'success');
         }, 1000);
         
@@ -512,6 +821,11 @@ async function handleDownload() {
 
 // Save to Cloud
 function saveToCloud() {
+    if (!state.currentUser) {
+        showNotification('Please login to save to cloud', 'warning');
+        return;
+    }
+    
     showNotification('Saving to cloud...', 'info');
     
     // Simulate cloud save
@@ -525,7 +839,7 @@ function shareFile() {
     if (navigator.share) {
         navigator.share({
             title: 'Processed PDF File',
-            text: 'Check out this PDF I processed with PDFMaster',
+            text: 'Check out this PDF I processed with swagchup',
             url: window.location.href
         });
     } else {
@@ -537,176 +851,218 @@ function shareFile() {
 
 // Close All Modals
 function closeAllModals() {
-    elements.processingModal.classList.remove('active');
-    elements.resultModal.classList.remove('active');
+    if (elements.processingModal) {
+        elements.processingModal.classList.remove('active');
+    }
+    if (elements.resultModal) {
+        elements.resultModal.classList.remove('active');
+    }
 }
 
-// Check Backend Connection
-async function checkBackend() {
+// Authentication Functions
+function openAuthModal(formType) {
+    if (!elements.authModal) return;
+    
+    elements.authModal.classList.add('active');
+    if (formType === 'login') {
+        switchToTab('login');
+    } else {
+        switchToTab('signup');
+    }
+    clearAuthErrors();
+}
+
+function closeAuthModal() {
+    if (!elements.authModal) return;
+    
+    elements.authModal.classList.remove('active');
+    clearAuthErrors();
+    hideOTPSection();
+    stopOTPTimers();
+}
+
+function switchToTab(tab) {
+    if (!elements.loginTab || !elements.signupTab || !elements.loginForm || !elements.signupForm) return;
+    
+    if (tab === 'login') {
+        elements.loginTab.classList.add('active');
+        elements.signupTab.classList.remove('active');
+        elements.loginForm.classList.add('active');
+        elements.signupForm.classList.remove('active');
+    } else {
+        elements.signupTab.classList.add('active');
+        elements.loginTab.classList.remove('active');
+        elements.signupForm.classList.add('active');
+        elements.loginForm.classList.remove('active');
+    }
+    clearAuthErrors();
+    hideOTPSection();
+}
+
+async function handleLogin() {
+    if (!elements.loginEmail || !elements.loginPassword) return;
+    
+    clearAuthErrors();
+    
+    const email = elements.loginEmail.value.trim();
+    const password = elements.loginPassword.value.trim();
+
+    // Simple validation
+    if (!email) {
+        showAuthError('login-email-error', 'Email is required');
+        return;
+    }
+
+    if (!password) {
+        showAuthError('login-password-error', 'Password is required');
+        return;
+    }
+
+    // Check if user exists
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const user = users.find(u => u.email === email && u.password === password);
+    
+    if (!user) {
+        showAuthError('login-general-error', 'Invalid email or password');
+        return;
+    }
+    
+    // Show OTP verification
+    await showOTPSection(email, 'login', user.name || 'User');
+}
+
+async function handleSignup() {
+    if (!elements.signupName || !elements.signupEmail || !elements.signupPassword || !elements.confirmPassword || !elements.termsAgreement) return;
+    
+    clearAuthErrors();
+    
+    const name = elements.signupName.value.trim();
+    const email = elements.signupEmail.value.trim();
+    const password = elements.signupPassword.value.trim();
+    const confirmPassword = elements.confirmPassword.value.trim();
+    const termsAgreed = elements.termsAgreement.checked;
+
+    // Validation
+    if (!name) {
+        showAuthError('signup-name-error', 'Name is required');
+        return;
+    }
+
+    if (!email) {
+        showAuthError('signup-email-error', 'Email is required');
+        return;
+    }
+
+    // Email validation regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        showAuthError('signup-email-error', 'Please enter a valid email address');
+        return;
+    }
+
+    if (!password) {
+        showAuthError('signup-password-error', 'Password is required');
+        return;
+    }
+
+    if (password.length < 6) {
+        showAuthError('signup-password-error', 'Password must be at least 6 characters');
+        return;
+    }
+
+    if (password !== confirmPassword) {
+        showAuthError('confirm-password-error', 'Passwords do not match');
+        return;
+    }
+
+    if (!termsAgreed) {
+        showAuthError('terms-error', 'You must agree to the terms');
+        return;
+    }
+
+    // Check if user already exists
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    if (users.find(u => u.email === email)) {
+        showAuthError('signup-email-error', 'Email already registered');
+        return;
+    }
+
+    // Save pending user data
+    const pendingUser = {
+        name: name,
+        email: email,
+        password: password
+    };
+    localStorage.setItem('pendingUser', JSON.stringify(pendingUser));
+    
+    // Show OTP verification
+    await showOTPSection(email, 'signup', name);
+}
+
+async function showOTPSection(email, type, userName = 'User') {
+    if (!elements.loginForm || !elements.signupForm || !elements.otpSection || !elements.otpEmailDisplay) return;
+    
+    // Hide forms and show OTP section
+    elements.loginForm.classList.remove('active');
+    elements.signupForm.classList.remove('active');
+    elements.otpSection.classList.add('active');
+    
+    // Set email display
+    elements.otpEmailDisplay.textContent = email;
+    
+    // Store verification data
+    state.pendingVerification = {
+        email: email,
+        type: type, // 'login' or 'signup'
+        userName: userName
+    };
+    
+    // Create OTP input fields
+    createOTPInputs();
+    
+    // Start timers
+    startOTPTimer();
+    startResendTimer();
+    
+    // Send OTP via email
     try {
-        const response = await fetch('http://localhost:3000/api/health');
-        if (response.ok) {
-            console.log('Backend connected successfully');
+        const result = await otpService.sendEmailOTP(email, otpService.generateOTP(), userName);
+        
+        if (result.success) {
+            showNotification(`OTP sent to ${email}. Please check your inbox.`, 'success');
+            
+            // For testing purposes, show OTP in console
+            console.log(`[For Testing] OTP for ${email}: ${result.otp}`);
+            console.log('Note: If email not received, check spam folder or use console OTP for testing.');
+        } else {
+            showAuthError('otp-error-message', 'Failed to send OTP. Please try again.');
         }
     } catch (error) {
-        console.warn('Backend not connected. Running in demo mode.');
+        console.error('Error sending OTP:', error);
+        showAuthError('otp-error-message', 'Error sending OTP. Please try again.');
     }
 }
 
-// Helper Functions
-function generateId() {
-    return Date.now().toString(36) + Math.random().toString(36).substr(2);
+function hideOTPSection() {
+    if (!elements.otpSection || !elements.loginForm) return;
+    
+    elements.otpSection.classList.remove('active');
+    elements.loginForm.classList.add('active');
+    clearOTPInputs();
+    stopOTPTimers();
+    state.pendingVerification = null;
 }
 
-function formatFileSize(bytes) {
-    if (bytes === 0) return '0 Bytes';
-    const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-}
-
-function getFileIcon(filename) {
-    const ext = filename.split('.').pop().toLowerCase();
-    switch(ext) {
-        case 'pdf': return 'fa-file-pdf';
-        case 'doc':
-        case 'docx': return 'fa-file-word';
-        case 'ppt':
-        case 'pptx': return 'fa-file-powerpoint';
-        case 'xls':
-        case 'xlsx': return 'fa-file-excel';
-        case 'jpg':
-        case 'jpeg':
-        case 'png': return 'fa-file-image';
-        case 'txt': return 'fa-file-alt';
-        case 'html': return 'fa-html5';
-        default: return 'fa-file';
-    }
-}
-
-function generateSamplePDF() {
-    // Simple PDF content for demonstration
-    return `%PDF-1.4
-1 0 obj
-<< /Type /Catalog /Pages 2 0 R >>
-endobj
-2 0 obj
-<< /Type /Pages /Kids [3 0 R] /Count 1 >>
-endobj
-3 0 obj
-<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R >>
-endobj
-4 0 obj
-<< /Length 73 >>
-stream
-BT
-/F1 24 Tf
-72 720 Td
-(Your PDF is Ready!) Tj
-/F1 12 Tf
-72 680 Td
-(Processed with PDFMaster) Tj
-ET
-endstream
-endobj
-xref
-0 5
-0000000000 65535 f
-0000000010 00000 n
-0000000053 00000 n
-0000000102 00000 n
-0000000172 00000 n
-trailer
-<< /Size 5 /Root 1 0 R >>
-startxref
-281
-%%EOF`;
-}
-
-function showNotification(message, type = 'info') {
-    // Remove existing notifications
-    const existing = document.querySelector('.notification');
-    if (existing) existing.remove();
+function createOTPInputs() {
+    if (!elements.otpInputContainer) return;
     
-    // Create notification
-    const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
-    notification.innerHTML = `
-        <span>${message}</span>
-        <button class="notification-close">&times;</button>
-    `;
-    
-    // Add styles if not present
-    if (!document.querySelector('#notification-styles')) {
-        const style = document.createElement('style');
-        style.id = 'notification-styles';
-        style.textContent = `
-            .notification {
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                padding: 16px 24px;
-                border-radius: 8px;
-                color: white;
-                font-weight: 500;
-                z-index: 9999;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                min-width: 300px;
-                max-width: 400px;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-                animation: slideIn 0.3s ease;
-                transform: translateX(0);
-            }
-            .notification-success { background: #2ec4b6; }
-            .notification-error { background: #e71d36; }
-            .notification-warning { background: #ff9f1c; }
-            .notification-info { background: #4361ee; }
-            .notification-close {
-                background: none;
-                border: none;
-                color: white;
-                font-size: 20px;
-                cursor: pointer;
-                margin-left: 15px;
-                line-height: 1;
-                padding: 0;
-                width: 24px;
-                height: 24px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-            @keyframes slideIn {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
-            }
-            @keyframes slideOut {
-                from { transform: translateX(0); opacity: 1; }
-                to { transform: translateX(100%); opacity: 0; }
-            }
-        `;
-        document.head.appendChild(style);
-    }
-    
-    document.body.appendChild(notification);
-    
-    // Add close event
-    notification.querySelector('.notification-close').addEventListener('click', () => {
-        notification.style.animation = 'slideOut 0.3s ease';
-        setTimeout(() => notification.remove(), 300);
-    });
-    
-    // Auto-remove after 5 seconds
-    setTimeout(() => {
-        if (notification.parentElement) {
-            notification.style.animation = 'slideOut 0.3s ease';
-            setTimeout(() => notification.remove(), 300);
-        }
-    }, 5000);
-}
-
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', init);
+    elements.otpInputContainer.innerHTML = '';
+    for (let i = 0; i < 6; i++) {
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.maxLength = 1;
+        input.className = 'otp-input';
+        input.dataset.index = i;
+        
+        input.addEventListener('input', (e) => {
+            const value = e.target.value.replace(/\D/g
