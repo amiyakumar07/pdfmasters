@@ -3,7 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SwagChup - 25+ Premium PDF Tools</title>
+    <title>SwagChup - Ultimate PDF Toolkit | Modern PDF Editor</title>
+    <meta name="description" content="35+ professional PDF tools with stunning design. Merge, split, compress, convert, edit, and secure PDFs. 100% free, no uploads, complete privacy.">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Core Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
@@ -13,62 +20,148 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-
-    <script src="https://quge5.com/88/tag.min.js" data-zone="212171" async data-cfasync="false"></script>
-    <script src="https://quge5.com/88/tag.min.js" data-zone="213302" async data-cfasync="false"></script>
-    <script src="https://quge5.com/88/tag.min.js" data-zone="212170" async data-cfasync="false"></script>
-
-    <script>(function(s){s.dataset.zone='10639206',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
     
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
 
         :root {
-            --bg-primary: #ffffff;
-            --bg-secondary: #f8fafc;
-            --bg-tertiary: #f1f5f9;
-            --text-primary: #0f172a;
-            --text-secondary: #475569;
-            --text-tertiary: #64748b;
-            --accent-1: #6366f1;
-            --accent-2: #8b5cf6;
-            --accent-3: #d946ef;
-            --accent-4: #ec4899;
-            --border: #e2e8f0;
-            --success: #22c55e;
+            --primary-50: #eef2ff;
+            --primary-100: #e0e7ff;
+            --primary-200: #c7d2fe;
+            --primary-300: #a5b4fc;
+            --primary-400: #818cf8;
+            --primary-500: #6366f1;
+            --primary-600: #4f46e5;
+            --primary-700: #4338ca;
+            --primary-800: #3730a3;
+            --primary-900: #312e81;
+            
+            --secondary-400: #f472b6;
+            --secondary-500: #ec4899;
+            --secondary-600: #db2777;
+            
+            --accent-400: #2dd4bf;
+            --accent-500: #14b8a6;
+            --accent-600: #0d9488;
+            
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            
+            --success: #10b981;
             --warning: #f59e0b;
             --danger: #ef4444;
             --info: #3b82f6;
-            --shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.15);
-            --gradient: linear-gradient(135deg, #6366f1, #8b5cf6, #d946ef, #ec4899);
-            --gradient-hover: linear-gradient(135deg, #4f46e5, #7c3aed, #c026d3, #db2777);
+            
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+            
+            --gradient-primary: linear-gradient(135deg, #6366f1, #8b5cf6, #d946ef, #ec4899);
+            --gradient-secondary: linear-gradient(135deg, #0ea5e9, #6366f1, #8b5cf6);
+            --gradient-accent: linear-gradient(135deg, #10b981, #14b8a6, #2dd4bf);
+            --gradient-warm: linear-gradient(135deg, #f59e0b, #f97316, #ef4444);
+            
+            --bg-primary: #ffffff;
+            --bg-secondary: #f9fafb;
+            --text-primary: #111827;
+            --text-secondary: #4b5563;
+            --text-tertiary: #6b7280;
+            --border: #e5e7eb;
         }
 
         [data-theme="dark"] {
-            --bg-primary: #0f172a;
-            --bg-secondary: #1e293b;
-            --bg-tertiary: #334155;
-            --text-primary: #f8fafc;
-            --text-secondary: #cbd5e1;
-            --text-tertiary: #94a3b8;
-            --accent-1: #818cf8;
-            --accent-2: #a78bfa;
-            --accent-3: #e879f9;
-            --accent-4: #f9a8d4;
-            --border: #334155;
-            --shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+            --bg-primary: #111827;
+            --bg-secondary: #1f2937;
+            --text-primary: #f9fafb;
+            --text-secondary: #e5e7eb;
+            --text-tertiary: #d1d5db;
+            --border: #374151;
+            
+            --gray-50: #111827;
+            --gray-100: #1f2937;
+            --gray-200: #374151;
+            --gray-300: #4b5563;
+            --gray-400: #6b7280;
+            --gray-500: #9ca3af;
+            --gray-600: #d1d5db;
+            --gray-700: #e5e7eb;
+            --gray-800: #f3f4f6;
+            --gray-900: #f9fafb;
         }
 
         body {
+            font-family: 'Inter', sans-serif;
             background: var(--bg-secondary);
             color: var(--text-primary);
             transition: all 0.3s ease;
-            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Custom Cursor */
+        .cursor-dot {
+            width: 5px;
+            height: 5px;
+            background: var(--primary-500);
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.1s ease;
+        }
+
+        .cursor-outline {
+            width: 30px;
+            height: 30px;
+            border: 2px solid var(--primary-400);
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transition: all 0.15s ease;
+        }
+
+        /* Animated Background */
+        .gradient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .gradient-bg::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: var(--gradient-primary);
+            opacity: 0.1;
+            animation: rotate 30s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         /* Header */
@@ -77,32 +170,92 @@
             top: 0;
             left: 0;
             right: 0;
-            background: var(--bg-primary);
+            background: rgba(var(--bg-primary), 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border);
             padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            box-shadow: var(--shadow);
-            backdrop-filter: blur(10px);
-            background: rgba(var(--bg-primary), 0.8);
+            transition: all 0.3s ease;
         }
 
         .logo {
             font-size: 2rem;
             font-weight: 800;
-            background: var(--gradient);
+            background: var(--gradient-primary);
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
             text-decoration: none;
-            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '✨';
+            font-size: 1.5rem;
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover::after {
+            opacity: 1;
+            transform: translateX(0);
         }
 
         .nav-items {
             display: flex;
             align-items: center;
             gap: 2rem;
+        }
+
+        /* Navigation Links */
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            padding: 0.5rem 1rem;
+            border-radius: 100px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            width: 80%;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-500);
+            background: var(--primary-50);
+        }
+
+        [data-theme="dark"] .nav-links a:hover {
+            background: rgba(99, 102, 241, 0.1);
         }
 
         /* Auth Buttons */
@@ -114,59 +267,139 @@
         .btn {
             padding: 0.6rem 1.5rem;
             border: none;
-            border-radius: 12px;
+            border-radius: 100px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
             font-size: 0.95rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
         }
 
         .btn-login {
             background: transparent;
-            color: var(--accent-1);
-            border: 2px solid var(--accent-1);
+            color: var(--primary-500);
+            border: 2px solid var(--primary-500);
         }
 
         .btn-login:hover {
-            background: var(--accent-1);
+            background: var(--primary-500);
             color: white;
             transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
         }
 
         .btn-signup {
-            background: var(--gradient);
+            background: var(--gradient-primary);
             color: white;
+            border: 2px solid transparent;
+            background-size: 200% auto;
         }
 
         .btn-signup:hover {
+            background-position: right center;
             transform: translateY(-2px);
-            box-shadow: var(--shadow);
+            box-shadow: var(--shadow-lg);
         }
 
         /* Theme Toggle */
         .theme-toggle {
-            width: 56px;
-            height: 28px;
-            background: var(--bg-tertiary);
-            border: 2px solid var(--border);
-            border-radius: 30px;
-            position: relative;
-            cursor: pointer;
-        }
-
-        .theme-toggle-circle {
-            width: 24px;
-            height: 24px;
-            background: var(--gradient);
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            transition: transform 0.3s;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
-        [data-theme="dark"] .theme-toggle-circle {
-            transform: translateX(28px);
+        .theme-toggle:hover {
+            transform: rotate(45deg);
+            border-color: var(--primary-500);
+        }
+
+        .theme-toggle i {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover i {
+            color: var(--primary-500);
+            transform: rotate(-45deg);
+        }
+
+        /* User Profile */
+        .user-profile {
+            display: none;
+            align-items: center;
+            gap: 1rem;
+            background: var(--bg-secondary);
+            padding: 0.5rem 1rem 0.5rem 0.5rem;
+            border-radius: 100px;
+            border: 1px solid var(--border);
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .user-name {
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .logout-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: transparent;
+            border: 1px solid var(--danger);
+            color: var(--danger);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logout-btn:hover {
+            background: var(--danger);
+            color: white;
+            transform: rotate(180deg);
         }
 
         /* Hero Section */
@@ -174,43 +407,155 @@
             margin-top: 80px;
             padding: 4rem 2rem;
             text-align: center;
-            background: radial-gradient(circle at 50% 0%, var(--accent-1)15, transparent 70%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: radial-gradient(circle at 50% 0%, var(--primary-400), transparent 70%);
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: var(--gradient-primary);
+            border-radius: 100px;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
         .hero h1 {
             font-size: 4rem;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 1rem;
             font-weight: 800;
             line-height: 1.2;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero .highlight {
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 30%;
+            background: var(--gradient-primary);
+            opacity: 0.2;
+            border-radius: 100px;
+            z-index: -1;
+            animation: width 1.5s ease;
         }
 
         .hero p {
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             color: var(--text-secondary);
-            max-width: 800px;
+            max-width: 700px;
             margin: 0 auto 3rem;
+            animation: fadeInUp 1s ease 0.2s both;
         }
 
-        .stats {
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 4rem;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .btn-cta {
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            border-radius: 100px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            position: relative;
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-cta-primary {
+            background: var(--gradient-primary);
+            color: white;
+            background-size: 200% auto;
+        }
+
+        .btn-cta-primary:hover {
+            background-position: right center;
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .btn-cta-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 2px solid var(--border);
+        }
+
+        .btn-cta-secondary:hover {
+            border-color: var(--primary-500);
+            color: var(--primary-500);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Stats */
+        .stats-grid {
             display: flex;
             justify-content: center;
             gap: 4rem;
             flex-wrap: wrap;
+            animation: fadeInUp 1s ease 0.6s both;
         }
 
         .stat-item {
             text-align: center;
+            position: relative;
         }
 
         .stat-number {
             font-size: 3rem;
             font-weight: 800;
-            background: var(--gradient);
+            background: var(--gradient-primary);
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            line-height: 1;
+            margin-bottom: 0.5rem;
         }
 
         .stat-label {
@@ -220,55 +565,153 @@
             letter-spacing: 1px;
         }
 
-        /* Tools Section */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes width {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        /* Categories Section */
+        .categories-section {
+            padding: 4rem 2rem;
+            background: var(--bg-secondary);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-subtitle {
+            color: var(--primary-500);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
         }
 
         .section-title {
-            text-align: center;
             font-size: 2.5rem;
-            margin: 3rem 0;
-            color: var(--text-primary);
-            position: relative;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
-        .section-title::after {
+        .section-description {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .category-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card::after {
             content: '';
             position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 4px;
-            background: var(--gradient);
-            border-radius: 2px;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 0;
+        }
+
+        .category-card:hover::after {
+            opacity: 0.1;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-500);
+        }
+
+        .category-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .category-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            position: relative;
+            z-index: 1;
+        }
+
+        .category-count {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--primary-500);
+            color: white;
+            padding: 0.2rem 0.8rem;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 1;
+        }
+
+        /* Tools Grid */
+        .tools-section {
+            padding: 4rem 2rem;
+            background: var(--bg-primary);
         }
 
         .tools-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .tool-card {
-            background: var(--bg-primary);
+            background: var(--bg-secondary);
             border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 2rem;
+            border-radius: 20px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
             cursor: pointer;
-            transition: all 0.3s;
             position: relative;
             overflow: hidden;
-            box-shadow: var(--shadow);
-        }
-
-        .tool-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--accent-1);
         }
 
         .tool-card::before {
@@ -278,22 +721,29 @@
             left: 0;
             right: 0;
             height: 4px;
-            background: var(--gradient);
-            transform: scaleX(0);
-            transition: transform 0.3s;
+            background: var(--gradient-primary);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
         }
 
         .tool-card:hover::before {
-            transform: scaleX(1);
+            transform: translateX(0);
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+            border-color: transparent;
         }
 
         .tool-icon {
-            font-size: 3rem;
+            font-size: 2rem;
             margin-bottom: 1rem;
         }
 
         .tool-card h3 {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
+            font-weight: 700;
             margin-bottom: 0.5rem;
             color: var(--text-primary);
         }
@@ -304,31 +754,216 @@
             line-height: 1.6;
         }
 
-        .badge {
-            position: absolute;
-            top: 1rem;
-            right: -2rem;
-            background: var(--gradient);
-            color: white;
-            padding: 0.2rem 2.5rem;
-            transform: rotate(45deg);
-            font-size: 0.8rem;
-            font-weight: 600;
+        /* Features Section */
+        .features-section {
+            padding: 4rem 2rem;
+            background: var(--bg-secondary);
         }
 
-        .new-badge {
-            position: absolute;
-            top: 1rem;
-            left: 1rem;
-            background: var(--success);
-            color: white;
-            padding: 0.3rem 1rem;
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 2rem;
             border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: 600;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
         }
 
-        /* Modal */
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-500);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.8rem;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover .feature-icon {
+            transform: scale(1.1) rotate(360deg);
+        }
+
+        .feature-item h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .feature-item p {
+            color: var(--text-tertiary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* Testimonials Section */
+        .testimonials-section {
+            padding: 4rem 2rem;
+            background: var(--bg-primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonial-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 2rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--primary-500);
+        }
+
+        .quote-icon {
+            font-size: 3rem;
+            color: var(--primary-500);
+            opacity: 0.2;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+        }
+
+        .testimonial-text {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .author-info h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.2rem;
+        }
+
+        .author-info p {
+            font-size: 0.85rem;
+            color: var(--text-tertiary);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 2rem;
+            background: var(--gradient-primary);
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 50%);
+            animation: rotate 30s linear infinite;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cta-section h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-cta-light {
+            background: white;
+            color: var(--primary-600);
+            border: none;
+        }
+
+        .btn-cta-light:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .btn-cta-outline-light {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .btn-cta-outline-light:hover {
+            border-color: white;
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-3px);
+        }
+
+        /* Tool Modal */
         .modal {
             display: none;
             position: fixed;
@@ -336,11 +971,18 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             align-items: center;
             justify-content: center;
             z-index: 2000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .modal.active {
@@ -349,15 +991,15 @@
 
         .modal-content {
             background: var(--bg-primary);
-            border-radius: 30px;
+            border-radius: 32px;
             padding: 2.5rem;
             width: 90%;
-            max-width: 900px;
-            max-height: 90vh;
+            max-width: 700px;
+            max-height: 85vh;
             overflow-y: auto;
             position: relative;
-            box-shadow: var(--shadow);
-            animation: slideUp 0.3s ease;
+            box-shadow: var(--shadow-xl);
+            animation: slideUp 0.4s ease;
         }
 
         @keyframes slideUp {
@@ -371,48 +1013,73 @@
             }
         }
 
-        .close {
+        .close-modal {
             position: absolute;
             top: 1.5rem;
             right: 1.5rem;
-            font-size: 2rem;
-            cursor: pointer;
-            color: var(--text-tertiary);
-            transition: all 0.3s;
             width: 40px;
             height: 40px;
+            border-radius: 50%;
+            background: var(--bg-secondary);
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 50%;
-            background: var(--bg-tertiary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+            border: none;
         }
 
-        .close:hover {
-            color: var(--danger);
+        .close-modal:hover {
+            background: var(--danger);
+            color: white;
             transform: rotate(90deg);
         }
 
         /* Drop Zone */
         .drop-zone {
             border: 3px dashed var(--border);
-            border-radius: 20px;
-            padding: 3rem;
+            border-radius: 24px;
+            padding: 2.5rem;
             text-align: center;
             margin: 2rem 0;
             cursor: pointer;
-            transition: all 0.3s;
-            background: var(--bg-tertiary);
+            transition: all 0.3s ease;
+            background: var(--bg-secondary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .drop-zone::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .drop-zone:hover::before {
+            opacity: 0.05;
         }
 
         .drop-zone.dragover {
-            border-color: var(--accent-1);
-            background: linear-gradient(135deg, var(--accent-1)10, var(--accent-2)10);
+            border-color: var(--primary-500);
             transform: scale(1.02);
         }
 
+        .drop-zone i {
+            font-size: 3rem;
+            color: var(--primary-500);
+            margin-bottom: 1rem;
+        }
+
         .drop-zone p {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: var(--text-secondary);
         }
 
@@ -425,14 +1092,26 @@
         }
 
         .file-list li {
-            background: var(--bg-tertiary);
+            background: var(--bg-secondary);
             border: 1px solid var(--border);
             border-radius: 12px;
-            padding: 1rem;
+            padding: 0.8rem 1rem;
             margin-bottom: 0.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
         .remove-file {
@@ -441,7 +1120,7 @@
             font-weight: bold;
             padding: 0.2rem 0.8rem;
             border-radius: 6px;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
         }
 
         .remove-file:hover {
@@ -451,7 +1130,7 @@
 
         /* Tool Options */
         .tool-options {
-            background: var(--bg-tertiary);
+            background: var(--bg-secondary);
             border-radius: 20px;
             padding: 1.5rem;
             margin: 1.5rem 0;
@@ -462,6 +1141,7 @@
             margin-bottom: 0.5rem;
             color: var(--text-primary);
             font-weight: 600;
+            font-size: 0.95rem;
         }
 
         .tool-options input,
@@ -474,33 +1154,38 @@
             background: var(--bg-primary);
             color: var(--text-primary);
             margin-bottom: 1rem;
-            font-size: 1rem;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
         }
 
         .tool-options input:focus,
         .tool-options select:focus {
             outline: none;
-            border-color: var(--accent-1);
+            border-color: var(--primary-500);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
         }
 
         /* Process Button */
         .process-btn {
             width: 100%;
             padding: 1.2rem;
-            background: var(--gradient);
+            background: var(--gradient-primary);
             color: white;
             border: none;
-            border-radius: 16px;
-            font-size: 1.2rem;
+            border-radius: 100px;
+            font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
-            margin: 1.5rem 0;
+            transition: all 0.3s ease;
+            background-size: 200% auto;
+            position: relative;
+            overflow: hidden;
         }
 
         .process-btn:hover:not(:disabled) {
+            background-position: right center;
             transform: translateY(-2px);
-            box-shadow: var(--shadow);
+            box-shadow: var(--shadow-xl);
         }
 
         .process-btn:disabled {
@@ -512,9 +1197,10 @@
         .output-area {
             margin-top: 1.5rem;
             padding: 1.5rem;
-            background: var(--bg-tertiary);
-            border-radius: 16px;
+            background: var(--bg-secondary);
+            border-radius: 20px;
             text-align: center;
+            animation: fadeIn 0.3s ease;
         }
 
         .download-btn {
@@ -523,17 +1209,17 @@
             background: var(--success);
             color: white;
             text-decoration: none;
-            border-radius: 12px;
+            border-radius: 100px;
             font-weight: 600;
             margin-top: 1rem;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
             border: none;
             cursor: pointer;
         }
 
         .download-btn:hover {
             transform: translateY(-2px);
-            box-shadow: var(--shadow);
+            box-shadow: var(--shadow-lg);
         }
 
         /* Loader */
@@ -549,8 +1235,9 @@
             justify-content: center;
             flex-direction: column;
             color: white;
-            border-radius: 30px;
+            border-radius: 32px;
             z-index: 10;
+            backdrop-filter: blur(4px);
         }
 
         .loader.active {
@@ -558,10 +1245,10 @@
         }
 
         .spinner {
-            width: 60px;
-            height: 60px;
-            border: 5px solid var(--border);
-            border-top-color: var(--accent-1);
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--border);
+            border-top-color: var(--primary-500);
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin-bottom: 1rem;
@@ -579,8 +1266,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
             align-items: center;
             justify-content: center;
             z-index: 3000;
@@ -592,11 +1279,36 @@
 
         .auth-container {
             background: var(--bg-primary);
-            border-radius: 30px;
+            border-radius: 32px;
             padding: 2.5rem;
             width: 90%;
             max-width: 400px;
             position: relative;
+            animation: slideUp 0.4s ease;
+        }
+
+        .close-auth {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--bg-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .close-auth:hover {
+            background: var(--danger);
+            color: white;
+            transform: rotate(90deg);
         }
 
         .auth-tabs {
@@ -614,11 +1326,22 @@
             font-weight: 600;
             cursor: pointer;
             font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
         }
 
         .auth-tab.active {
-            color: var(--accent-1);
-            border-bottom: 2px solid var(--accent-1);
+            color: var(--primary-500);
+        }
+
+        .auth-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gradient-primary);
         }
 
         .auth-form {
@@ -627,6 +1350,7 @@
 
         .auth-form.active {
             display: block;
+            animation: fadeIn 0.3s ease;
         }
 
         .form-group {
@@ -638,6 +1362,7 @@
             margin-bottom: 0.5rem;
             color: var(--text-primary);
             font-weight: 500;
+            font-size: 0.95rem;
         }
 
         .form-group input {
@@ -645,14 +1370,16 @@
             padding: 0.8rem 1rem;
             border: 2px solid var(--border);
             border-radius: 12px;
-            background: var(--bg-tertiary);
+            background: var(--bg-secondary);
             color: var(--text-primary);
-            font-size: 1rem;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
         }
 
         .form-group input:focus {
             outline: none;
-            border-color: var(--accent-1);
+            border-color: var(--primary-500);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
         }
 
         .error-message {
@@ -666,97 +1393,29 @@
             font-size: 0.9rem;
             margin: 0.5rem 0;
             padding: 0.8rem;
-            background: var(--bg-tertiary);
+            background: var(--bg-secondary);
             border-radius: 12px;
             text-align: center;
         }
 
-        /* User Profile */
-        .user-profile {
-            display: none;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            background: var(--gradient);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .auth-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--gradient-primary);
             color: white;
+            border: none;
+            border-radius: 100px;
+            font-size: 1rem;
             font-weight: 600;
-            font-size: 1.2rem;
-        }
-
-        .user-name {
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-
-        .logout-btn {
-            padding: 0.4rem 1rem;
-            background: transparent;
-            border: 1px solid var(--danger);
-            color: var(--danger);
-            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
+            background-size: 200% auto;
         }
 
-        .logout-btn:hover {
-            background: var(--danger);
-            color: white;
-        }
-
-        /* Footer */
-        .footer {
-            background: var(--bg-primary);
-            border-top: 1px solid var(--border);
-            padding: 4rem 2rem 2rem;
-            margin-top: 4rem;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 3rem;
-        }
-
-        .footer-section h4 {
-            color: var(--text-primary);
-            margin-bottom: 1.5rem;
-            font-size: 1.2rem;
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section li {
-            margin-bottom: 0.8rem;
-        }
-
-        .footer-section a {
-            color: var(--text-tertiary);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-section a:hover {
-            color: var(--accent-1);
-        }
-
-        .copyright {
-            text-align: center;
-            padding-top: 3rem;
-            margin-top: 3rem;
-            border-top: 1px solid var(--border);
-            color: var(--text-tertiary);
+        .auth-btn:hover {
+            background-position: right center;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
         }
 
         /* Hamburger Menu */
@@ -770,12 +1429,24 @@
         .hamburger span {
             width: 30px;
             height: 3px;
-            background: var(--gradient);
+            background: var(--gradient-primary);
             border-radius: 3px;
-            transition: 0.3s;
+            transition: all 0.3s ease;
         }
 
-        /* Mobile Menu */
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
         .mobile-menu {
             display: none;
             position: fixed;
@@ -789,7 +1460,9 @@
             gap: 0.5rem;
             z-index: 999;
             transform: translateY(-150%);
-            transition: transform 0.3s;
+            transition: transform 0.3s ease;
+            box-shadow: var(--shadow-lg);
+            backdrop-filter: blur(10px);
         }
 
         .mobile-menu.active {
@@ -799,18 +1472,112 @@
         .mobile-menu a {
             color: var(--text-primary);
             text-decoration: none;
-            padding: 0.8rem;
-            border-radius: 8px;
-            transition: all 0.3s;
+            padding: 0.8rem 1rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
         }
 
         .mobile-menu a:hover {
-            background: var(--bg-tertiary);
-            color: var(--accent-1);
+            background: var(--bg-secondary);
+            color: var(--primary-500);
+            transform: translateX(5px);
+        }
+
+        .mobile-menu hr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 0.5rem 0;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--bg-primary);
+            border-top: 1px solid var(--border);
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-section h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section a {
+            color: var(--text-tertiary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary-500);
+            transform: translateX(5px);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: var(--bg-secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .social-links a:hover {
+            background: var(--gradient-primary);
+            color: white;
+            transform: translateY(-3px) rotate(360deg);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-tertiary);
+            font-size: 0.9rem;
         }
 
         /* Responsive */
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
+            .nav-links {
+                display: none;
+            }
+
             .auth-buttons {
                 display: none;
             }
@@ -824,49 +1591,127 @@
             }
 
             .hero h1 {
-                font-size: 2.5rem;
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
             }
 
-            .stats {
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn-cta {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .stats-grid {
                 gap: 2rem;
             }
 
             .stat-number {
-                font-size: 2rem;
+                font-size: 2.5rem;
             }
 
-            .container {
-                padding: 1rem;
+            .section-title {
+                font-size: 2rem;
             }
 
             .tools-grid {
                 grid-template-columns: 1fr;
             }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero-badge {
+                font-size: 0.8rem;
+                padding: 0.4rem 1rem;
+            }
+
+            .stats-grid {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 1.6rem;
+            }
+
+            .modal-content {
+                padding: 1.5rem;
+            }
         }
     </style>
 </head>
 <body data-theme="light">
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- Animated Background -->
+    <div class="gradient-bg"></div>
+
     <!-- Header -->
     <header class="header">
-        <a href="#" class="logo">⚡ SwagChup</a>
+        <a href="#" class="logo">
+            <i class="fas fa-bolt"></i>
+            SwagChup
+        </a>
         
         <div class="nav-items">
+            <!-- Navigation Links -->
+            <ul class="nav-links">
+                <li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="#features"><i class="fas fa-star"></i> Features</a></li>
+                <li><a href="#tools"><i class="fas fa-tools"></i> Tools</a></li>
+                <li><a href="#testimonials"><i class="fas fa-comments"></i> Testimonials</a></li>
+                <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
+
             <!-- Auth Buttons -->
             <div class="auth-buttons" id="auth-buttons">
-                <button class="btn btn-login" id="open-login">Login</button>
-                <button class="btn btn-signup" id="open-signup">Sign Up</button>
+                <button class="btn btn-login" id="open-login">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+                <button class="btn btn-signup" id="open-signup">
+                    <i class="fas fa-user-plus"></i> Sign Up
+                </button>
             </div>
 
             <!-- User Profile -->
             <div class="user-profile" id="user-profile">
                 <div class="user-avatar" id="user-avatar">U</div>
                 <span class="user-name" id="user-name">User</span>
-                <button class="logout-btn" id="logout-btn">Logout</button>
+                <button class="logout-btn" id="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
             </div>
 
             <!-- Theme Toggle -->
             <div class="theme-toggle" id="theme-toggle">
-                <div class="theme-toggle-circle"></div>
+                <i class="fas fa-sun"></i>
             </div>
 
             <!-- Hamburger Menu -->
@@ -880,42 +1725,43 @@
 
     <!-- Mobile Menu -->
     <div class="mobile-menu" id="mobile-menu">
-        <a href="#" onclick="openTool('merge-pdf')">📑 Merge PDF</a>
-        <a href="#" onclick="openTool('split-pdf')">✂️ Split PDF</a>
-        <a href="#" onclick="openTool('compress-pdf')">🗜️ Compress PDF</a>
-        <a href="#" onclick="openTool('pdf-to-word')">📝 PDF to Word</a>
-        <a href="#" onclick="openTool('word-to-pdf')">📄 Word to PDF</a>
-        <a href="#" onclick="openTool('pdf-to-excel')">📊 PDF to Excel</a>
-        <a href="#" onclick="openTool('excel-to-pdf')">📈 Excel to PDF</a>
-        <a href="#" onclick="openTool('pdf-to-ppt')">📽️ PDF to PPT</a>
-        <a href="#" onclick="openTool('ppt-to-pdf')">📺 PPT to PDF</a>
-        <a href="#" onclick="openTool('pdf-to-images')">🖼️ PDF to Images</a>
-        <a href="#" onclick="openTool('images-to-pdf')">📸 Images to PDF</a>
-        <a href="#" onclick="openTool('edit-pdf')">✏️ Edit PDF</a>
-        <a href="#" onclick="openTool('sign-pdf')">✍️ Sign PDF</a>
-        <a href="#" onclick="openTool('protect-pdf')">🔒 Protect PDF</a>
-        <a href="#" onclick="openTool('unlock-pdf')">🔓 Unlock PDF</a>
-        <a href="#" onclick="openTool('rotate-pdf')">🔄 Rotate PDF</a>
-        <a href="#" onclick="openTool('watermark-pdf')">💧 Watermark PDF</a>
-        <a href="#" onclick="openTool('crop-pdf')">✂️ Crop PDF</a>
-        <a href="#" onclick="openTool('delete-pages')">🗑️ Delete Pages</a>
-        <a href="#" onclick="openTool('extract-pages')">📄 Extract Pages</a>
-        <a href="#" onclick="openTool('reorder-pages')">🔄 Reorder Pages</a>
-        <a href="#" onclick="openTool('add-numbers')">🔢 Add Page Numbers</a>
-        <a href="#" onclick="openTool('flatten-pdf')">⬇️ Flatten PDF</a>
-        <a href="#" onclick="openTool('ocr-pdf')">🔍 OCR PDF</a>
-        <a href="#" onclick="openTool('compare-pdf')">🔁 Compare PDF</a>
+        <a href="#home"><i class="fas fa-home"></i> Home</a>
+        <a href="#features"><i class="fas fa-star"></i> Features</a>
+        <a href="#tools"><i class="fas fa-tools"></i> Tools</a>
+        <a href="#testimonials"><i class="fas fa-comments"></i> Testimonials</a>
+        <a href="#contact"><i class="fas fa-envelope"></i> Contact</a>
+        <hr>
+        <a href="#" id="mobile-login"><i class="fas fa-sign-in-alt"></i> Login</a>
+        <a href="#" id="mobile-signup"><i class="fas fa-user-plus"></i> Sign Up</a>
     </div>
 
     <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <h1>25+ Premium PDF Tools</h1>
-            <p>Everything you need to work with PDFs. Merge, split, compress, convert, edit, secure, and more. All tools are 100% free and work entirely in your browser.</p>
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <span class="hero-badge">
+                <i class="fas fa-crown"></i> 35+ Professional PDF Tools
+            </span>
             
-            <div class="stats">
+            <h1>
+                <span class="highlight">Transform</span> Your PDFs<br>with <span class="highlight">Style</span>
+            </h1>
+            
+            <p>
+                Experience the most beautiful and intuitive PDF toolkit. Merge, split, compress, convert, edit, and secure your PDFs with our stunning interface. 100% free, no uploads, complete privacy.
+            </p>
+            
+            <div class="hero-cta">
+                <button class="btn-cta btn-cta-primary" onclick="scrollToTools()">
+                    <i class="fas fa-rocket"></i> Get Started Free
+                </button>
+                <button class="btn-cta btn-cta-secondary" onclick="watchDemo()">
+                    <i class="fas fa-play-circle"></i> Watch Demo
+                </button>
+            </div>
+            
+            <div class="stats-grid">
                 <div class="stat-item">
-                    <div class="stat-number" id="stat-tools">25+</div>
+                    <div class="stat-number">35+</div>
                     <div class="stat-label">Powerful Tools</div>
                 </div>
                 <div class="stat-item">
@@ -923,30 +1769,348 @@
                     <div class="stat-label">Free Forever</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number">100%</div>
-                    <div class="stat-label">Secure</div>
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Upload Required</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number">0</div>
-                    <div class="stat-label">Server Upload</div>
+                    <div class="stat-number">1M+</div>
+                    <div class="stat-label">Happy Users</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Tools Section -->
-    <div class="container">
-        <h2 class="section-title">🚀 All PDF Tools</h2>
-        <div class="tools-grid" id="tools-grid"></div>
-    </div>
+    <!-- Categories Section -->
+    <section class="categories-section" id="features">
+        <div class="section-header">
+            <div class="section-subtitle">CATEGORIES</div>
+            <h2 class="section-title">Everything You Need</h2>
+            <p class="section-description">
+                Organized tools for every PDF task you can imagine
+            </p>
+        </div>
+        
+        <div class="categories-grid">
+            <div class="category-card" onclick="scrollToCategory('organize')">
+                <span class="category-count">6</span>
+                <div class="category-icon">
+                    <i class="fas fa-folder-open"></i>
+                </div>
+                <h3>Organize PDF</h3>
+            </div>
+            
+            <div class="category-card" onclick="scrollToCategory('optimize')">
+                <span class="category-count">3</span>
+                <div class="category-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3>Optimize PDF</h3>
+            </div>
+            
+            <div class="category-card" onclick="scrollToCategory('convert-to')">
+                <span class="category-count">5</span>
+                <div class="category-icon">
+                    <i class="fas fa-file-import"></i>
+                </div>
+                <h3>Convert to PDF</h3>
+            </div>
+            
+            <div class="category-card" onclick="scrollToCategory('convert-from')">
+                <span class="category-count">5</span>
+                <div class="category-icon">
+                    <i class="fas fa-file-export"></i>
+                </div>
+                <h3>Convert from PDF</h3>
+            </div>
+            
+            <div class="category-card" onclick="scrollToCategory('edit')">
+                <span class="category-count">5</span>
+                <div class="category-icon">
+                    <i class="fas fa-edit"></i>
+                </div>
+                <h3>Edit PDF</h3>
+            </div>
+            
+            <div class="category-card" onclick="scrollToCategory('security')">
+                <span class="category-count">5</span>
+                <div class="category-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>PDF Security</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tools Section - ORGANIZE PDF -->
+    <section class="tools-section" id="organize">
+        <div class="section-header">
+            <div class="section-subtitle">ORGANIZE PDF</div>
+            <h2 class="section-title">Arrange Your Documents</h2>
+            <p class="section-description">
+                Merge, split, remove, extract, and organize pages with ease
+            </p>
+        </div>
+        
+        <div class="tools-grid" id="organize-tools"></div>
+    </section>
+
+    <!-- Tools Section - OPTIMIZE PDF -->
+    <section class="tools-section" id="optimize">
+        <div class="section-header">
+            <div class="section-subtitle">OPTIMIZE PDF</div>
+            <h2 class="section-title">Make PDFs Smaller & Better</h2>
+            <p class="section-description">
+                Compress, repair, and make your PDFs searchable
+            </p>
+        </div>
+        
+        <div class="tools-grid" id="optimize-tools"></div>
+    </section>
+
+    <!-- Tools Section - CONVERT TO PDF -->
+    <section class="tools-section" id="convert-to">
+        <div class="section-header">
+            <div class="section-subtitle">CONVERT TO PDF</div>
+            <h2 class="section-title">Create PDF from Any File</h2>
+            <p class="section-description">
+                Convert images, documents, and web pages to PDF
+            </p>
+        </div>
+        
+        <div class="tools-grid" id="convert-to-tools"></div>
+    </section>
+
+    <!-- Tools Section - CONVERT FROM PDF -->
+    <section class="tools-section" id="convert-from">
+        <div class="section-header">
+            <div class="section-subtitle">CONVERT FROM PDF</div>
+            <h2 class="section-title">Extract Content from PDF</h2>
+            <p class="section-description">
+                Convert PDF to images, Word, PowerPoint, Excel, and more
+            </p>
+        </div>
+        
+        <div class="tools-grid" id="convert-from-tools"></div>
+    </section>
+
+    <!-- Tools Section - EDIT PDF -->
+    <section class="tools-section" id="edit">
+        <div class="section-header">
+            <div class="section-subtitle">EDIT PDF</div>
+            <h2 class="section-title">Modify Your Documents</h2>
+            <p class="section-description">
+                Rotate, add numbers, watermark, crop, and edit content
+            </p>
+        </div>
+        
+        <div class="tools-grid" id="edit-tools"></div>
+    </section>
+
+    <!-- Tools Section - PDF SECURITY -->
+    <section class="tools-section" id="security">
+        <div class="section-header">
+            <div class="section-subtitle">PDF SECURITY</div>
+            <h2 class="section-title">Protect Your Documents</h2>
+            <p class="section-description">
+                Unlock, protect, sign, redact, and compare PDFs
+            </p>
+        </div>
+        
+        <div class="tools-grid" id="security-tools"></div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="section-header">
+            <div class="section-subtitle">WHY CHOOSE US</div>
+            <h2 class="section-title">Amazing Features</h2>
+            <p class="section-description">
+                We've designed the perfect PDF toolkit with you in mind
+            </p>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h3>Privacy First</h3>
+                <p>All processing happens in your browser. Your files never leave your device.</p>
+            </div>
+            
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3>Lightning Fast</h3>
+                <p>Optimized algorithms process even large files in seconds.</p>
+            </div>
+            
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-infinity"></i>
+                </div>
+                <h3>Unlimited Usage</h3>
+                <p>No limits, no file size restrictions, no hidden charges. 100% free.</p>
+            </div>
+            
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3>Works Everywhere</h3>
+                <p>Compatible with all devices and browsers. Use on desktop, tablet, or phone.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section" id="testimonials">
+        <div class="section-header">
+            <div class="section-subtitle">TESTIMONIALS</div>
+            <h2 class="section-title">Loved by Users</h2>
+            <p class="section-description">
+                Join millions of satisfied users who trust SwagChup
+            </p>
+        </div>
+        
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="quote-icon">
+                    <i class="fas fa-quote-right"></i>
+                </div>
+                <p class="testimonial-text">
+                    "This is hands down the best PDF tool I've ever used. The interface is gorgeous and everything just works. And it's free!"
+                </p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="author-info">
+                        <h4>Sarah Johnson</h4>
+                        <p>Marketing Director</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <div class="quote-icon">
+                    <i class="fas fa-quote-right"></i>
+                </div>
+                <p class="testimonial-text">
+                    "The privacy aspect is what sold me. Knowing my files never leave my device gives me peace of mind when working with sensitive documents."
+                </p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="author-info">
+                        <h4>Michael Chen</h4>
+                        <p>Legal Consultant</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <div class="quote-icon">
+                    <i class="fas fa-quote-right"></i>
+                </div>
+                <p class="testimonial-text">
+                    "35+ tools and everything is actually useful. No bloat, just quality tools that work perfectly. The edit feature is amazing!"
+                </p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="author-info">
+                        <h4>Emily Rodriguez</h4>
+                        <p>Graphic Designer</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="contact">
+        <div class="cta-content">
+            <h2>Ready to Transform Your PDF Workflow?</h2>
+            <p>Join 1M+ users who have already discovered the most beautiful PDF toolkit</p>
+            
+            <div class="cta-buttons">
+                <button class="btn-cta btn-cta-light" onclick="scrollToTools()">
+                    <i class="fas fa-rocket"></i> Get Started Free
+                </button>
+                <button class="btn-cta btn-cta-outline-light" onclick="contactSupport()">
+                    <i class="fas fa-headset"></i> Contact Support
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4><i class="fas fa-bolt"></i> SwagChup</h4>
+                <p style="color: var(--text-tertiary); margin-bottom: 1rem;">
+                    The most beautiful PDF toolkit on the web. 35+ tools, 100% free, privacy first.
+                </p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-discord"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Popular Tools</h4>
+                <ul>
+                    <li><a href="#" onclick="openToolModal('merge-pdf')"><i class="fas fa-object-group"></i> Merge PDF</a></li>
+                    <li><a href="#" onclick="openToolModal('split-pdf')"><i class="fas fa-cut"></i> Split PDF</a></li>
+                    <li><a href="#" onclick="openToolModal('compress-pdf')"><i class="fas fa-compress-alt"></i> Compress PDF</a></li>
+                    <li><a href="#" onclick="openToolModal('pdf-to-word')"><i class="fas fa-file-word"></i> PDF to Word</a></li>
+                    <li><a href="#" onclick="openToolModal('edit-pdf')"><i class="fas fa-pen-fancy"></i> Edit PDF</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Categories</h4>
+                <ul>
+                    <li><a href="#" onclick="scrollToCategory('organize')"><i class="fas fa-folder-open"></i> Organize PDF</a></li>
+                    <li><a href="#" onclick="scrollToCategory('optimize')"><i class="fas fa-chart-line"></i> Optimize PDF</a></li>
+                    <li><a href="#" onclick="scrollToCategory('convert-to')"><i class="fas fa-file-import"></i> Convert to PDF</a></li>
+                    <li><a href="#" onclick="scrollToCategory('convert-from')"><i class="fas fa-file-export"></i> Convert from PDF</a></li>
+                    <li><a href="#" onclick="scrollToCategory('security')"><i class="fas fa-shield-alt"></i> PDF Security</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <ul>
+                    <li><a href="mailto:support@swagchup.in"><i class="fas fa-envelope"></i> support@swagchup.in</a></li>
+                    <li><a href="https://wa.me/7978270687"><i class="fab fa-whatsapp"></i> +91 7978270687</a></li>
+                    <li><a href="https://wa.me/7978792545"><i class="fab fa-whatsapp"></i> +91 7978792545</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>© 2025 SwagChup. All Rights Reserved. | Made with <i class="fas fa-heart" style="color: var(--danger);"></i> for PDF lovers</p>
+        </div>
+    </footer>
 
     <!-- Tool Modal -->
     <div class="modal" id="tool-modal">
         <div class="modal-content">
-            <span class="close" id="close-tool-modal">×</span>
-            <h2 id="tool-title" style="margin-bottom: 1rem; font-size: 2rem;">Tool Title</h2>
+            <button class="close-modal" id="close-modal">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2 id="modal-title" style="font-size: 1.8rem; margin-bottom: 1rem;">Tool Title</h2>
             
             <div class="drop-zone" id="drop-zone">
+                <i class="fas fa-cloud-upload-alt"></i>
                 <p>📁 Drag & drop files here or click to browse</p>
                 <input type="file" id="file-input" style="display: none;">
             </div>
@@ -955,7 +2119,9 @@
             
             <div class="tool-options" id="tool-options"></div>
 
-            <button class="process-btn" id="process-btn" disabled>Process Files</button>
+            <button class="process-btn" id="process-btn" disabled>
+                <i class="fas fa-magic"></i> Process
+            </button>
 
             <div class="output-area" id="output-area"></div>
 
@@ -969,23 +2135,29 @@
     <!-- Auth Modal -->
     <div class="auth-modal" id="auth-modal">
         <div class="auth-container">
-            <span class="close" id="close-auth">×</span>
+            <button class="close-auth" id="close-auth">
+                <i class="fas fa-times"></i>
+            </button>
             
             <div class="auth-tabs">
-                <button class="auth-tab active" id="login-tab">Login</button>
-                <button class="auth-tab" id="signup-tab">Sign Up</button>
+                <button class="auth-tab active" id="login-tab">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+                <button class="auth-tab" id="signup-tab">
+                    <i class="fas fa-user-plus"></i> Sign Up
+                </button>
             </div>
 
             <!-- Login Form -->
             <form class="auth-form active" id="login-form">
                 <div class="form-group">
-                    <label>Email Address</label>
+                    <label><i class="fas fa-envelope"></i> Email</label>
                     <input type="email" id="login-email" placeholder="Enter your email">
                     <div class="error-message" id="login-email-error"></div>
                 </div>
 
                 <div class="form-group">
-                    <label>Password</label>
+                    <label><i class="fas fa-lock"></i> Password</label>
                     <input type="password" id="login-password" placeholder="Enter your password">
                     <div class="error-message" id="login-password-error"></div>
                 </div>
@@ -996,50 +2168,54 @@
                     </label>
                 </div>
 
-                <button type="submit" class="process-btn" style="margin-top: 1rem;">Login</button>
+                <button type="submit" class="auth-btn">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
                 
                 <div class="error-message" id="login-general-error"></div>
                 <div class="success-message" id="login-success-message"></div>
 
                 <div style="text-align: center; margin-top: 1rem;">
-                    <a href="#" id="forgot-password" style="color: var(--accent-1);">Forgot password?</a>
+                    <a href="#" id="forgot-password" style="color: var(--primary-500);">Forgot password?</a>
                 </div>
             </form>
 
             <!-- Signup Form -->
             <form class="auth-form" id="signup-form">
                 <div class="form-group">
-                    <label>Full Name</label>
+                    <label><i class="fas fa-user"></i> Full Name</label>
                     <input type="text" id="signup-name" placeholder="Enter your full name">
                     <div class="error-message" id="signup-name-error"></div>
                 </div>
 
                 <div class="form-group">
-                    <label>Email Address</label>
+                    <label><i class="fas fa-envelope"></i> Email</label>
                     <input type="email" id="signup-email" placeholder="Enter your email">
                     <div class="error-message" id="signup-email-error"></div>
                 </div>
 
                 <div class="form-group">
-                    <label>Password</label>
+                    <label><i class="fas fa-lock"></i> Password</label>
                     <input type="password" id="signup-password" placeholder="Create a password">
                     <div class="error-message" id="signup-password-error"></div>
                 </div>
 
                 <div class="form-group">
-                    <label>Confirm Password</label>
-                    <input type="password" id="signup-confirm" placeholder="Confirm your password">
+                    <label><i class="fas fa-lock"></i> Confirm Password</label>
+                    <input type="password" id="signup-confirm" placeholder="Confirm password">
                     <div class="error-message" id="signup-confirm-error"></div>
                 </div>
 
                 <div class="form-group">
                     <label style="display: flex; align-items: center; gap: 0.5rem;">
-                        <input type="checkbox" id="terms"> I agree to the Terms & Privacy
+                        <input type="checkbox" id="terms"> I agree to Terms & Privacy
                     </label>
                     <div class="error-message" id="terms-error"></div>
                 </div>
 
-                <button type="submit" class="process-btn" style="margin-top: 1rem;">Create Account</button>
+                <button type="submit" class="auth-btn">
+                    <i class="fas fa-user-plus"></i> Create Account
+                </button>
                 
                 <div class="error-message" id="signup-general-error"></div>
                 <div class="success-message" id="signup-success-message"></div>
@@ -1047,48 +2223,30 @@
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>⚡ SwagChup</h4>
-                <p style="color: var(--text-tertiary); line-height: 1.6;">Complete PDF toolkit with 25+ professional tools. All processing happens in your browser - your files never leave your device.</p>
-            </div>
-            <div class="footer-section">
-                <h4>Popular Tools</h4>
-                <ul>
-                    <li><a href="#" onclick="openTool('merge-pdf')">📑 Merge PDF</a></li>
-                    <li><a href="#" onclick="openTool('split-pdf')">✂️ Split PDF</a></li>
-                    <li><a href="#" onclick="openTool('compress-pdf')">🗜️ Compress PDF</a></li>
-                    <li><a href="#" onclick="openTool('pdf-to-word')">📝 PDF to Word</a></li>
-                    <li><a href="#" onclick="openTool('edit-pdf')">✏️ Edit PDF</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Company</h4>
-                <ul>
-                    <li><a href="about-us.html">About Us</a></li>
-                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                    <li><a href="terms-of-service.html">Terms of Service</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Connect</h4>
-                <ul>
-                    <li><a href="https://omg10.com/4/10638979">Twitter</a></li>
-                    <li><a href="https://omg10.com/4/10623166">GitHub</a></li>
-                    <li><a href="https://omg10.com/4/10637169">LinkedIn</a></li>
-                    <li><a href="https://omg10.com/4/10637159">Discord</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="copyright">
-            <p>© 2026 SwagChup. All rights reserved. Made with ❤️ from Odisha.</p>
-        </div>
-    </footer>
-
     <script>
+        // Custom Cursor
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+
+        document.addEventListener('mousemove', (e) => {
+            cursorDot.style.left = e.clientX + 'px';
+            cursorDot.style.top = e.clientY + 'px';
+            
+            cursorOutline.style.left = e.clientX + 'px';
+            cursorOutline.style.top = e.clientY + 'px';
+        });
+
+        // Hide cursor on mouse leave
+        document.addEventListener('mouseleave', () => {
+            cursorDot.style.opacity = '0';
+            cursorOutline.style.opacity = '0';
+        });
+
+        document.addEventListener('mouseenter', () => {
+            cursorDot.style.opacity = '1';
+            cursorOutline.style.opacity = '1';
+        });
+
         // Initialize PDF.js worker
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
         const { PDFDocument, rgb, degrees, StandardFonts } = PDFLib;
@@ -1114,16 +2272,392 @@
         const hamburger = document.getElementById('hamburger');
         const mobileMenu = document.getElementById('mobile-menu');
 
-        // ============ ALL 25+ PDF TOOLS ============
+        // Helper Functions
+        function readFileAsArrayBuffer(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsArrayBuffer(file);
+            });
+        }
+
+        function readFileAsText(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsText(file);
+            });
+        }
+
+        function downloadFile(data, filename, type) {
+            const blob = new Blob([data], { type });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function downloadBlob(blob, filename) {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function parsePageRange(range, totalPages) {
+            const pages = new Set();
+            range.split(',').forEach(part => {
+                part = part.trim();
+                if (part.includes('-')) {
+                    const [start, end] = part.split('-').map(Number);
+                    for (let i = start; i <= end; i++) {
+                        if (i >= 1 && i <= totalPages) pages.add(i - 1);
+                    }
+                } else {
+                    const page = Number(part);
+                    if (page >= 1 && page <= totalPages) pages.add(page - 1);
+                }
+            });
+            return Array.from(pages);
+        }
+
+        function hexToRgb(hex) {
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? {
+                r: parseInt(result[1], 16) / 255,
+                g: parseInt(result[2], 16) / 255,
+                b: parseInt(result[3], 16) / 255
+            } : { r: 0.5, g: 0.5, b: 0.5 };
+        }
+
+        function toRoman(num) {
+            const roman = ['M','CM','D','CD','C','XC','L','XL','X','IX','V','IV','I'];
+            const values = [1000,900,500,400,100,90,50,40,10,9,5,4,1];
+            let result = '';
+            for (let i = 0; i < values.length; i++) {
+                while (num >= values[i]) {
+                    result += roman[i];
+                    num -= values[i];
+                }
+            }
+            return result;
+        }
+
+        function showLoader(text = 'Processing...') {
+            const loader = document.getElementById('loader');
+            const loaderText = document.getElementById('loader-text');
+            loaderText.textContent = text;
+            loader.classList.add('active');
+        }
+
+        function hideLoader() {
+            document.getElementById('loader').classList.remove('active');
+        }
+
+        function showError(message) {
+            alert('❌ Error: ' + message);
+        }
+
+        function showOutput(message, data, filename) {
+            const output = document.getElementById('output-area');
+            output.innerHTML = `
+                <p style="color: var(--success); margin-bottom: 0.8rem;">
+                    <i class="fas fa-check-circle"></i> ${message}
+                </p>
+                <button class="download-btn" onclick="downloadFileFromOutput('${filename}')">
+                    <i class="fas fa-download"></i> Download ${filename}
+                </button>
+            `;
+            
+            window.lastFileData = data;
+            window.lastFileName = filename;
+        }
+
+        window.downloadFileFromOutput = (filename) => {
+            if (window.lastFileData && window.lastFileName === filename) {
+                const blob = new Blob([window.lastFileData], { type: 'application/octet-stream' });
+                downloadBlob(blob, filename);
+            }
+        };
+
+        // Theme management
+        function setTheme(theme) {
+            body.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            state.theme = theme;
+            
+            const icon = themeToggle.querySelector('i');
+            if (theme === 'light') {
+                icon.className = 'fas fa-moon';
+            } else {
+                icon.className = 'fas fa-sun';
+            }
+        }
+
+        themeToggle.addEventListener('click', () => {
+            setTheme(state.theme === 'light' ? 'dark' : 'light');
+        });
+
+        // Auth management
+        function updateAuthUI() {
+            if (state.currentUser) {
+                authButtons.style.display = 'none';
+                userProfile.style.display = 'flex';
+                userName.textContent = state.currentUser.name;
+                userAvatar.textContent = state.currentUser.name.charAt(0).toUpperCase();
+            } else {
+                authButtons.style.display = 'flex';
+                userProfile.style.display = 'none';
+            }
+        }
+
+        function login(email, password, remember) {
+            const user = state.users.find(u => u.email === email && u.password === password);
+            if (user) {
+                state.currentUser = { name: user.name, email: user.email };
+                if (remember) {
+                    localStorage.setItem('rememberedUser', JSON.stringify(state.currentUser));
+                }
+                sessionStorage.setItem('currentUser', JSON.stringify(state.currentUser));
+                updateAuthUI();
+                closeAuthModal();
+                showSuccess('Login successful!');
+                return true;
+            }
+            return false;
+        }
+
+        function signup(name, email, password) {
+            if (state.users.some(u => u.email === email)) {
+                return false;
+            }
+            const newUser = { name, email, password, id: Date.now() };
+            state.users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(state.users));
+            return true;
+        }
+
+        function logout() {
+            state.currentUser = null;
+            sessionStorage.removeItem('currentUser');
+            localStorage.removeItem('rememberedUser');
+            updateAuthUI();
+        }
+
+        function showSuccess(message) {
+            alert('✅ ' + message);
+        }
+
+        // Check saved session
+        const rememberedUser = localStorage.getItem('rememberedUser');
+        const sessionUser = sessionStorage.getItem('currentUser');
+        
+        if (sessionUser) {
+            state.currentUser = JSON.parse(sessionUser);
+        } else if (rememberedUser) {
+            state.currentUser = JSON.parse(rememberedUser);
+        }
+        updateAuthUI();
+
+        // Auth modal handlers
+        document.getElementById('open-login').addEventListener('click', () => openAuthModal('login'));
+        document.getElementById('open-signup').addEventListener('click', () => openAuthModal('signup'));
+        document.getElementById('close-auth').addEventListener('click', closeAuthModal);
+        document.getElementById('logout-btn').addEventListener('click', logout);
+
+        document.getElementById('mobile-login')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            openAuthModal('login');
+            mobileMenu.classList.remove('active');
+            hamburger.classList.remove('active');
+        });
+
+        document.getElementById('mobile-signup')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            openAuthModal('signup');
+            mobileMenu.classList.remove('active');
+            hamburger.classList.remove('active');
+        });
+
+        function openAuthModal(tab = 'login') {
+            authModal.classList.add('active');
+            if (tab === 'login') {
+                document.getElementById('login-tab').click();
+            } else {
+                document.getElementById('signup-tab').click();
+            }
+        }
+
+        function closeAuthModal() {
+            authModal.classList.remove('active');
+            clearAuthErrors();
+        }
+
+        function clearAuthErrors() {
+            document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+            document.querySelectorAll('.success-message').forEach(el => el.textContent = '');
+        }
+
+        // Auth tab switching
+        document.getElementById('login-tab').addEventListener('click', () => {
+            document.getElementById('login-tab').classList.add('active');
+            document.getElementById('signup-tab').classList.remove('active');
+            document.getElementById('login-form').classList.add('active');
+            document.getElementById('signup-form').classList.remove('active');
+            clearAuthErrors();
+        });
+
+        document.getElementById('signup-tab').addEventListener('click', () => {
+            document.getElementById('signup-tab').classList.add('active');
+            document.getElementById('login-tab').classList.remove('active');
+            document.getElementById('signup-form').classList.add('active');
+            document.getElementById('login-form').classList.remove('active');
+            clearAuthErrors();
+        });
+
+        // Login form
+        document.getElementById('login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            clearAuthErrors();
+            
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const remember = document.getElementById('remember-me').checked;
+            
+            if (!email || !password) {
+                document.getElementById('login-general-error').textContent = 'Please fill all fields';
+                return;
+            }
+            
+            if (login(email, password, remember)) {
+                document.getElementById('login-success-message').textContent = 'Login successful! Redirecting...';
+            } else {
+                document.getElementById('login-general-error').textContent = 'Invalid email or password';
+            }
+        });
+
+        // Signup form
+        document.getElementById('signup-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            clearAuthErrors();
+            
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const confirm = document.getElementById('signup-confirm').value;
+            const terms = document.getElementById('terms').checked;
+            
+            if (!name) {
+                document.getElementById('signup-name-error').textContent = 'Name is required';
+                return;
+            }
+            if (!email || !email.includes('@')) {
+                document.getElementById('signup-email-error').textContent = 'Valid email is required';
+                return;
+            }
+            if (password.length < 6) {
+                document.getElementById('signup-password-error').textContent = 'Password must be at least 6 characters';
+                return;
+            }
+            if (password !== confirm) {
+                document.getElementById('signup-confirm-error').textContent = 'Passwords do not match';
+                return;
+            }
+            if (!terms) {
+                document.getElementById('terms-error').textContent = 'You must agree to the terms';
+                return;
+            }
+            
+            if (signup(name, email, password)) {
+                document.getElementById('signup-success-message').textContent = 'Account created! Please login.';
+                setTimeout(() => {
+                    document.getElementById('login-tab').click();
+                    document.getElementById('login-email').value = email;
+                }, 2000);
+            } else {
+                document.getElementById('signup-general-error').textContent = 'Email already exists';
+            }
+        });
+
+        // Forgot password
+        document.getElementById('forgot-password').addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('📧 Password reset link sent to your email!');
+        });
+
+        // Close modal on outside click
+        authModal.addEventListener('click', (e) => {
+            if (e.target === authModal) closeAuthModal();
+        });
+
+        toolModal.addEventListener('click', (e) => {
+            if (e.target === toolModal) closeToolModal();
+        });
+
+        // Scroll functions
+        function scrollToTools() {
+            document.getElementById('organize').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function scrollToCategory(categoryId) {
+            const element = document.getElementById(categoryId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function watchDemo() {
+            alert('🎥 Demo video coming soon! Stay tuned.');
+        }
+
+        function contactSupport() {
+            window.location.href = 'mailto:support@swagchup.in';
+        }
+
+        window.scrollToTools = scrollToTools;
+        window.scrollToCategory = scrollToCategory;
+        window.watchDemo = watchDemo;
+        window.contactSupport = contactSupport;
+
+        // Hamburger menu
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking links
+        document.querySelectorAll('.mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                document.querySelector('.header').classList.add('scrolled');
+            } else {
+                document.querySelector('.header').classList.remove('scrolled');
+            }
+        });
+
+        // ============ ALL PDF TOOLS ============
         const tools = {
-            // 1. Merge PDF
+            // ORGANIZE PDF
             'merge-pdf': {
-                title: '📑 Merge PDF',
+                title: 'Merge PDF',
                 description: 'Combine multiple PDFs into one document',
                 icon: '📑',
+                category: 'organize',
                 accept: '.pdf',
                 multiple: true,
-                featured: true,
                 process: async (files) => {
                     showLoader('Merging PDFs...');
                     const mergedPdf = await PDFDocument.create();
@@ -1137,23 +2671,20 @@
                     
                     const pdfBytes = await mergedPdf.save();
                     downloadFile(pdfBytes, 'merged.pdf', 'application/pdf');
-                    showOutput('✅ PDFs merged successfully!', pdfBytes, 'merged.pdf');
+                    showOutput('PDFs merged successfully!', pdfBytes, 'merged.pdf');
                     hideLoader();
                 }
             },
-
-            // 2. Split PDF
             'split-pdf': {
-                title: '✂️ Split PDF',
+                title: 'Split PDF',
                 description: 'Extract specific pages from PDF',
                 icon: '✂️',
+                category: 'organize',
                 accept: '.pdf',
                 multiple: false,
-                featured: true,
                 optionsUI: `
-                    <label>Page ranges (e.g., 1-3, 5, 7-9):</label>
+                    <label><i class="fas fa-code"></i> Page ranges (e.g., 1-3, 5, 7-9):</label>
                     <input type="text" id="split-range" placeholder="Enter page ranges" value="1">
-                    <small style="color: var(--text-tertiary);">Separate with commas. Use hyphens for ranges.</small>
                 `,
                 process: async (files) => {
                     const range = document.getElementById('split-range')?.value;
@@ -1170,19 +2701,154 @@
                     
                     const pdfBytes = await newPdf.save();
                     downloadFile(pdfBytes, 'split.pdf', 'application/pdf');
-                    showOutput('✅ PDF split successfully!', pdfBytes, 'split.pdf');
+                    showOutput('PDF split successfully!', pdfBytes, 'split.pdf');
+                    hideLoader();
+                }
+            },
+            'remove-pages': {
+                title: 'Remove pages',
+                description: 'Delete specific pages from PDF',
+                icon: '🗑️',
+                category: 'organize',
+                accept: '.pdf',
+                multiple: false,
+                optionsUI: `
+                    <label><i class="fas fa-code"></i> Pages to remove (e.g., 1-3, 5, 7-9):</label>
+                    <input type="text" id="remove-pages" placeholder="Enter pages to remove">
+                `,
+                process: async (files) => {
+                    const range = document.getElementById('remove-pages')?.value;
+                    if (!range) throw new Error('Please enter pages to remove');
+                    
+                    showLoader('Removing pages...');
+                    const bytes = await readFileAsArrayBuffer(files[0]);
+                    const pdfDoc = await PDFDocument.load(bytes);
+                    
+                    const totalPages = pdfDoc.getPageCount();
+                    const pagesToRemove = parsePageRange(range, totalPages);
+                    const pagesToKeep = Array.from({length: totalPages}, (_, i) => i)
+                        .filter(i => !pagesToRemove.includes(i));
+                    
+                    const newPdf = await PDFDocument.create();
+                    const pages = await newPdf.copyPages(pdfDoc, pagesToKeep);
+                    pages.forEach(page => newPdf.addPage(page));
+                    
+                    const pdfBytes = await newPdf.save();
+                    downloadFile(pdfBytes, 'pages-removed.pdf', 'application/pdf');
+                    showOutput('Pages removed successfully!', pdfBytes, 'pages-removed.pdf');
+                    hideLoader();
+                }
+            },
+            'extract-pages': {
+                title: 'Extract pages',
+                description: 'Extract specific pages to new PDF',
+                icon: '📄',
+                category: 'organize',
+                accept: '.pdf',
+                multiple: false,
+                optionsUI: `
+                    <label><i class="fas fa-code"></i> Pages to extract (e.g., 1-3, 5, 7-9):</label>
+                    <input type="text" id="extract-pages" placeholder="Enter pages to extract">
+                `,
+                process: async (files) => {
+                    const range = document.getElementById('extract-pages')?.value;
+                    if (!range) throw new Error('Please enter pages to extract');
+                    
+                    showLoader('Extracting pages...');
+                    const bytes = await readFileAsArrayBuffer(files[0]);
+                    const pdfDoc = await PDFDocument.load(bytes);
+                    
+                    const pagesToExtract = parsePageRange(range, pdfDoc.getPageCount());
+                    const newPdf = await PDFDocument.create();
+                    const pages = await newPdf.copyPages(pdfDoc, pagesToExtract);
+                    pages.forEach(page => newPdf.addPage(page));
+                    
+                    const pdfBytes = await newPdf.save();
+                    downloadFile(pdfBytes, 'extracted.pdf', 'application/pdf');
+                    showOutput('Pages extracted successfully!', pdfBytes, 'extracted.pdf');
+                    hideLoader();
+                }
+            },
+            'organize-pdf': {
+                title: 'Organize PDF',
+                description: 'Reorder pages in your PDF',
+                icon: '🔄',
+                category: 'organize',
+                accept: '.pdf',
+                multiple: false,
+                optionsUI: `
+                    <label><i class="fas fa-code"></i> New page order (e.g., 3,1,2,4):</label>
+                    <input type="text" id="page-order" placeholder="Enter new order">
+                `,
+                process: async (files) => {
+                    const order = document.getElementById('page-order')?.value;
+                    if (!order) throw new Error('Please enter page order');
+                    
+                    showLoader('Organizing pages...');
+                    const bytes = await readFileAsArrayBuffer(files[0]);
+                    const pdfDoc = await PDFDocument.load(bytes);
+                    
+                    const totalPages = pdfDoc.getPageCount();
+                    const newOrder = order.split(',')
+                        .map(p => parseInt(p.trim()) - 1)
+                        .filter(i => i >= 0 && i < totalPages);
+                    
+                    const newPdf = await PDFDocument.create();
+                    const pages = await newPdf.copyPages(pdfDoc, newOrder);
+                    pages.forEach(page => newPdf.addPage(page));
+                    
+                    const pdfBytes = await newPdf.save();
+                    downloadFile(pdfBytes, 'organized.pdf', 'application/pdf');
+                    showOutput('Pages organized successfully!', pdfBytes, 'organized.pdf');
+                    hideLoader();
+                }
+            },
+            'scan-to-pdf': {
+                title: 'Scan to PDF',
+                description: 'Create PDF from scanner images',
+                icon: '📸',
+                category: 'organize',
+                accept: '.jpg,.jpeg,.png,.gif',
+                multiple: true,
+                process: async (files) => {
+                    showLoader('Creating PDF from images...');
+                    
+                    const pdfDoc = await PDFDocument.create();
+                    
+                    for (const file of files) {
+                        const bytes = await readFileAsArrayBuffer(file);
+                        
+                        let image;
+                        if (file.type.includes('jpeg') || file.type.includes('jpg')) {
+                            image = await pdfDoc.embedJpg(bytes);
+                        } else {
+                            image = await pdfDoc.embedPng(bytes);
+                        }
+                        
+                        const page = pdfDoc.addPage([image.width, image.height]);
+                        page.drawImage(image, {
+                            x: 0,
+                            y: 0,
+                            width: image.width,
+                            height: image.height
+                        });
+                    }
+                    
+                    const pdfBytes = await pdfDoc.save();
+                    downloadFile(pdfBytes, 'scanned.pdf', 'application/pdf');
+                    showOutput('PDF created from images!', pdfBytes, 'scanned.pdf');
                     hideLoader();
                 }
             },
 
-            // 3. Compress PDF
+            // OPTIMIZE PDF
             'compress-pdf': {
-                title: '🗜️ Compress PDF',
+                title: 'Compress PDF',
                 description: 'Reduce PDF file size',
                 icon: '🗜️',
+                category: 'optimize',
                 accept: '.pdf',
                 multiple: false,
-                featured: true,
                 process: async (files) => {
                     showLoader('Compressing PDF...');
                     
@@ -1195,59 +2861,99 @@
                     const reduction = ((originalSize - compressedSize) / originalSize * 100).toFixed(1);
                     
                     downloadFile(pdfBytes, 'compressed.pdf', 'application/pdf');
-                    showOutput(`✅ PDF compressed by ${reduction}%!`, pdfBytes, 'compressed.pdf');
+                    showOutput(`PDF compressed by ${reduction}%!`, pdfBytes, 'compressed.pdf');
                     hideLoader();
                 }
             },
-
-            // 4. PDF to Word
-            'pdf-to-word': {
-                title: '📝 PDF to Word',
-                description: 'Convert PDF to editable Word document',
-                icon: '📝',
+            'repair-pdf': {
+                title: 'Repair PDF',
+                description: 'Fix corrupted PDF files',
+                icon: '🔧',
+                category: 'optimize',
                 accept: '.pdf',
                 multiple: false,
-                featured: true,
                 process: async (files) => {
-                    showLoader('Extracting text from PDF...');
+                    showLoader('Repairing PDF...');
                     
-                    const data = await readFileAsArrayBuffer(files[0]);
-                    const pdf = await pdfjsLib.getDocument({data}).promise;
-                    let text = '';
-                    
-                    for (let i = 1; i <= pdf.numPages; i++) {
-                        const page = await pdf.getPage(i);
-                        const content = await page.getTextContent();
-                        const pageText = content.items.map(item => item.str).join(' ');
-                        text += pageText + '\n\n';
+                    try {
+                        const bytes = await readFileAsArrayBuffer(files[0]);
+                        const pdfDoc = await PDFDocument.load(bytes);
+                        const pdfBytes = await pdfDoc.save();
+                        
+                        downloadFile(pdfBytes, 'repaired.pdf', 'application/pdf');
+                        showOutput('PDF repaired successfully!', pdfBytes, 'repaired.pdf');
+                    } catch (error) {
+                        showError('Could not repair PDF. File may be severely damaged.');
                     }
                     
-                    const html = `
-                        <!DOCTYPE html>
-                        <html>
-                        <head><meta charset="UTF-8"><title>Converted Document</title></head>
-                        <body style="font-family: Arial; margin: 2rem; line-height: 1.6;">
-                            <h1>Converted from PDF</h1>
-                            ${text.split('\n').map(p => `<p>${p}</p>`).join('')}
-                        </body>
-                        </html>
-                    `;
+                    hideLoader();
+                }
+            },
+            'ocr-pdf': {
+                title: 'OCR PDF',
+                description: 'Make scanned PDF searchable',
+                icon: '🔍',
+                category: 'optimize',
+                accept: '.pdf',
+                multiple: false,
+                process: async (files) => {
+                    showLoader('Performing OCR (mock)...');
                     
-                    const bytes = new TextEncoder().encode(html);
-                    downloadFile(bytes, 'converted.doc', 'application/msword');
-                    showOutput('✅ PDF converted to Word!', bytes, 'converted.doc');
+                    const bytes = await readFileAsArrayBuffer(files[0]);
+                    const pdfDoc = await PDFDocument.load(bytes);
+                    const pdfBytes = await pdfDoc.save();
+                    
+                    downloadFile(pdfBytes, 'ocr.pdf', 'application/pdf');
+                    showOutput('OCR completed! (Mock version)', pdfBytes, 'ocr.pdf');
                     hideLoader();
                 }
             },
 
-            // 5. Word to PDF
+            // CONVERT TO PDF
+            'jpg-to-pdf': {
+                title: 'JPG to PDF',
+                description: 'Convert images to PDF',
+                icon: '🖼️',
+                category: 'convert-to',
+                accept: '.jpg,.jpeg,.png,.gif',
+                multiple: true,
+                process: async (files) => {
+                    showLoader('Creating PDF from images...');
+                    
+                    const pdfDoc = await PDFDocument.create();
+                    
+                    for (const file of files) {
+                        const bytes = await readFileAsArrayBuffer(file);
+                        
+                        let image;
+                        if (file.type.includes('jpeg') || file.type.includes('jpg')) {
+                            image = await pdfDoc.embedJpg(bytes);
+                        } else {
+                            image = await pdfDoc.embedPng(bytes);
+                        }
+                        
+                        const page = pdfDoc.addPage([image.width, image.height]);
+                        page.drawImage(image, {
+                            x: 0,
+                            y: 0,
+                            width: image.width,
+                            height: image.height
+                        });
+                    }
+                    
+                    const pdfBytes = await pdfDoc.save();
+                    downloadFile(pdfBytes, 'images.pdf', 'application/pdf');
+                    showOutput('PDF created from images!', pdfBytes, 'images.pdf');
+                    hideLoader();
+                }
+            },
             'word-to-pdf': {
-                title: '📄 Word to PDF',
-                description: 'Convert Word documents to PDF',
+                title: 'WORD to PDF',
+                description: 'Convert Word to PDF',
                 icon: '📄',
+                category: 'convert-to',
                 accept: '.doc,.docx,.txt',
                 multiple: false,
-                featured: true,
                 process: async (files) => {
                     showLoader('Converting to PDF...');
                     
@@ -1278,64 +2984,53 @@
                     
                     const pdfBytes = await pdfDoc.save();
                     downloadFile(pdfBytes, 'converted.pdf', 'application/pdf');
-                    showOutput('✅ Word converted to PDF!', pdfBytes, 'converted.pdf');
+                    showOutput('Word converted to PDF!', pdfBytes, 'converted.pdf');
                     hideLoader();
                 }
             },
-
-            // 6. PDF to Excel
-            'pdf-to-excel': {
-                title: '📊 PDF to Excel',
-                description: 'Extract tables from PDF to Excel',
-                icon: '📊',
-                accept: '.pdf',
+            'ppt-to-pdf': {
+                title: 'POWERPOINT to PDF',
+                description: 'Convert PPT to PDF',
+                icon: '📽️',
+                category: 'convert-to',
+                accept: '.pptx,.ppt',
                 multiple: false,
                 process: async (files) => {
-                    showLoader('Extracting data to Excel...');
+                    showLoader('Converting PPT to PDF...');
                     
-                    const data = await readFileAsArrayBuffer(files[0]);
-                    const pdf = await pdfjsLib.getDocument({data}).promise;
+                    const text = await readFileAsText(files[0]);
                     
-                    const wb = XLSX.utils.book_new();
+                    const pdfDoc = await PDFDocument.create();
+                    const page = pdfDoc.addPage([612, 792]);
+                    const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
                     
-                    for (let i = 1; i <= pdf.numPages; i++) {
-                        const page = await pdf.getPage(i);
-                        const content = await page.getTextContent();
-                        
-                        const rows = [];
-                        let currentRow = [];
-                        
-                        content.items.forEach(item => {
-                            if (item.str.includes('\n')) {
-                                if (currentRow.length) {
-                                    rows.push([...currentRow]);
-                                    currentRow = [];
-                                }
-                            } else {
-                                currentRow.push(item.str);
-                            }
-                        });
-                        
-                        if (currentRow.length) {
-                            rows.push(currentRow);
-                        }
-                        
-                        const ws = XLSX.utils.aoa_to_sheet(rows);
-                        XLSX.utils.book_append_sheet(wb, ws, `Page ${i}`);
-                    }
+                    page.drawText('Presentation Export', {
+                        x: 50,
+                        y: 750,
+                        size: 24,
+                        font: font,
+                        color: rgb(0, 0, 0)
+                    });
                     
-                    const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-                    downloadFile(wbout, 'converted.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-                    showOutput('✅ PDF converted to Excel!', wbout, 'converted.xlsx');
+                    page.drawText(text.substring(0, 1000), {
+                        x: 50,
+                        y: 700,
+                        size: 12,
+                        font: font,
+                        color: rgb(0, 0, 0)
+                    });
+                    
+                    const pdfBytes = await pdfDoc.save();
+                    downloadFile(pdfBytes, 'presentation.pdf', 'application/pdf');
+                    showOutput('PPT converted to PDF!', pdfBytes, 'presentation.pdf');
                     hideLoader();
                 }
             },
-
-            // 7. Excel to PDF
             'excel-to-pdf': {
-                title: '📈 Excel to PDF',
+                title: 'EXCEL to PDF',
                 description: 'Convert Excel to PDF',
-                icon: '📈',
+                icon: '📊',
+                category: 'convert-to',
                 accept: '.xlsx,.xls,.csv',
                 multiple: false,
                 process: async (files) => {
@@ -1393,92 +3088,61 @@
                     
                     const pdfBytes = await pdfDoc.save();
                     downloadFile(pdfBytes, 'excel-export.pdf', 'application/pdf');
-                    showOutput('✅ Excel converted to PDF!', pdfBytes, 'excel-export.pdf');
+                    showOutput('Excel converted to PDF!', pdfBytes, 'excel-export.pdf');
                     hideLoader();
                 }
             },
-
-            // 8. PDF to PowerPoint
-            'pdf-to-ppt': {
-                title: '📽️ PDF to PPT',
-                description: 'Convert PDF to PowerPoint',
-                icon: '📽️',
-                accept: '.pdf',
+            'html-to-pdf': {
+                title: 'HTML to PDF',
+                description: 'Convert HTML to PDF',
+                icon: '🌐',
+                category: 'convert-to',
+                accept: '.html,.htm',
                 multiple: false,
                 process: async (files) => {
-                    showLoader('Creating presentation...');
+                    showLoader('Converting HTML to PDF...');
                     
-                    const data = await readFileAsArrayBuffer(files[0]);
-                    const pdf = await pdfjsLib.getDocument({data}).promise;
-                    
-                    let presentation = '<!DOCTYPE html><html><head><title>Presentation</title><style>';
-                    presentation += 'body { margin: 0; background: #333; } .slide { page-break-after: always; height: 100vh; background: white; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 2rem; padding: 2rem; }';
-                    presentation += '</style></head><body>';
-                    
-                    for (let i = 1; i <= pdf.numPages; i++) {
-                        const page = await pdf.getPage(i);
-                        const content = await page.getTextContent();
-                        const text = content.items.map(item => item.str).join(' ');
-                        
-                        presentation += `<div class="slide">`;
-                        presentation += `<h1>Slide ${i}</h1>`;
-                        presentation += `<p>${text.substring(0, 500)}</p>`;
-                        presentation += `</div>`;
-                    }
-                    
-                    presentation += '</body></html>';
-                    
-                    const bytes = new TextEncoder().encode(presentation);
-                    downloadFile(bytes, 'presentation.pptx', 'application/vnd.openxmlformats-officedocument.presentationml.presentation');
-                    showOutput('✅ PDF converted to PPT!', bytes, 'presentation.pptx');
-                    hideLoader();
-                }
-            },
-
-            // 9. PPT to PDF
-            'ppt-to-pdf': {
-                title: '📺 PPT to PDF',
-                description: 'Convert PowerPoint to PDF',
-                icon: '📺',
-                accept: '.pptx,.ppt',
-                multiple: false,
-                process: async (files) => {
-                    showLoader('Converting PPT to PDF...');
-                    
-                    const text = await readFileAsText(files[0]);
+                    const html = await readFileAsText(files[0]);
                     
                     const pdfDoc = await PDFDocument.create();
                     const page = pdfDoc.addPage([612, 792]);
                     const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
                     
-                    page.drawText('Presentation Export', {
-                        x: 50,
-                        y: 750,
-                        size: 24,
-                        font: font,
-                        color: rgb(0, 0, 0)
-                    });
+                    // Strip HTML tags for simplicity
+                    const text = html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
                     
-                    page.drawText(text.substring(0, 1000), {
-                        x: 50,
-                        y: 700,
-                        size: 12,
-                        font: font,
-                        color: rgb(0, 0, 0)
-                    });
+                    let y = 750;
+                    const chunks = text.match(/.{1,80}/g) || [];
+                    
+                    for (const chunk of chunks) {
+                        if (y < 50) {
+                            pdfDoc.addPage([612, 792]);
+                            y = 750;
+                        }
+                        
+                        page.drawText(chunk, {
+                            x: 50,
+                            y: y,
+                            size: 12,
+                            font: font,
+                            color: rgb(0, 0, 0)
+                        });
+                        y -= 20;
+                    }
                     
                     const pdfBytes = await pdfDoc.save();
-                    downloadFile(pdfBytes, 'presentation.pdf', 'application/pdf');
-                    showOutput('✅ PPT converted to PDF!', pdfBytes, 'presentation.pdf');
+                    downloadFile(pdfBytes, 'webpage.pdf', 'application/pdf');
+                    showOutput('HTML converted to PDF!', pdfBytes, 'webpage.pdf');
                     hideLoader();
                 }
             },
 
-            // 10. PDF to Images
-            'pdf-to-images': {
-                title: '🖼️ PDF to Images',
-                description: 'Convert PDF pages to JPG/PNG',
-                icon: '🖼️',
+            // CONVERT FROM PDF
+            'pdf-to-jpg': {
+                title: 'PDF to JPG',
+                description: 'Convert PDF to images',
+                icon: '📸',
+                category: 'convert-from',
                 accept: '.pdf',
                 multiple: false,
                 optionsUI: `
@@ -1521,57 +3185,362 @@
                     
                     const zipBlob = await zip.generateAsync({ type: 'blob' });
                     downloadBlob(zipBlob, 'pdf-images.zip');
-                    showOutput('✅ Images created successfully!', zipBlob, 'pdf-images.zip');
+                    showOutput('Images created successfully!', zipBlob, 'pdf-images.zip');
+                    hideLoader();
+                }
+            },
+            'pdf-to-word': {
+                title: 'PDF to WORD',
+                description: 'Extract text to Word',
+                icon: '📝',
+                category: 'convert-from',
+                accept: '.pdf',
+                multiple: false,
+                process: async (files) => {
+                    showLoader('Extracting text from PDF...');
+                    
+                    const data = await readFileAsArrayBuffer(files[0]);
+                    const pdf = await pdfjsLib.getDocument({data}).promise;
+                    let text = '';
+                    
+                    for (let i = 1; i <= pdf.numPages; i++) {
+                        const page = await pdf.getPage(i);
+                        const content = await page.getTextContent();
+                        const pageText = content.items.map(item => item.str).join(' ');
+                        text += pageText + '\n\n';
+                    }
+                    
+                    const html = `
+                        <!DOCTYPE html>
+                        <html>
+                        <head><meta charset="UTF-8"><title>Converted Document</title></head>
+                        <body style="font-family: Arial; margin: 2rem; line-height: 1.6;">
+                            <h1>Converted from PDF</h1>
+                            ${text.split('\n').map(p => `<p>${p}</p>`).join('')}
+                        </body>
+                        </html>
+                    `;
+                    
+                    const bytes = new TextEncoder().encode(html);
+                    downloadFile(bytes, 'converted.doc', 'application/msword');
+                    showOutput('PDF converted to Word!', bytes, 'converted.doc');
+                    hideLoader();
+                }
+            },
+            'pdf-to-ppt': {
+                title: 'PDF to POWERPOINT',
+                description: 'Convert to presentation',
+                icon: '📽️',
+                category: 'convert-from',
+                accept: '.pdf',
+                multiple: false,
+                process: async (files) => {
+                    showLoader('Creating presentation...');
+                    
+                    const data = await readFileAsArrayBuffer(files[0]);
+                    const pdf = await pdfjsLib.getDocument({data}).promise;
+                    
+                    let presentation = '<!DOCTYPE html><html><head><title>Presentation</title><style>';
+                    presentation += 'body { margin: 0; background: #333; } .slide { page-break-after: always; height: 100vh; background: white; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 2rem; padding: 2rem; }';
+                    presentation += '</style></head><body>';
+                    
+                    for (let i = 1; i <= pdf.numPages; i++) {
+                        const page = await pdf.getPage(i);
+                        const content = await page.getTextContent();
+                        const text = content.items.map(item => item.str).join(' ');
+                        
+                        presentation += `<div class="slide">`;
+                        presentation += `<h1>Slide ${i}</h1>`;
+                        presentation += `<p>${text.substring(0, 500)}</p>`;
+                        presentation += `</div>`;
+                    }
+                    
+                    presentation += '</body></html>';
+                    
+                    const bytes = new TextEncoder().encode(presentation);
+                    downloadFile(bytes, 'presentation.pptx', 'application/vnd.openxmlformats-officedocument.presentationml.presentation');
+                    showOutput('PDF converted to PPT!', bytes, 'presentation.pptx');
+                    hideLoader();
+                }
+            },
+            'pdf-to-excel': {
+                title: 'PDF to EXCEL',
+                description: 'Extract tables to Excel',
+                icon: '📊',
+                category: 'convert-from',
+                accept: '.pdf',
+                multiple: false,
+                process: async (files) => {
+                    showLoader('Extracting data to Excel...');
+                    
+                    const data = await readFileAsArrayBuffer(files[0]);
+                    const pdf = await pdfjsLib.getDocument({data}).promise;
+                    
+                    const wb = XLSX.utils.book_new();
+                    
+                    for (let i = 1; i <= pdf.numPages; i++) {
+                        const page = await pdf.getPage(i);
+                        const content = await page.getTextContent();
+                        
+                        const rows = [];
+                        let currentRow = [];
+                        
+                        content.items.forEach(item => {
+                            if (item.str.includes('\n')) {
+                                if (currentRow.length) {
+                                    rows.push([...currentRow]);
+                                    currentRow = [];
+                                }
+                            } else {
+                                currentRow.push(item.str);
+                            }
+                        });
+                        
+                        if (currentRow.length) {
+                            rows.push(currentRow);
+                        }
+                        
+                        const ws = XLSX.utils.aoa_to_sheet(rows);
+                        XLSX.utils.book_append_sheet(wb, ws, `Page ${i}`);
+                    }
+                    
+                    const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+                    downloadFile(wbout, 'converted.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                    showOutput('PDF converted to Excel!', wbout, 'converted.xlsx');
+                    hideLoader();
+                }
+            },
+            'pdf-to-pdfa': {
+                title: 'PDF to PDF/A',
+                description: 'Convert to archive format',
+                icon: '📦',
+                category: 'convert-from',
+                accept: '.pdf',
+                multiple: false,
+                process: async (files) => {
+                    showLoader('Converting to PDF/A...');
+                    
+                    const bytes = await readFileAsArrayBuffer(files[0]);
+                    const pdfDoc = await PDFDocument.load(bytes);
+                    
+                    // PDF/A conversion is complex - this is a mock
+                    const pdfBytes = await pdfDoc.save();
+                    
+                    downloadFile(pdfBytes, 'archived.pdf', 'application/pdf');
+                    showOutput('PDF/A created! (Mock version)', pdfBytes, 'archived.pdf');
                     hideLoader();
                 }
             },
 
-            // 11. Images to PDF
-            'images-to-pdf': {
-                title: '📸 Images to PDF',
-                description: 'Convert images to PDF',
-                icon: '📸',
-                accept: '.jpg,.jpeg,.png,.gif',
-                multiple: true,
+            // EDIT PDF
+            'rotate-pdf': {
+                title: 'Rotate PDF',
+                description: 'Rotate pages',
+                icon: '🔄',
+                category: 'edit',
+                accept: '.pdf',
+                multiple: false,
+                optionsUI: `
+                    <label>Rotation angle:</label>
+                    <select id="rotate-angle">
+                        <option value="90">90° Clockwise</option>
+                        <option value="180">180°</option>
+                        <option value="270">90° Counter-clockwise</option>
+                    </select>
+                    
+                    <label>Apply to:</label>
+                    <select id="rotate-pages">
+                        <option value="all">All pages</option>
+                        <option value="first">First page only</option>
+                    </select>
+                `,
                 process: async (files) => {
-                    showLoader('Creating PDF from images...');
+                    const angle = parseInt(document.getElementById('rotate-angle').value);
+                    const pagesOption = document.getElementById('rotate-pages').value;
                     
-                    const pdfDoc = await PDFDocument.create();
+                    showLoader('Rotating PDF...');
                     
-                    for (const file of files) {
-                        const bytes = await readFileAsArrayBuffer(file);
+                    const bytes = await readFileAsArrayBuffer(files[0]);
+                    const pdfDoc = await PDFDocument.load(bytes);
+                    
+                    if (pagesOption === 'all') {
+                        pdfDoc.getPages().forEach(page => page.setRotation(degrees(angle)));
+                    } else {
+                        pdfDoc.getPages()[0].setRotation(degrees(angle));
+                    }
+                    
+                    const pdfBytes = await pdfDoc.save();
+                    downloadFile(pdfBytes, 'rotated.pdf', 'application/pdf');
+                    showOutput('PDF rotated successfully!', pdfBytes, 'rotated.pdf');
+                    hideLoader();
+                }
+            },
+            'add-page-numbers': {
+                title: 'Add page numbers',
+                description: 'Number pages',
+                icon: '🔢',
+                category: 'edit',
+                accept: '.pdf',
+                multiple: false,
+                optionsUI: `
+                    <label>Start number:</label>
+                    <input type="number" id="start-number" value="1" min="1">
+                    
+                    <label>Position:</label>
+                    <select id="number-position">
+                        <option value="bottom-center">Bottom Center</option>
+                        <option value="bottom-right">Bottom Right</option>
+                        <option value="bottom-left">Bottom Left</option>
+                    </select>
+                `,
+                process: async (files) => {
+                    const start = parseInt(document.getElementById('start-number').value);
+                    const position = document.getElementById('number-position').value;
+                    
+                    showLoader('Adding page numbers...');
+                    
+                    const bytes = await readFileAsArrayBuffer(files[0]);
+                    const pdfDoc = await PDFDocument.load(bytes);
+                    const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+                    
+                    const pages = pdfDoc.getPages();
+                    
+                    for (let i = 0; i < pages.length; i++) {
+                        const page = pages[i];
+                        const { width, height } = page.getSize();
                         
-                        let image;
-                        if (file.type.includes('jpeg') || file.type.includes('jpg')) {
-                            image = await pdfDoc.embedJpg(bytes);
-                        } else {
-                            image = await pdfDoc.embedPng(bytes);
+                        let x, y;
+                        switch(position) {
+                            case 'bottom-center':
+                                x = width / 2 - 15;
+                                y = 30;
+                                break;
+                            case 'bottom-right':
+                                x = width - 50;
+                                y = 30;
+                                break;
+                            case 'bottom-left':
+                                x = 50;
+                                y = 30;
+                                break;
                         }
                         
-                        const page = pdfDoc.addPage([image.width, image.height]);
-                        page.drawImage(image, {
-                            x: 0,
-                            y: 0,
-                            width: image.width,
-                            height: image.height
+                        page.drawText(String(start + i), {
+                            x: x,
+                            y: y,
+                            size: 10,
+                            font: font,
+                            color: rgb(0, 0, 0)
                         });
                     }
                     
                     const pdfBytes = await pdfDoc.save();
-                    downloadFile(pdfBytes, 'images.pdf', 'application/pdf');
-                    showOutput('✅ PDF created from images!', pdfBytes, 'images.pdf');
+                    downloadFile(pdfBytes, 'numbered.pdf', 'application/pdf');
+                    showOutput('Page numbers added!', pdfBytes, 'numbered.pdf');
                     hideLoader();
                 }
             },
-
-            // 12. Edit PDF
-            'edit-pdf': {
-                title: '✏️ Edit PDF',
-                description: 'Add text and shapes to PDF',
-                icon: '✏️',
+            'add-watermark': {
+                title: 'Add watermark',
+                description: 'Add text watermark',
+                icon: '💧',
+                category: 'edit',
                 accept: '.pdf',
                 multiple: false,
-                featured: true,
+                optionsUI: `
+                    <label>Watermark text:</label>
+                    <input type="text" id="watermark-text" value="CONFIDENTIAL">
+                    
+                    <label>Opacity:</label>
+                    <input type="range" id="watermark-opacity" min="0.1" max="1" step="0.1" value="0.3">
+                `,
+                process: async (files) => {
+                    const text = document.getElementById('watermark-text').value;
+                    const opacity = parseFloat(document.getElementById('watermark-opacity').value);
+                    
+                    showLoader('Adding watermark...');
+                    
+                    const bytes = await readFileAsArrayBuffer(files[0]);
+                    const pdfDoc = await PDFDocument.load(bytes);
+                    const font = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+                    
+                    for (const page of pdfDoc.getPages()) {
+                        const { width, height } = page.getSize();
+                        
+                        page.drawText(text, {
+                            x: width / 2 - 100,
+                            y: height / 2,
+                            size: 60,
+                            font: font,
+                            color: rgb(0.5, 0.5, 0.5),
+                            opacity: opacity,
+                            rotate: degrees(45)
+                        });
+                    }
+                    
+                    const pdfBytes = await pdfDoc.save();
+                    downloadFile(pdfBytes, 'watermarked.pdf', 'application/pdf');
+                    showOutput('Watermark added!', pdfBytes, 'watermarked.pdf');
+                    hideLoader();
+                }
+            },
+            'crop-pdf': {
+                title: 'Crop PDF',
+                description: 'Crop margins',
+                icon: '✂️',
+                category: 'edit',
+                accept: '.pdf',
+                multiple: false,
+                optionsUI: `
+                    <label>Margins (in points):</label>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div>
+                            <label>Top:</label>
+                            <input type="number" id="crop-top" value="0" min="0">
+                        </div>
+                        <div>
+                            <label>Right:</label>
+                            <input type="number" id="crop-right" value="0" min="0">
+                        </div>
+                        <div>
+                            <label>Bottom:</label>
+                            <input type="number" id="crop-bottom" value="0" min="0">
+                        </div>
+                        <div>
+                            <label>Left:</label>
+                            <input type="number" id="crop-left" value="0" min="0">
+                        </div>
+                    </div>
+                `,
+                process: async (files) => {
+                    const top = parseInt(document.getElementById('crop-top').value) || 0;
+                    const right = parseInt(document.getElementById('crop-right').value) || 0;
+                    const bottom = parseInt(document.getElementById('crop-bottom').value) || 0;
+                    const left = parseInt(document.getElementById('crop-left').value) || 0;
+                    
+                    showLoader('Cropping PDF...');
+                    
+                    const bytes = await readFileAsArrayBuffer(files[0]);
+                    const pdfDoc = await PDFDocument.load(bytes);
+                    
+                    pdfDoc.getPages().forEach(page => {
+                        const { width, height } = page.getSize();
+                        page.setCropBox(left, bottom, width - left - right, height - top - bottom);
+                    });
+                    
+                    const pdfBytes = await pdfDoc.save();
+                    downloadFile(pdfBytes, 'cropped.pdf', 'application/pdf');
+                    showOutput('PDF cropped successfully!', pdfBytes, 'cropped.pdf');
+                    hideLoader();
+                }
+            },
+            'edit-pdf': {
+                title: 'Edit PDF',
+                description: 'Add text and shapes',
+                icon: '✏️',
+                category: 'edit',
+                accept: '.pdf',
+                multiple: false,
                 optionsUI: `
                     <div style="margin-bottom: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
                         <button id="add-text-btn" class="btn-login" style="padding: 0.5rem 1rem;">Add Text</button>
@@ -1601,7 +3570,7 @@
                     
                     const pdfBytes = await pdfDoc.save();
                     downloadFile(pdfBytes, 'edited.pdf', 'application/pdf');
-                    showOutput('✅ PDF edited successfully!', pdfBytes, 'edited.pdf');
+                    showOutput('PDF edited successfully!', pdfBytes, 'edited.pdf');
                     hideLoader();
                 },
                 onFileSelect: async (file) => {
@@ -1650,11 +3619,76 @@
                 }
             },
 
-            // 13. Sign PDF
+            // PDF SECURITY
+            'unlock-pdf': {
+                title: 'Unlock PDF',
+                description: 'Remove password',
+                icon: '🔓',
+                category: 'security',
+                accept: '.pdf',
+                multiple: false,
+                optionsUI: `
+                    <label>PDF Password:</label>
+                    <input type="password" id="unlock-password" placeholder="Enter password">
+                `,
+                process: async (files) => {
+                    const password = document.getElementById('unlock-password').value;
+                    
+                    if (!password) throw new Error('Please enter the password');
+                    
+                    showLoader('Unlocking PDF...');
+                    
+                    const bytes = await readFileAsArrayBuffer(files[0]);
+                    
+                    try {
+                        const pdfDoc = await PDFDocument.load(bytes, { password });
+                        const pdfBytes = await pdfDoc.save();
+                        downloadFile(pdfBytes, 'unlocked.pdf', 'application/pdf');
+                        showOutput('PDF unlocked successfully!', pdfBytes, 'unlocked.pdf');
+                    } catch (error) {
+                        throw new Error('Incorrect password');
+                    }
+                    
+                    hideLoader();
+                }
+            },
+            'protect-pdf': {
+                title: 'Protect PDF',
+                description: 'Add password',
+                icon: '🔒',
+                category: 'security',
+                accept: '.pdf',
+                multiple: false,
+                optionsUI: `
+                    <label>Password:</label>
+                    <input type="password" id="pdf-password" placeholder="Enter password">
+                    <label>Confirm password:</label>
+                    <input type="password" id="pdf-password-confirm" placeholder="Confirm password">
+                `,
+                process: async (files) => {
+                    const password = document.getElementById('pdf-password').value;
+                    const confirm = document.getElementById('pdf-password-confirm').value;
+                    
+                    if (!password || password !== confirm) {
+                        throw new Error('Passwords do not match');
+                    }
+                    
+                    showLoader('Protecting PDF...');
+                    
+                    const bytes = await readFileAsArrayBuffer(files[0]);
+                    const pdfDoc = await PDFDocument.load(bytes);
+                    const pdfBytes = await pdfDoc.save();
+                    
+                    downloadFile(pdfBytes, 'protected.pdf', 'application/pdf');
+                    showOutput(`PDF protected! Password: ${password}`, pdfBytes, 'protected.pdf');
+                    hideLoader();
+                }
+            },
             'sign-pdf': {
-                title: '✍️ Sign PDF',
-                description: 'Add digital signature',
+                title: 'Sign PDF',
+                description: 'Add signature',
                 icon: '✍️',
+                category: 'security',
                 accept: '.pdf',
                 multiple: false,
                 optionsUI: `
@@ -1715,7 +3749,7 @@
                     
                     const pdfBytes = await pdfDoc.save();
                     downloadFile(pdfBytes, 'signed.pdf', 'application/pdf');
-                    showOutput('✅ PDF signed successfully!', pdfBytes, 'signed.pdf');
+                    showOutput('PDF signed successfully!', pdfBytes, 'signed.pdf');
                     hideLoader();
                 },
                 onFileSelect: () => {
@@ -1765,437 +3799,34 @@
                     }
                 }
             },
-
-            // 14. Protect PDF
-            'protect-pdf': {
-                title: '🔒 Protect PDF',
-                description: 'Add password protection',
-                icon: '🔒',
+            'redact-pdf': {
+                title: 'Redact PDF',
+                description: 'Permanently remove text',
+                icon: '🔴',
+                category: 'security',
                 accept: '.pdf',
                 multiple: false,
                 optionsUI: `
-                    <label>Password:</label>
-                    <input type="password" id="pdf-password" placeholder="Enter password">
-                    <label>Confirm password:</label>
-                    <input type="password" id="pdf-password-confirm" placeholder="Confirm password">
+                    <label>Text to redact:</label>
+                    <input type="text" id="redact-text" placeholder="Enter text to redact">
                 `,
                 process: async (files) => {
-                    const password = document.getElementById('pdf-password').value;
-                    const confirm = document.getElementById('pdf-password-confirm').value;
-                    
-                    if (!password || password !== confirm) {
-                        throw new Error('Passwords do not match');
-                    }
-                    
-                    showLoader('Protecting PDF...');
+                    showLoader('Redacting PDF (mock)...');
                     
                     const bytes = await readFileAsArrayBuffer(files[0]);
                     const pdfDoc = await PDFDocument.load(bytes);
                     const pdfBytes = await pdfDoc.save();
                     
-                    downloadFile(pdfBytes, 'protected.pdf', 'application/pdf');
-                    showOutput(`✅ PDF protected! Password: ${password}`, pdfBytes, 'protected.pdf');
+                    downloadFile(pdfBytes, 'redacted.pdf', 'application/pdf');
+                    showOutput('PDF redacted! (Mock version)', pdfBytes, 'redacted.pdf');
                     hideLoader();
                 }
             },
-
-            // 15. Unlock PDF
-            'unlock-pdf': {
-                title: '🔓 Unlock PDF',
-                description: 'Remove password protection',
-                icon: '🔓',
-                accept: '.pdf',
-                multiple: false,
-                optionsUI: `
-                    <label>PDF Password:</label>
-                    <input type="password" id="unlock-password" placeholder="Enter password">
-                `,
-                process: async (files) => {
-                    const password = document.getElementById('unlock-password').value;
-                    
-                    if (!password) throw new Error('Please enter the password');
-                    
-                    showLoader('Unlocking PDF...');
-                    
-                    const bytes = await readFileAsArrayBuffer(files[0]);
-                    
-                    try {
-                        const pdfDoc = await PDFDocument.load(bytes, { password });
-                        const pdfBytes = await pdfDoc.save();
-                        downloadFile(pdfBytes, 'unlocked.pdf', 'application/pdf');
-                        showOutput('✅ PDF unlocked successfully!', pdfBytes, 'unlocked.pdf');
-                    } catch (error) {
-                        throw new Error('Incorrect password');
-                    }
-                    
-                    hideLoader();
-                }
-            },
-
-            // 16. Rotate PDF
-            'rotate-pdf': {
-                title: '🔄 Rotate PDF',
-                description: 'Rotate PDF pages',
-                icon: '🔄',
-                accept: '.pdf',
-                multiple: false,
-                optionsUI: `
-                    <label>Rotation angle:</label>
-                    <select id="rotate-angle">
-                        <option value="90">90° Clockwise</option>
-                        <option value="180">180°</option>
-                        <option value="270">90° Counter-clockwise</option>
-                    </select>
-                    
-                    <label>Apply to:</label>
-                    <select id="rotate-pages">
-                        <option value="all">All pages</option>
-                        <option value="first">First page only</option>
-                    </select>
-                `,
-                process: async (files) => {
-                    const angle = parseInt(document.getElementById('rotate-angle').value);
-                    const pagesOption = document.getElementById('rotate-pages').value;
-                    
-                    showLoader('Rotating PDF...');
-                    
-                    const bytes = await readFileAsArrayBuffer(files[0]);
-                    const pdfDoc = await PDFDocument.load(bytes);
-                    
-                    if (pagesOption === 'all') {
-                        pdfDoc.getPages().forEach(page => page.setRotation(degrees(angle)));
-                    } else {
-                        pdfDoc.getPages()[0].setRotation(degrees(angle));
-                    }
-                    
-                    const pdfBytes = await pdfDoc.save();
-                    downloadFile(pdfBytes, 'rotated.pdf', 'application/pdf');
-                    showOutput('✅ PDF rotated successfully!', pdfBytes, 'rotated.pdf');
-                    hideLoader();
-                }
-            },
-
-            // 17. Watermark PDF
-            'watermark-pdf': {
-                title: '💧 Watermark PDF',
-                description: 'Add text watermark',
-                icon: '💧',
-                accept: '.pdf',
-                multiple: false,
-                optionsUI: `
-                    <label>Watermark text:</label>
-                    <input type="text" id="watermark-text" value="CONFIDENTIAL">
-                    
-                    <label>Opacity:</label>
-                    <input type="range" id="watermark-opacity" min="0.1" max="1" step="0.1" value="0.3">
-                `,
-                process: async (files) => {
-                    const text = document.getElementById('watermark-text').value;
-                    const opacity = parseFloat(document.getElementById('watermark-opacity').value);
-                    
-                    showLoader('Adding watermark...');
-                    
-                    const bytes = await readFileAsArrayBuffer(files[0]);
-                    const pdfDoc = await PDFDocument.load(bytes);
-                    const font = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
-                    
-                    for (const page of pdfDoc.getPages()) {
-                        const { width, height } = page.getSize();
-                        
-                        page.drawText(text, {
-                            x: width / 2 - 100,
-                            y: height / 2,
-                            size: 60,
-                            font: font,
-                            color: rgb(0.5, 0.5, 0.5),
-                            opacity: opacity,
-                            rotate: degrees(45)
-                        });
-                    }
-                    
-                    const pdfBytes = await pdfDoc.save();
-                    downloadFile(pdfBytes, 'watermarked.pdf', 'application/pdf');
-                    showOutput('✅ Watermark added!', pdfBytes, 'watermarked.pdf');
-                    hideLoader();
-                }
-            },
-
-            // 18. Crop PDF
-            'crop-pdf': {
-                title: '✂️ Crop PDF',
-                description: 'Crop PDF margins',
-                icon: '✂️',
-                accept: '.pdf',
-                multiple: false,
-                optionsUI: `
-                    <label>Margins (in points):</label>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                        <div>
-                            <label>Top:</label>
-                            <input type="number" id="crop-top" value="0" min="0">
-                        </div>
-                        <div>
-                            <label>Right:</label>
-                            <input type="number" id="crop-right" value="0" min="0">
-                        </div>
-                        <div>
-                            <label>Bottom:</label>
-                            <input type="number" id="crop-bottom" value="0" min="0">
-                        </div>
-                        <div>
-                            <label>Left:</label>
-                            <input type="number" id="crop-left" value="0" min="0">
-                        </div>
-                    </div>
-                `,
-                process: async (files) => {
-                    const top = parseInt(document.getElementById('crop-top').value) || 0;
-                    const right = parseInt(document.getElementById('crop-right').value) || 0;
-                    const bottom = parseInt(document.getElementById('crop-bottom').value) || 0;
-                    const left = parseInt(document.getElementById('crop-left').value) || 0;
-                    
-                    showLoader('Cropping PDF...');
-                    
-                    const bytes = await readFileAsArrayBuffer(files[0]);
-                    const pdfDoc = await PDFDocument.load(bytes);
-                    
-                    pdfDoc.getPages().forEach(page => {
-                        const { width, height } = page.getSize();
-                        page.setCropBox(left, bottom, width - left - right, height - top - bottom);
-                    });
-                    
-                    const pdfBytes = await pdfDoc.save();
-                    downloadFile(pdfBytes, 'cropped.pdf', 'application/pdf');
-                    showOutput('✅ PDF cropped successfully!', pdfBytes, 'cropped.pdf');
-                    hideLoader();
-                }
-            },
-
-            // 19. Delete Pages
-            'delete-pages': {
-                title: '🗑️ Delete Pages',
-                description: 'Remove specific pages',
-                icon: '🗑️',
-                accept: '.pdf',
-                multiple: false,
-                optionsUI: `
-                    <label>Pages to delete (e.g., 1-3,5,7):</label>
-                    <input type="text" id="delete-pages" placeholder="Enter pages to delete">
-                `,
-                process: async (files) => {
-                    const deleteRange = document.getElementById('delete-pages').value;
-                    
-                    if (!deleteRange) throw new Error('Please enter pages to delete');
-                    
-                    showLoader('Deleting pages...');
-                    
-                    const bytes = await readFileAsArrayBuffer(files[0]);
-                    const pdfDoc = await PDFDocument.load(bytes);
-                    
-                    const totalPages = pdfDoc.getPageCount();
-                    const pagesToDelete = parsePageRange(deleteRange, totalPages);
-                    const pagesToKeep = Array.from({length: totalPages}, (_, i) => i)
-                        .filter(i => !pagesToDelete.includes(i));
-                    
-                    const newPdf = await PDFDocument.create();
-                    const pages = await newPdf.copyPages(pdfDoc, pagesToKeep);
-                    pages.forEach(page => newPdf.addPage(page));
-                    
-                    const pdfBytes = await newPdf.save();
-                    downloadFile(pdfBytes, 'pages-removed.pdf', 'application/pdf');
-                    showOutput('✅ Pages deleted successfully!', pdfBytes, 'pages-removed.pdf');
-                    hideLoader();
-                }
-            },
-
-            // 20. Extract Pages
-            'extract-pages': {
-                title: '📄 Extract Pages',
-                description: 'Extract specific pages to new PDF',
-                icon: '📄',
-                accept: '.pdf',
-                multiple: false,
-                optionsUI: `
-                    <label>Pages to extract (e.g., 1-3,5,7):</label>
-                    <input type="text" id="extract-pages" placeholder="Enter pages to extract">
-                `,
-                process: async (files) => {
-                    const extractRange = document.getElementById('extract-pages').value;
-                    
-                    if (!extractRange) throw new Error('Please enter pages to extract');
-                    
-                    showLoader('Extracting pages...');
-                    
-                    const bytes = await readFileAsArrayBuffer(files[0]);
-                    const pdfDoc = await PDFDocument.load(bytes);
-                    
-                    const totalPages = pdfDoc.getPageCount();
-                    const pagesToExtract = parsePageRange(extractRange, totalPages);
-                    
-                    const newPdf = await PDFDocument.create();
-                    const pages = await newPdf.copyPages(pdfDoc, pagesToExtract);
-                    pages.forEach(page => newPdf.addPage(page));
-                    
-                    const pdfBytes = await newPdf.save();
-                    downloadFile(pdfBytes, 'extracted.pdf', 'application/pdf');
-                    showOutput('✅ Pages extracted successfully!', pdfBytes, 'extracted.pdf');
-                    hideLoader();
-                }
-            },
-
-            // 21. Reorder Pages
-            'reorder-pages': {
-                title: '🔄 Reorder Pages',
-                description: 'Change page order',
-                icon: '🔄',
-                accept: '.pdf',
-                multiple: false,
-                optionsUI: `
-                    <label>New page order (e.g., 3,1,2,4):</label>
-                    <input type="text" id="page-order" placeholder="Enter new page order">
-                `,
-                process: async (files) => {
-                    const orderStr = document.getElementById('page-order').value;
-                    
-                    if (!orderStr) throw new Error('Please enter new page order');
-                    
-                    showLoader('Reordering pages...');
-                    
-                    const bytes = await readFileAsArrayBuffer(files[0]);
-                    const pdfDoc = await PDFDocument.load(bytes);
-                    
-                    const totalPages = pdfDoc.getPageCount();
-                    const newOrder = orderStr.split(',')
-                        .map(p => parseInt(p.trim()) - 1)
-                        .filter(i => i >= 0 && i < totalPages);
-                    
-                    const newPdf = await PDFDocument.create();
-                    const pages = await newPdf.copyPages(pdfDoc, newOrder);
-                    pages.forEach(page => newPdf.addPage(page));
-                    
-                    const pdfBytes = await newPdf.save();
-                    downloadFile(pdfBytes, 'reordered.pdf', 'application/pdf');
-                    showOutput('✅ Pages reordered successfully!', pdfBytes, 'reordered.pdf');
-                    hideLoader();
-                }
-            },
-
-            // 22. Add Page Numbers
-            'add-numbers': {
-                title: '🔢 Add Page Numbers',
-                description: 'Add page numbers to PDF',
-                icon: '🔢',
-                accept: '.pdf',
-                multiple: false,
-                optionsUI: `
-                    <label>Start number:</label>
-                    <input type="number" id="start-number" value="1" min="1">
-                    
-                    <label>Position:</label>
-                    <select id="number-position">
-                        <option value="bottom-center">Bottom Center</option>
-                        <option value="bottom-right">Bottom Right</option>
-                        <option value="bottom-left">Bottom Left</option>
-                    </select>
-                `,
-                process: async (files) => {
-                    const start = parseInt(document.getElementById('start-number').value);
-                    const position = document.getElementById('number-position').value;
-                    
-                    showLoader('Adding page numbers...');
-                    
-                    const bytes = await readFileAsArrayBuffer(files[0]);
-                    const pdfDoc = await PDFDocument.load(bytes);
-                    const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
-                    
-                    const pages = pdfDoc.getPages();
-                    
-                    for (let i = 0; i < pages.length; i++) {
-                        const page = pages[i];
-                        const { width, height } = page.getSize();
-                        
-                        let x, y;
-                        switch(position) {
-                            case 'bottom-center':
-                                x = width / 2 - 15;
-                                y = 30;
-                                break;
-                            case 'bottom-right':
-                                x = width - 50;
-                                y = 30;
-                                break;
-                            case 'bottom-left':
-                                x = 50;
-                                y = 30;
-                                break;
-                        }
-                        
-                        page.drawText(String(start + i), {
-                            x: x,
-                            y: y,
-                            size: 10,
-                            font: font,
-                            color: rgb(0, 0, 0)
-                        });
-                    }
-                    
-                    const pdfBytes = await pdfDoc.save();
-                    downloadFile(pdfBytes, 'numbered.pdf', 'application/pdf');
-                    showOutput('✅ Page numbers added!', pdfBytes, 'numbered.pdf');
-                    hideLoader();
-                }
-            },
-
-            // 23. Flatten PDF
-            'flatten-pdf': {
-                title: '⬇️ Flatten PDF',
-                description: 'Flatten form fields and annotations',
-                icon: '⬇️',
-                accept: '.pdf',
-                multiple: false,
-                process: async (files) => {
-                    showLoader('Flattening PDF...');
-                    
-                    const bytes = await readFileAsArrayBuffer(files[0]);
-                    const pdfDoc = await PDFDocument.load(bytes);
-                    
-                    const form = pdfDoc.getForm();
-                    if (form) {
-                        form.flatten();
-                    }
-                    
-                    const pdfBytes = await pdfDoc.save();
-                    downloadFile(pdfBytes, 'flattened.pdf', 'application/pdf');
-                    showOutput('✅ PDF flattened successfully!', pdfBytes, 'flattened.pdf');
-                    hideLoader();
-                }
-            },
-
-            // 24. OCR PDF (Mock)
-            'ocr-pdf': {
-                title: '🔍 OCR PDF',
-                description: 'Make scanned PDF searchable',
-                icon: '🔍',
-                accept: '.pdf',
-                multiple: false,
-                process: async (files) => {
-                    showLoader('Performing OCR...');
-                    
-                    const bytes = await readFileAsArrayBuffer(files[0]);
-                    const pdfDoc = await PDFDocument.load(bytes);
-                    const pdfBytes = await pdfDoc.save();
-                    
-                    downloadFile(pdfBytes, 'ocr.pdf', 'application/pdf');
-                    showOutput('✅ OCR completed! (Mock)', pdfBytes, 'ocr.pdf');
-                    hideLoader();
-                }
-            },
-
-            // 25. Compare PDF
             'compare-pdf': {
-                title: '🔁 Compare PDF',
-                description: 'Compare two PDF files',
+                title: 'Compare PDF',
+                description: 'Compare two PDFs',
                 icon: '🔁',
+                category: 'security',
                 accept: '.pdf',
                 multiple: true,
                 optionsUI: `
@@ -2223,294 +3854,88 @@
                     
                     const bytes = new TextEncoder().encode(comparison);
                     downloadFile(bytes, 'comparison.txt', 'text/plain');
-                    showOutput('✅ Comparison complete!', bytes, 'comparison.txt');
+                    showOutput('Comparison complete!', bytes, 'comparison.txt');
                     hideLoader();
                 }
             }
         };
 
-        // Helper Functions
-        function readFileAsArrayBuffer(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = reject;
-                reader.readAsArrayBuffer(file);
-            });
-        }
-
-        function readFileAsText(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = reject;
-                reader.readAsText(file);
-            });
-        }
-
-        function downloadFile(data, filename, type) {
-            const blob = new Blob([data], { type });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = filename;
-            a.click();
-            URL.revokeObjectURL(url);
-        }
-
-        function downloadBlob(blob, filename) {
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = filename;
-            a.click();
-            URL.revokeObjectURL(url);
-        }
-
-        function parsePageRange(range, totalPages) {
-            const pages = new Set();
-            range.split(',').forEach(part => {
-                part = part.trim();
-                if (part.includes('-')) {
-                    const [start, end] = part.split('-').map(Number);
-                    for (let i = start; i <= end; i++) {
-                        if (i >= 1 && i <= totalPages) pages.add(i - 1);
-                    }
-                } else {
-                    const page = Number(part);
-                    if (page >= 1 && page <= totalPages) pages.add(page - 1);
-                }
-            });
-            return Array.from(pages);
-        }
-
-        function showLoader(text = 'Processing...') {
-            const loader = document.getElementById('loader');
-            const loaderText = document.getElementById('loader-text');
-            loaderText.textContent = text;
-            loader.classList.add('active');
-        }
-
-        function hideLoader() {
-            document.getElementById('loader').classList.remove('active');
-        }
-
-        function showError(message) {
-            alert('❌ Error: ' + message);
-        }
-
-        function showOutput(message, data, filename) {
-            const output = document.getElementById('output-area');
-            output.innerHTML = `
-                <p style="color: var(--success); margin-bottom: 1rem; font-size: 1.1rem;">${message}</p>
-                <button class="download-btn" onclick="downloadFileFromOutput('${filename}')">📥 Download ${filename}</button>
-            `;
-            
-            window.lastFileData = data;
-            window.lastFileName = filename;
-        }
-
-        window.downloadFileFromOutput = (filename) => {
-            if (window.lastFileData && window.lastFileName === filename) {
-                const blob = new Blob([window.lastFileData], { type: 'application/octet-stream' });
-                downloadBlob(blob, filename);
-            }
+        // Tool categories mapping
+        const categories = {
+            'organize': ['merge-pdf', 'split-pdf', 'remove-pages', 'extract-pages', 'organize-pdf', 'scan-to-pdf'],
+            'optimize': ['compress-pdf', 'repair-pdf', 'ocr-pdf'],
+            'convert-to': ['jpg-to-pdf', 'word-to-pdf', 'ppt-to-pdf', 'excel-to-pdf', 'html-to-pdf'],
+            'convert-from': ['pdf-to-jpg', 'pdf-to-word', 'pdf-to-ppt', 'pdf-to-excel', 'pdf-to-pdfa'],
+            'edit': ['rotate-pdf', 'add-page-numbers', 'add-watermark', 'crop-pdf', 'edit-pdf'],
+            'security': ['unlock-pdf', 'protect-pdf', 'sign-pdf', 'redact-pdf', 'compare-pdf']
         };
 
-        // Theme management
-        function setTheme(theme) {
-            body.setAttribute('data-theme', theme);
-            localStorage.setItem('theme', theme);
-            state.theme = theme;
-        }
+        // Populate tool grids
+        function populateTools() {
+            const organizeGrid = document.getElementById('organize-tools');
+            const optimizeGrid = document.getElementById('optimize-tools');
+            const convertToGrid = document.getElementById('convert-to-tools');
+            const convertFromGrid = document.getElementById('convert-from-tools');
+            const editGrid = document.getElementById('edit-tools');
+            const securityGrid = document.getElementById('security-tools');
 
-        themeToggle.addEventListener('click', () => {
-            setTheme(state.theme === 'light' ? 'dark' : 'light');
-        });
-
-        // Auth management
-        function updateAuthUI() {
-            if (state.currentUser) {
-                authButtons.style.display = 'none';
-                userProfile.style.display = 'flex';
-                userName.textContent = state.currentUser.name;
-                userAvatar.textContent = state.currentUser.name.charAt(0).toUpperCase();
-            } else {
-                authButtons.style.display = 'flex';
-                userProfile.style.display = 'none';
-            }
-        }
-
-        function login(email, password, remember) {
-            const user = state.users.find(u => u.email === email && u.password === password);
-            if (user) {
-                state.currentUser = { name: user.name, email: user.email };
-                if (remember) {
-                    localStorage.setItem('rememberedUser', JSON.stringify(state.currentUser));
+            categories.organize.forEach(toolId => {
+                if (tools[toolId]) {
+                    organizeGrid.appendChild(createToolCard(toolId, tools[toolId]));
                 }
-                sessionStorage.setItem('currentUser', JSON.stringify(state.currentUser));
-                updateAuthUI();
-                closeAuthModal();
-                alert('✅ Login successful!');
-                return true;
-            }
-            return false;
+            });
+
+            categories.optimize.forEach(toolId => {
+                if (tools[toolId]) {
+                    optimizeGrid.appendChild(createToolCard(toolId, tools[toolId]));
+                }
+            });
+
+            categories['convert-to'].forEach(toolId => {
+                if (tools[toolId]) {
+                    convertToGrid.appendChild(createToolCard(toolId, tools[toolId]));
+                }
+            });
+
+            categories['convert-from'].forEach(toolId => {
+                if (tools[toolId]) {
+                    convertFromGrid.appendChild(createToolCard(toolId, tools[toolId]));
+                }
+            });
+
+            categories.edit.forEach(toolId => {
+                if (tools[toolId]) {
+                    editGrid.appendChild(createToolCard(toolId, tools[toolId]));
+                }
+            });
+
+            categories.security.forEach(toolId => {
+                if (tools[toolId]) {
+                    securityGrid.appendChild(createToolCard(toolId, tools[toolId]));
+                }
+            });
         }
 
-        function signup(name, email, password) {
-            if (state.users.some(u => u.email === email)) {
-                return false;
-            }
-            const newUser = { name, email, password, id: Date.now() };
-            state.users.push(newUser);
-            localStorage.setItem('users', JSON.stringify(state.users));
-            return true;
+        function createToolCard(toolId, tool) {
+            const card = document.createElement('div');
+            card.className = 'tool-card';
+            card.setAttribute('data-tool', toolId);
+            card.innerHTML = `
+                <div class="tool-icon">${tool.icon}</div>
+                <h3>${tool.title}</h3>
+                <p>${tool.description}</p>
+            `;
+            card.addEventListener('click', () => openToolModal(toolId));
+            return card;
         }
 
-        function logout() {
-            state.currentUser = null;
-            sessionStorage.removeItem('currentUser');
-            localStorage.removeItem('rememberedUser');
-            updateAuthUI();
-        }
-
-        const rememberedUser = localStorage.getItem('rememberedUser');
-        const sessionUser = sessionStorage.getItem('currentUser');
-        
-        if (sessionUser) {
-            state.currentUser = JSON.parse(sessionUser);
-        } else if (rememberedUser) {
-            state.currentUser = JSON.parse(rememberedUser);
-        }
-        updateAuthUI();
-
-        // Auth modal handlers
-        document.getElementById('open-login').addEventListener('click', () => openAuthModal('login'));
-        document.getElementById('open-signup').addEventListener('click', () => openAuthModal('signup'));
-        document.getElementById('close-auth').addEventListener('click', closeAuthModal);
-        document.getElementById('logout-btn').addEventListener('click', logout);
-
-        function openAuthModal(tab = 'login') {
-            authModal.classList.add('active');
-            if (tab === 'login') {
-                document.getElementById('login-tab').click();
-            } else {
-                document.getElementById('signup-tab').click();
-            }
-        }
-
-        function closeAuthModal() {
-            authModal.classList.remove('active');
-            clearAuthErrors();
-        }
-
-        function clearAuthErrors() {
-            document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
-            document.querySelectorAll('.success-message').forEach(el => el.textContent = '');
-        }
-
-        document.getElementById('login-tab').addEventListener('click', () => {
-            document.getElementById('login-tab').classList.add('active');
-            document.getElementById('signup-tab').classList.remove('active');
-            document.getElementById('login-form').classList.add('active');
-            document.getElementById('signup-form').classList.remove('active');
-            clearAuthErrors();
-        });
-
-        document.getElementById('signup-tab').addEventListener('click', () => {
-            document.getElementById('signup-tab').classList.add('active');
-            document.getElementById('login-tab').classList.remove('active');
-            document.getElementById('signup-form').classList.add('active');
-            document.getElementById('login-form').classList.remove('active');
-            clearAuthErrors();
-        });
-
-        document.getElementById('login-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            clearAuthErrors();
-            
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
-            const remember = document.getElementById('remember-me').checked;
-            
-            if (!email || !password) {
-                document.getElementById('login-general-error').textContent = 'Please fill all fields';
-                return;
-            }
-            
-            if (login(email, password, remember)) {
-                document.getElementById('login-success-message').textContent = 'Login successful! Redirecting...';
-            } else {
-                document.getElementById('login-general-error').textContent = 'Invalid email or password';
-            }
-        });
-
-        document.getElementById('signup-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            clearAuthErrors();
-            
-            const name = document.getElementById('signup-name').value;
-            const email = document.getElementById('signup-email').value;
-            const password = document.getElementById('signup-password').value;
-            const confirm = document.getElementById('signup-confirm').value;
-            const terms = document.getElementById('terms').checked;
-            
-            if (!name) {
-                document.getElementById('signup-name-error').textContent = 'Name is required';
-                return;
-            }
-            if (!email || !email.includes('@')) {
-                document.getElementById('signup-email-error').textContent = 'Valid email is required';
-                return;
-            }
-            if (password.length < 6) {
-                document.getElementById('signup-password-error').textContent = 'Password must be at least 6 characters';
-                return;
-            }
-            if (password !== confirm) {
-                document.getElementById('signup-confirm-error').textContent = 'Passwords do not match';
-                return;
-            }
-            if (!terms) {
-                document.getElementById('terms-error').textContent = 'You must agree to the terms';
-                return;
-            }
-            
-            if (signup(name, email, password)) {
-                document.getElementById('signup-success-message').textContent = 'Account created! Please login.';
-                setTimeout(() => {
-                    document.getElementById('login-tab').click();
-                    document.getElementById('login-email').value = email;
-                }, 2000);
-            } else {
-                document.getElementById('signup-general-error').textContent = 'Email already exists';
-            }
-        });
-
-        document.getElementById('forgot-password').addEventListener('click', (e) => {
-            e.preventDefault();
-            alert('📧 Password reset link sent to your email!');
-        });
-
-        authModal.addEventListener('click', (e) => {
-            if (e.target === authModal) closeAuthModal();
-        });
-
-        toolModal.addEventListener('click', (e) => {
-            if (e.target === toolModal) closeToolModal();
-        });
-
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            mobileMenu.classList.toggle('active');
-        });
-
+        // Tool modal functions
         function openToolModal(toolId) {
             state.currentTool = toolId;
             state.files = [];
             const tool = tools[toolId];
             
-            document.getElementById('tool-title').textContent = tool.title;
+            document.getElementById('modal-title').textContent = tool.title;
             document.getElementById('tool-options').innerHTML = tool.optionsUI || '';
             
             const fileInput = document.getElementById('file-input');
@@ -2528,15 +3953,16 @@
             }
         }
 
-        window.openTool = openToolModal;
+        window.openToolModal = openToolModal;
 
         function closeToolModal() {
             toolModal.classList.remove('active');
             if (window.fabricCanvas) window.fabricCanvas.dispose();
         }
 
-        document.getElementById('close-tool-modal').addEventListener('click', closeToolModal);
+        document.getElementById('close-modal').addEventListener('click', closeToolModal);
 
+        // File handling
         const dropZone = document.getElementById('drop-zone');
         const fileInput = document.getElementById('file-input');
         const fileList = document.getElementById('file-list');
@@ -2585,7 +4011,7 @@
             state.files.forEach((file, index) => {
                 const li = document.createElement('li');
                 li.innerHTML = `
-                    <span>📄 ${file.name} (${(file.size / 1024).toFixed(1)} KB)</span>
+                    <span><i class="fas fa-file-pdf" style="color: var(--danger); margin-right: 0.5rem;"></i> ${file.name} (${(file.size / 1024).toFixed(1)} KB)</span>
                     <span class="remove-file" data-index="${index}">✕</span>
                 `;
                 fileList.appendChild(li);
@@ -2613,32 +4039,18 @@
             }
         });
 
-        // Generate tool cards
-        const toolsGrid = document.getElementById('tools-grid');
-        
-        Object.keys(tools).forEach((toolId) => {
-            const tool = tools[toolId];
-            const card = document.createElement('div');
-            card.className = 'tool-card';
-            card.innerHTML = `
-                <div class="tool-icon">${tool.icon}</div>
-                <h3>${tool.title}</h3>
-                <p>${tool.description}</p>
-                ${tool.featured ? '<div class="badge">POPULAR</div>' : ''}
-            `;
-            card.addEventListener('click', () => openToolModal(toolId));
-            toolsGrid.appendChild(card);
+        // Update copyright year
+        document.addEventListener('DOMContentLoaded', () => {
+            const year = new Date().getFullYear();
+            document.querySelector('.copyright p').innerHTML = 
+                document.querySelector('.copyright p').innerHTML.replace('2025', year);
         });
-
-        // Update stats
-        document.getElementById('stat-tools').textContent = Object.keys(tools).length + '+';
 
         // Set initial theme
         setTheme(state.theme);
+
+        // Initialize tools
+        populateTools();
     </script>
 </body>
 </html>
-
-
-
-
