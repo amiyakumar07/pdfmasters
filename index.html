@@ -1663,6 +1663,37 @@
                 padding: 1.5rem;
             }
         }
+
+        /* Add this enhanced animation */
+@keyframes glow-pulse {
+    0% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 5px #ef4444);
+    }
+    25% {
+        transform: scale(1.2);
+        filter: drop-shadow(0 0 15px #ef4444);
+    }
+    50% {
+        transform: scale(1.1);
+        filter: drop-shadow(0 0 20px #ef4444);
+    }
+    75% {
+        transform: scale(1.2);
+        filter: drop-shadow(0 0 15px #ef4444);
+    }
+    100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 5px #ef4444);
+    }
+}
+
+.heart-glow {
+    display: inline-block;
+    color: #ef4444;
+    animation: glow-pulse 2s ease-in-out infinite;
+}
+        
     </style>
 </head>
 <body data-theme="light">
@@ -4091,5 +4122,6 @@
     </script>
 </body>
 </html>
+
 
 
